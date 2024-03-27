@@ -39,7 +39,7 @@ fun Greeting(
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+private fun GreetingPreview() {
     HobbyloopTheme {
         Greeting("Android")
     }
