@@ -18,6 +18,9 @@ jobs:
           distribution: 'zulu'
           cache: gradle
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
@@ -38,7 +41,7 @@ jobs:
       - name: Run ktlint
         run: ./gradlew ktlintCheck
 
-  lint:
+  composelint:
     needs: setup
     runs-on: ubuntu-latest
     steps:
