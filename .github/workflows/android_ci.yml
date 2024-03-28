@@ -22,9 +22,6 @@ jobs:
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
-    - name: Setup Android SDK Tools
-      uses: android-actions/setup-android@v3
       
     - name: Cache Gradle packages
       uses: actions/cache@v3
