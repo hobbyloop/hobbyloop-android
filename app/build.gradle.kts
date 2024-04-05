@@ -80,4 +80,6 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     lintChecks(libs.compose.lint.checks)
+
+    implementation(libs.navigation.compose)
 }
