@@ -3,6 +3,77 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_4_API_33_Play_Store_.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-06T11:25:46.104923Z" />
+        </State>
+      </entry>
+      <entry key="core.data">
+        <State />
+      </entry>
+      <entry key="core.database">
+        <State />
+      </entry>
+      <entry key="core.datastore">
+        <State />
+      </entry>
+      <entry key="core.domain">
+        <State />
+      </entry>
+      <entry key="core.domin">
+        <State />
+      </entry>
+      <entry key="core.network">
+        <State />
+      </entry>
+      <entry key="core.ui">
+        <State />
+      </entry>
+      <entry key="feature.facility">
+        <State />
+      </entry>
+      <entry key="feature.home">
+        <State />
+      </entry>
+      <entry key="feature.login">
+        <State />
+      </entry>
+      <entry key="feature.my-page">
+        <State />
+      </entry>
+      <entry key="feature.my_page">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_4_API_33_Play_Store_.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-06T11:24:28.353010Z" />
+        </State>
+      </entry>
+      <entry key="feature.reservation">
+        <State />
+      </entry>
+      <entry key="feature.signup">
+        <State />
+      </entry>
+      <entry key="feature.storage">
         <State />
       </entry>
     </value>
