@@ -13,6 +13,8 @@ compose-navigation = "2.7.7"
 ktlint = "12.1.0"
 androidx-appcompat = "1.6.1"
 google-material = "1.11.0"
+hilt = "2.48.1"
+hilt-navigation-compose = "1.1.0"
 
 [libraries]
 compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "compose-lint-checks" }
@@ -33,6 +35,9 @@ ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "google-material" }
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
 
 [plugins]
@@ -40,11 +45,13 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
-compose = ["core-ktx", "lifecycle-runtime-ktx", "activity-compose", "compose-bom", "compose-navigation", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "ui-test-manifest", "ui-test-junit4", "material3"]
 ui = ["core-ktx", "lifecycle-runtime-ktx", "activity-compose", "compose-navigation", "ui", "ui-graphics", "ui-tooling", "ui-tooling-preview", "ui-test-manifest", "ui-test-junit4", "material3"]
-navigation = ["compose-navigation", "espresso-core"]
+navigation = ["compose-navigation", "espresso-core", "hilt-navigation-compose"]
+hilt = ["hilt"]
+hiltCompiler = ["hilt-compiler"]
 test = ["junit"]
 androidTest = ["androidx-test-ext-junit", "compose-bom", "ui-test-junit4"]
 debugImple = ["ui-tooling", "ui-test-manifest"]

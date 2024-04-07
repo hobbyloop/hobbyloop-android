@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.hilt)
+    kotlin("kapt")
 }
 
 android {
@@ -63,6 +65,8 @@ ktlint {
 dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.ui)
+    implementation(libs.bundles.hilt)
+    kapt(libs.bundles.hiltCompiler)
     implementation(libs.bundles.navigation)
     testImplementation(libs.bundles.test)
     androidTestImplementation(libs.bundles.androidTest)
