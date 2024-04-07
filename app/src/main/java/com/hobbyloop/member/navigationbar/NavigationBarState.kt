@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 
 @Stable
 internal class NavigationBarState(private val navController: NavController) {
-    private val navigationBarRoutes = listOf(
+    val navigationBarRoutes = listOf(
         HOME_GRAPH_ROUTE,
         FACILITY_GRAPH_ROUTE,
         RESERVATION_GRAPH_ROUTE,

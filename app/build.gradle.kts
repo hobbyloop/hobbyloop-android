@@ -66,6 +66,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.ui)
     implementation(libs.bundles.hilt)
+    implementation(project(":feature:facility-card"))
     kapt(libs.bundles.hiltCompiler)
     implementation(libs.bundles.navigation)
     testImplementation(libs.bundles.test)

@@ -42,6 +42,9 @@
       <entry key="feature.facility">
         <State />
       </entry>
+      <entry key="feature.facility-card">
+        <State />
+      </entry>
       <entry key="feature.home">
         <State />
       </entry>

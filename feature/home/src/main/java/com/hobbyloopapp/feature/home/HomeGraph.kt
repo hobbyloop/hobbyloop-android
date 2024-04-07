@@ -9,6 +9,7 @@ const val HOME_GRAPH_ROUTE = "home-graph"
 private const val HOME_DEEPLINK = "$ROOT_DEEPLINK/home"
 
 fun NavGraphBuilder.homeGraph(
+    onFacilityClick: (facilityId: String) -> Unit,
 ) {
     navigation(
         startDestination = HOME_ROUTE,
@@ -17,6 +18,6 @@ fun NavGraphBuilder.homeGraph(
             navDeepLink { uriPattern = HOME_DEEPLINK }
         ),
     ) {
-        homeScreen()
+        homeScreen(onFacilityClick = onFacilityClick)
     }
 }
