@@ -7,7 +7,6 @@ import com.hobbyloop.member.navigationbar.navigateToNavigationBarHost
 import com.hobbyloop.member.navigationbar.navigationBarHost
 import com.hobbyloopapp.feature.login.LOGIN_GRAPH_ROUTE
 import com.hobbyloopapp.feature.login.loginGraph
-import com.hobbyloopapp.feature.signup.SIGNUP_GRAPH_ROUTE
 import com.hobbyloopapp.feature.signup.navigateToSignupGraph
 import com.hobbyloopapp.feature.signup.signupGraph
 
@@ -27,13 +26,13 @@ fun RootHost() {
             },
             onLoggedIn = {
                 rootController.navigateToNavigationBarHost()
-            }
+            },
         )
         signupGraph(
             navController = rootController,
             onSignupClick = {
                 rootController.navigateToNavigationBarHost()
-            }
+            },
         )
         navigationBarHost(navController = navigationBarController)
     }

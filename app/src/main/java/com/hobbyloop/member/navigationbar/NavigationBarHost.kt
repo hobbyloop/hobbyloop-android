@@ -29,10 +29,7 @@ fun NavController.navigateToNavigationBarHost() {
     }
 }
 
-internal fun NavGraphBuilder.navigationBarHost(
-    navController: NavHostController
-) {
-
+internal fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
     composable(NAVIGATION_BAR_HOST_ROUTE) { entry ->
         Scaffold(
             bottomBar = {
@@ -47,7 +44,7 @@ internal fun NavGraphBuilder.navigationBarHost(
                 homeGraph(
                     onFacilityClick = { facilityId ->
                         navController.navigateToProductCardGraph(facilityId = facilityId)
-                    }
+                    },
                 )
                 facilityGraph()
                 reservationGraph()

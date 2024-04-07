@@ -38,16 +38,15 @@ internal fun NavigationBar(navController: NavController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+
     if (bottomBarDestination) {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ) {
-            val backStackEntry = navController.currentBackStackEntryAsState()
             screens.forEach { screen ->
-                val currentRoute = backStackEntry.value?.destination?.route;
+                val currentRoute = navBackStackEntry?.destination?.route
                 val selected = currentRoute == screen.route
                 AddItem(
                     screen = screen,
@@ -59,27 +58,26 @@ internal fun NavigationBar(navController: NavController) {
     }
 }
 
-
 @Composable
 fun RowScope.AddItem(
     screen: BottomBarScreen,
     navController: NavController,
     selected: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavigationBarItem(
         label = {
             Text(
                 if (selected) screen.title else "",
                 fontWeight = FontWeight.SemiBold,
-                color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
         icon = {
             Icon(
                 imageVector = screen.icon,
                 contentDescription = "Navigation Icon",
-                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
         selected = selected,
@@ -96,8 +94,8 @@ fun RowScope.AddItem(
             selectedIconColor = MaterialTheme.colorScheme.primary,
             unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
             selectedTextColor = MaterialTheme.colorScheme.primary,
-            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        ),
     )
 }
 
@@ -107,35 +105,35 @@ fun RowScope.AddItem(
 sealed class BottomBarScreen(
     val route: String,
     val title: String,
-    val icon: ImageVector
+    val icon: ImageVector,
 ) {
     data object Home : BottomBarScreen(
         route = HOME_ROUTE,
         title = "홈",
-        icon = Icons.Default.Home
+        icon = Icons.Default.Home,
     )
 
     data object Facility : BottomBarScreen(
         route = FACILITY_ROUTE,
         title = "이용권",
-        icon = Icons.Default.Search
+        icon = Icons.Default.Search,
     )
 
     data object Reservation : BottomBarScreen(
         route = RESERVATION_ROUTE,
         title = "수업예약",
-        icon = Icons.Default.AccountBox
+        icon = Icons.Default.AccountBox,
     )
 
     data object Storage : BottomBarScreen(
         route = STORAGE_ROUTE,
         title = "보관함",
-        icon = Icons.Default.ShoppingCart
+        icon = Icons.Default.ShoppingCart,
     )
 
     data object MyPage : BottomBarScreen(
         route = MYPAGE_ROUTE,
         title = "마이페이지",
-        icon = Icons.Default.Person
+        icon = Icons.Default.Person,
     )
 }

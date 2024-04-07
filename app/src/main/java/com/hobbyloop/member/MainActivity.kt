@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             HobbyloopTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     RootHost()
                 }
