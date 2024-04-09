@@ -29,13 +29,14 @@ import com.hobbyloopapp.feature.reservation.RESERVATION_ROUTE
 
 @Composable
 internal fun NavigationBar(navController: NavController) {
-    val screens = listOf(
-        BottomBarScreen.Home,
-        BottomBarScreen.Facility,
-        BottomBarScreen.Reservation,
-        BottomBarScreen.Storage,
-        BottomBarScreen.MyPage,
-    )
+    val screens =
+        listOf(
+            BottomBarScreen.Home,
+            BottomBarScreen.Facility,
+            BottomBarScreen.Reservation,
+            BottomBarScreen.Storage,
+            BottomBarScreen.MyPage,
+        )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
@@ -90,12 +91,13 @@ fun RowScope.AddItem(
                 restoreState = true
             }
         },
-        colors = NavigationBarItemDefaults.colors(
-            selectedIconColor = MaterialTheme.colorScheme.primary,
-            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            selectedTextColor = MaterialTheme.colorScheme.primary,
-            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        ),
+        colors =
+            NavigationBarItemDefaults.colors(
+                selectedIconColor = MaterialTheme.colorScheme.primary,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                selectedTextColor = MaterialTheme.colorScheme.primary,
+                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
     )
 }
 
