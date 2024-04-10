@@ -144,40 +144,40 @@ sealed class BottomBarScreen(
         route = HOME_ROUTE,
         title = "홈",
         iconLabelSpacing = 6.dp,
-        unSelectedIcon = R.drawable.home,
-        selectedIcon = R.drawable.home_filled,
+        unSelectedIcon = R.drawable.bt_home_ic,
+        selectedIcon = R.drawable.bt_home_filled_ic,
     )
 
     data object Facility : BottomBarScreen(
         route = FACILITY_ROUTE,
         title = "이용권",
         iconLabelSpacing = 6.dp,
-        unSelectedIcon = R.drawable.facility,
-        selectedIcon = R.drawable.group_4210,
+        unSelectedIcon = R.drawable.bt_facility_ic,
+        selectedIcon = R.drawable.bt_facility_filled_ic,
     )
 
     data object Reservation : BottomBarScreen(
         route = RESERVATION_ROUTE,
         title = "수업예약",
         iconLabelSpacing = 4.dp,
-        unSelectedIcon = R.drawable.calendar,
-        selectedIcon = R.drawable.calendar,
+        unSelectedIcon = R.drawable.bt_calendar_ic,
+        selectedIcon = R.drawable.bt_calendar_ic,
     )
 
     data object Storage : BottomBarScreen(
         route = STORAGE_ROUTE,
         title = "보관함",
         iconLabelSpacing = 6.dp,
-        unSelectedIcon = R.drawable.storage,
-        selectedIcon = R.drawable.storage_filled,
+        unSelectedIcon = R.drawable.bt_storage_ic,
+        selectedIcon = R.drawable.bt_storage_filled_ic,
     )
 
     data object MyPage : BottomBarScreen(
         route = MYPAGE_ROUTE,
         title = "마이페이지",
         iconLabelSpacing = 6.dp,
-        unSelectedIcon = R.drawable.my_page,
-        selectedIcon = R.drawable.my_page_filled,
+        unSelectedIcon = R.drawable.bt_my_ic,
+        selectedIcon = R.drawable.bt_my_filled_ic,
     )
 }
 
@@ -217,7 +217,7 @@ fun BottomBar(
             navController = navController,
             size = 50.dp,
             backgroundColor = orangeColor,
-            iconId = R.drawable.calendar,
+            iconId = R.drawable.bt_calendar_ic,
             iconTint = Color.White,
             contentDescription = "CalendarButton",
             yOffset = (-57).dp,
