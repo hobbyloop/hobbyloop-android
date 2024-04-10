@@ -15,6 +15,7 @@ androidx-appcompat = "1.6.1"
 google-material = "1.11.0"
 hilt = "2.48.1"
 hilt-navigation-compose = "1.1.0"
+kotlinx-collections-immutable = "0.3.6"
 
 [libraries]
 compose-lint-checks = { module = "com.slack.lint.compose:compose-lint-checks", version.ref = "compose-lint-checks" }
@@ -38,7 +39,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
-
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -52,6 +53,7 @@ ui = ["core-ktx", "lifecycle-runtime-ktx", "activity-compose", "compose-navigati
 navigation = ["compose-navigation", "espresso-core", "hilt-navigation-compose"]
 hilt = ["hilt"]
 hiltCompiler = ["hilt-compiler"]
+kotlinxCollections = ["kotlinx-collections-immutable"]
 test = ["junit"]
 androidTest = ["androidx-test-ext-junit", "compose-bom", "ui-test-junit4"]
 debugImple = ["ui-tooling", "ui-test-manifest"]
