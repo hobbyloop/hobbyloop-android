@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import com.hobbyloop.feature.center.centerGraph
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
+import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
 import com.hobbyloop.feature.storage.storageGraph
 
@@ -41,6 +42,7 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                 centerGraph()
                 reservationGraph(navController)
                 storageGraph(navController)
+                myPageGraph(navController)
             }
         }
     }

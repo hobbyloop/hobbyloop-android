@@ -1,6 +1,7 @@
 package com.hobbyloop.member.navigationbar
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -17,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.hobbyloop.feature.center.CENTER_GRAPH_ROUTE
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
+import com.hobbyloop.feature.mypage.MY_PAGE_GRAPH_ROUTE
 import com.hobbyloop.feature.reservation.RESERVATION_GRAPH_ROUTE
 import com.hobbyloop.feature.storage.STORAGE_GRAPH_ROUTE
 
@@ -82,6 +84,21 @@ internal fun NavigationBar(navController: NavController) {
             },
             label = {
                 Text("보관함")
+            },
+        )
+
+        val isMyPageSelected by state.isRouteSelected(MY_PAGE_GRAPH_ROUTE)
+            .collectAsState(initial = false)
+        NavigationBarItem(
+            selected = isMyPageSelected,
+            onClick = {
+                state.openRoute(MY_PAGE_GRAPH_ROUTE)
+            },
+            icon = {
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null)
+            },
+            label = {
+                Text("마이페이지")
             },
         )
     }
