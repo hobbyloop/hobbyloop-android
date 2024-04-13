@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import com.hobbyloop.feature.center.centerGraph
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
+import com.hobbyloop.feature.reservation.reservationGraph
 
 internal const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 
@@ -37,6 +38,7 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
             ) {
                 homeGraph(navController)
                 centerGraph()
+                reservationGraph(navController)
             }
         }
     }

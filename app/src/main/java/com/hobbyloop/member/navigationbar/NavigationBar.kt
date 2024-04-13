@@ -1,6 +1,7 @@
 package com.hobbyloop.member.navigationbar
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -15,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.hobbyloop.feature.center.CENTER_GRAPH_ROUTE
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
+import com.hobbyloop.feature.reservation.RESERVATION_GRAPH_ROUTE
 
 @Composable
 internal fun NavigationBar(navController: NavController) {
@@ -48,6 +50,21 @@ internal fun NavigationBar(navController: NavController) {
             },
             label = {
                 Text("시설")
+            },
+        )
+
+        val isReservationSelected by state.isRouteSelected(RESERVATION_GRAPH_ROUTE)
+            .collectAsState(initial = false)
+        NavigationBarItem(
+            selected = isReservationSelected,
+            onClick = {
+                state.openRoute(RESERVATION_GRAPH_ROUTE)
+            },
+            icon = {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            },
+            label = {
+                Text("수업 예약")
             },
         )
     }

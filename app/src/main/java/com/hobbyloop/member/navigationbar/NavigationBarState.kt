@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.hobbyloop.feature.center.CENTER_GRAPH_ROUTE
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
+import com.hobbyloop.feature.reservation.RESERVATION_GRAPH_ROUTE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -17,6 +18,7 @@ internal class NavigationBarState(private val navController: NavController) {
         listOf(
             HOME_GRAPH_ROUTE,
             CENTER_GRAPH_ROUTE,
+            RESERVATION_GRAPH_ROUTE,
         )
 
     @SuppressLint("RestrictedApi")
