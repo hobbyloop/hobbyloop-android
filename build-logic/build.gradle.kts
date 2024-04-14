@@ -13,3 +13,12 @@ dependencies {
     compileOnly(libs.android.tools.build.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
 }
+
+gradlePlugin {
+    plugins {
+        register("appModule") {
+            id = "buildlogic.appmodule"
+            implementationClass = "AppModuleConventions"
+        }
+    }
+}
