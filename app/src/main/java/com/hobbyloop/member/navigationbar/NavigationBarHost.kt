@@ -33,7 +33,7 @@ internal fun NavGraphBuilder.navigationBarHost(navController: NavHostController)
     composable(NAVIGATION_BAR_HOST_ROUTE) { entry ->
         Scaffold(
             bottomBar = {
-                NavigationBar(navController = navController)
+                BottomBar(navController = navController)
             },
         ) { padding ->
             NavHost(

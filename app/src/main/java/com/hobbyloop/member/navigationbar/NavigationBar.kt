@@ -1,141 +1,231 @@
 package com.hobbyloop.member.navigationbar
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.hobboyloopapp.feature.storage.STORAGE_ROUTE
-import com.hobbyloopapp.feature.facility.FACILITY_ROUTE
-import com.hobbyloopapp.feature.home.HOME_ROUTE
-import com.hobbyloopapp.feature.my_page.MYPAGE_ROUTE
-import com.hobbyloopapp.feature.reservation.RESERVATION_ROUTE
+import androidx.navigation.compose.rememberNavController
+import com.hobbyloop.member.R
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-internal fun NavigationBar(navController: NavController) {
-    val screens =
+fun BottomBar(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+) {
+    val bottomBarScreens =
         listOf(
             BottomBarScreen.Home,
             BottomBarScreen.Facility,
             BottomBarScreen.Reservation,
             BottomBarScreen.Storage,
             BottomBarScreen.MyPage,
-        )
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
-    val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+        ).toImmutableList()
+    val orangeColor = Color(0xFFFF5F05)
 
-    if (bottomBarDestination) {
-        NavigationBar(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ) {
-            screens.forEach { screen ->
-                val currentRoute = navBackStackEntry?.destination?.route
-                val selected = currentRoute == screen.route
-                AddItem(
-                    screen = screen,
-                    navController = navController,
-                    selected = selected,
+    val state =
+        rememberNavigationBarState(
+            navController = navController,
+            bottomBarScreens = bottomBarScreens,
+        )
+
+    Box(
+        modifier
+            .fillMaxWidth(),
+    ) {
+        BottomNavigationRow(
+            state = state,
+            selectedColor = Color.Black,
+            unselectedColor = Color.Gray,
+            labelSize = 12.sp,
+            iconSize = 24.dp,
+        )
+        FloatingActionIconButton(
+            state = state,
+            route = BottomBarScreen.Reservation.route,
+            size = 50.dp,
+            backgroundColor = orangeColor,
+            iconId = R.drawable.bt_calendar_ic,
+            iconTint = Color.White,
+            contentDescription = "CalendarButton",
+            yOffset = (-57).dp,
+            modifier = Modifier.align(Alignment.BottomCenter),
+        )
+    }
+}
+
+@Composable
+private fun BottomNavigationRow(
+    state: NavigationBarState,
+    selectedColor: Color,
+    unselectedColor: Color,
+    labelSize: TextUnit,
+    iconSize: Dp,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = Color.White,
+    borderColor: Color = Color.Gray,
+    borderWidth: Dp = 0.3.dp,
+    height: Dp = 92.dp,
+    bottomPadding: Dp = 20.dp,
+    horizontalPadding: Dp = 10.dp,
+    applyRoundedCorners: Boolean = true,
+    cornerRadius: Dp = 30.dp,
+) {
+    Row(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(height)
+                .background(backgroundColor)
+                .border(
+                    borderWidth,
+                    borderColor,
+                    if (applyRoundedCorners) {
+                        RoundedCornerShape(
+                            topStart = cornerRadius,
+                            topEnd = cornerRadius,
+                        )
+                    } else {
+                        RectangleShape
+                    },
                 )
+                .padding(bottom = bottomPadding, start = horizontalPadding, end = horizontalPadding),
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        state.bottomBarScreens.forEach { screen ->
+            val isSelected by state.isRouteSelected(screen.route).collectAsState(initial = false)
+
+            ScreenContent(
+                screen = screen,
+                isSelected = isSelected,
+                selectedColor = selectedColor,
+                unselectedColor = unselectedColor,
+                labelSize = labelSize,
+                iconSize = iconSize,
+                modifier = Modifier.weight(1f),
+            ) {
+                state.openRoute(screen.route)
             }
         }
     }
 }
 
 @Composable
-fun RowScope.AddItem(
+fun ScreenContent(
     screen: BottomBarScreen,
-    navController: NavController,
-    selected: Boolean,
+    isSelected: Boolean,
+    selectedColor: Color,
+    unselectedColor: Color,
+    labelSize: TextUnit,
+    iconSize: Dp,
     modifier: Modifier = Modifier,
+    onScreenClicked: () -> Unit,
 ) {
-    NavigationBarItem(
-        label = {
-            Text(
-                if (selected) screen.title else "",
-                fontWeight = FontWeight.SemiBold,
-                color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        },
-        icon = {
+    Column(
+        modifier =
+            modifier
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        onScreenClicked()
+                    })
+                },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(screen.iconLabelSpacing),
+    ) {
+        if (screen != BottomBarScreen.Reservation) {
             Icon(
-                imageVector = screen.icon,
-                contentDescription = "Navigation Icon",
-                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                painter =
+                    if (isSelected) {
+                        painterResource(id = screen.selectedIcon)
+                    } else {
+                        painterResource(
+                            id = screen.unSelectedIcon,
+                        )
+                    },
+                contentDescription = screen.title,
+                tint = if (isSelected) selectedColor else unselectedColor,
+                modifier = Modifier.size(iconSize),
             )
-        },
-        selected = selected,
-        onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                launchSingleTop = true
-                restoreState = true
-            }
-        },
-        colors =
-            NavigationBarItemDefaults.colors(
-                selectedIconColor = MaterialTheme.colorScheme.primary,
-                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                selectedTextColor = MaterialTheme.colorScheme.primary,
-                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            ),
-    )
+        } else {
+            Spacer(modifier = Modifier.size(iconSize))
+        }
+        Text(
+            text = screen.title,
+            color = if (isSelected) selectedColor else unselectedColor,
+            fontSize = labelSize,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+        )
+    }
 }
 
-/**
- * 추후 strings.xml에서 텍스트 리소스 관리할 것
- */
-sealed class BottomBarScreen(
-    val route: String,
-    val title: String,
-    val icon: ImageVector,
+@Composable
+private fun FloatingActionIconButton(
+    state: NavigationBarState,
+    route: String,
+    size: Dp,
+    backgroundColor: Color,
+    iconId: Int,
+    iconTint: Color,
+    yOffset: Dp,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = "",
 ) {
-    data object Home : BottomBarScreen(
-        route = HOME_ROUTE,
-        title = "홈",
-        icon = Icons.Default.Home,
-    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier =
+            modifier
+                .offset(y = yOffset)
+                .size(size)
+                .clip(CircleShape)
+                .background(backgroundColor)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        state.openRoute(route)
+                    })
+                },
+    ) {
+        Icon(
+            painter = painterResource(id = iconId),
+            contentDescription = contentDescription,
+            tint = iconTint,
+        )
+    }
+}
 
-    data object Facility : BottomBarScreen(
-        route = FACILITY_ROUTE,
-        title = "이용권",
-        icon = Icons.Default.Search,
-    )
-
-    data object Reservation : BottomBarScreen(
-        route = RESERVATION_ROUTE,
-        title = "수업예약",
-        icon = Icons.Default.AccountBox,
-    )
-
-    data object Storage : BottomBarScreen(
-        route = STORAGE_ROUTE,
-        title = "보관함",
-        icon = Icons.Default.ShoppingCart,
-    )
-
-    data object MyPage : BottomBarScreen(
-        route = MYPAGE_ROUTE,
-        title = "마이페이지",
-        icon = Icons.Default.Person,
-    )
+@Preview()
+@Composable
+private fun BottomBarPreview() {
+    val navController = rememberNavController()
+    BottomBar(navController = navController)
 }
