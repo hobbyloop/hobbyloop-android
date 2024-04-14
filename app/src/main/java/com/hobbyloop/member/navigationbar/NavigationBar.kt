@@ -28,21 +28,36 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.hobbyloop.member.R
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun BottomBar(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    val bottomBarScreens =
+        listOf(
+            BottomBarScreen.Home,
+            BottomBarScreen.Facility,
+            BottomBarScreen.Reservation,
+            BottomBarScreen.Storage,
+            BottomBarScreen.MyPage,
+        ).toImmutableList()
     val orangeColor = Color(0xFFFF5F05)
 
-    val state = rememberNavigationBarState(navController)
+    val state =
+        rememberNavigationBarState(
+            navController = navController,
+            bottomBarScreens = bottomBarScreens,
+        )
 
     Box(
         modifier
@@ -208,5 +223,9 @@ private fun FloatingActionIconButton(
     }
 }
 
-
-
+@Preview()
+@Composable
+private fun BottomBarPreview() {
+    val navController = rememberNavController()
+    BottomBar(navController = navController)
+}

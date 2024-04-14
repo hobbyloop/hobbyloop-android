@@ -10,16 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @Stable
-internal class NavigationBarState(private val navController: NavController) {
-    val bottomBarScreens =
-        listOf(
-            BottomBarScreen.Home,
-            BottomBarScreen.Facility,
-            BottomBarScreen.Reservation,
-            BottomBarScreen.Storage,
-            BottomBarScreen.MyPage,
-        )
-
+internal class NavigationBarState(
+    private val navController: NavController,
+    val bottomBarScreens: List<BottomBarScreen>,
+) {
     @SuppressLint("RestrictedApi")
     fun isRouteSelected(route: String): Flow<Boolean> {
         return navController.currentBackStack.map { backStack ->
@@ -42,8 +36,11 @@ internal class NavigationBarState(private val navController: NavController) {
 }
 
 @Composable
-internal fun rememberNavigationBarState(navController: NavController): NavigationBarState {
-    return remember(navController) {
-        NavigationBarState(navController)
+internal fun rememberNavigationBarState(
+    navController: NavController,
+    bottomBarScreens: List<BottomBarScreen>,
+): NavigationBarState {
+    return remember(navController, bottomBarScreens) {
+        NavigationBarState(navController, bottomBarScreens)
     }
 }
