@@ -62,6 +62,16 @@ ktlint {
 
 dependencies {
 
+    implementation(project(":feature:center"))
+    implementation(project(":feature:center-detail"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:login"))
+    implementation(project(":feature:my-page"))
+    implementation(project(":feature:reservation"))
+    implementation(project(":feature:reservation-detail"))
+    implementation(project(":feature:sign-up"))
+    implementation(project(":feature:storage"))
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -80,4 +90,6 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     lintChecks(libs.compose.lint.checks)
+
+    implementation(libs.navigation.compose)
 }
