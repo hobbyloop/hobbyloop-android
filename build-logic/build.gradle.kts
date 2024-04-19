@@ -32,5 +32,9 @@ gradlePlugin {
             id = "buildlogic.uimodule"
             implementationClass = "UiModuleConventions"
         }
+        register("networkModule") {
+            id = "buildlogic.networkmodule"
+            implementationClass = "NetworkModuleConventions"
+        }
     }
 }
