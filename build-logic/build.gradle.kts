@@ -24,5 +24,9 @@ gradlePlugin {
             id = "buildlogic.datamodule"
             implementationClass = "DataModuleConventions"
         }
+        register("featureModule") {
+            id = "buildlogic.featuremodule"
+            implementationClass = "FeatureModuleConventions"
+        }
     }
 }
