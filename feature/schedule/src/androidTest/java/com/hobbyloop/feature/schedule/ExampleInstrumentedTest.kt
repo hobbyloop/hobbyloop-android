@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.storage
+package com.hobbyloop.feature.schedule
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.hobbyloop.feature.storage.test", appContext.packageName)
+        assertEquals("com.hobbyloop.feature.schedule.test", appContext.packageName)
     }
 }

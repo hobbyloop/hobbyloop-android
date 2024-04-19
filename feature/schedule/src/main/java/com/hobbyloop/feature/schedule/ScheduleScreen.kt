@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.storage
+package com.hobbyloop.feature.schedule
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun StorageScreen(
+internal fun ScheduleScreen(
     backgroundColor: Color,
     onContentColor: (color: Color) -> Unit,
 ) {
@@ -26,7 +26,7 @@ internal fun StorageScreen(
                     .background(backgroundColor),
         ) {
             Text(
-                text = "보관함",
+                text = "스케줄",
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.storage
+package com.hobbyloop.feature.schedule
 
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
@@ -12,9 +12,9 @@ fun NavGraphBuilder.storageGraph(
     onContentColor: (color: Color) -> Unit,
 ) {
     navigation(
-        startDestination = STORAGE_ROUTE,
+        startDestination = SCHEDULE_ROUTE,
         route = STORAGE_GRAPH_ROUTE,
     ) {
-        storageScreen(onContentColor = onContentColor)
+        scheduleScreen(onContentColor = onContentColor)
     }
 }

@@ -18,7 +18,7 @@ import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
-import com.hobbyloop.feature.storage.storageGraph
+import com.hobbyloop.feature.schedule.storageGraph
 
 internal const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 

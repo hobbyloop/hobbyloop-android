@@ -8,7 +8,7 @@ import com.hobbyloop.feature.center.CENTER_GRAPH_ROUTE
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.mypage.MY_PAGE_GRAPH_ROUTE
 import com.hobbyloop.feature.reservation.RESERVATION_GRAPH_ROUTE
-import com.hobbyloop.feature.storage.STORAGE_GRAPH_ROUTE
+import com.hobbyloop.feature.schedule.STORAGE_GRAPH_ROUTE
 import com.hobbyloop.member.R
 
 sealed class BottomBarScreen(
