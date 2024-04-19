@@ -62,19 +62,16 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                     },
                 )
                 reservationGraph(
-                    navController = navController,
                     onContentColor = { color ->
                         contentColor = color
                     },
                 )
                 storageGraph(
-                    navController = navController,
                     onContentColor = { color ->
                         contentColor = color
                     },
                 )
                 myPageGraph(
-                    navController = navController,
                     onContentColor = { color ->
                         contentColor = color
                     },

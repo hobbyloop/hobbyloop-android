@@ -22,13 +22,11 @@ internal fun RootHost() {
             navController = navigationBarController,
         )
         loginGraph(
-            navController = rootController,
             onSignUpClick = {
                 rootController.navigateToSignUpGraph()
             },
         )
         signUpGraph(
-            navController = rootController,
             onBackClick = { rootController.popBackStack() },
             onNavigationBarClick = {
                 rootController.navigateToNavigationBarHost()

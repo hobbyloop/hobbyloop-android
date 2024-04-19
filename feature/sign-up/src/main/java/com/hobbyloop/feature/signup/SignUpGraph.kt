@@ -11,7 +11,6 @@ fun NavController.navigateToSignUpGraph() {
 }
 
 fun NavGraphBuilder.signUpGraph(
-    navController: NavController,
     onBackClick: () -> Unit,
     onNavigationBarClick: () -> Unit,
 ) {
