@@ -6,6 +6,6 @@ import org.gradle.kotlin.dsl.dependencies
 internal fun Project.configureNavigation() {
     dependencies {
         add("implementation", getLibrary("hilt-navigation-compose"))
-        add("implementation", getLibrary("navigation-compose"))
+        add("implementation", getLibrary("compose-navigation"))
     }
 }
