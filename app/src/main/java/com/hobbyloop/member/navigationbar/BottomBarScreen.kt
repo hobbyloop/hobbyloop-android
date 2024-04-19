@@ -8,7 +8,7 @@ import com.hobbyloop.feature.center.CENTER_GRAPH_ROUTE
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.mypage.MY_PAGE_GRAPH_ROUTE
 import com.hobbyloop.feature.reservation.RESERVATION_GRAPH_ROUTE
-import com.hobbyloop.feature.schedule.STORAGE_GRAPH_ROUTE
+import com.hobbyloop.feature.schedule.SCHEDULE_GRAPH_ROUTE
 import com.hobbyloop.member.R
 
 sealed class BottomBarScreen(
@@ -39,7 +39,7 @@ sealed class BottomBarScreen(
     )
 
     data object Schedule : BottomBarScreen(
-        route = STORAGE_GRAPH_ROUTE,
+        route = SCHEDULE_GRAPH_ROUTE,
         title = R.string.bt_schedule,
         iconLabelSpacing = 6.dp,
         unSelectedIcon = R.drawable.bt_schedule_ic,
