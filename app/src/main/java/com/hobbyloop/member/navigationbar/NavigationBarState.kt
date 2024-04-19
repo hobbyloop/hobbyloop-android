@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -38,9 +39,9 @@ internal class NavigationBarState(
 @Composable
 internal fun rememberNavigationBarState(
     navController: NavController,
-    bottomBarScreens: List<BottomBarScreen>,
+    bottomBarScreenList: ImmutableList<BottomBarScreen>,
 ): NavigationBarState {
-    return remember(navController, bottomBarScreens) {
-        NavigationBarState(navController, bottomBarScreens)
+    return remember(navController, bottomBarScreenList) {
+        NavigationBarState(navController, bottomBarScreenList)
     }
 }

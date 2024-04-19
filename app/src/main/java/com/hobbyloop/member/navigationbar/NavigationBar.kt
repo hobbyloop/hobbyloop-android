@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -41,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.hobbyloop.member.R
 import com.hobbyloop.member.ui.theme.Gray40
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun BottomBar(
@@ -48,18 +48,18 @@ fun BottomBar(
     modifier: Modifier = Modifier,
     roundedCornerShapeColor: Color = Color.White,
 ) {
-    val bottomBarScreens =
+    val bottomBarScreenList =
         listOf(
             BottomBarScreen.Home,
             BottomBarScreen.Facility,
             BottomBarScreen.Reservation,
             BottomBarScreen.Schedule,
             BottomBarScreen.My,
-        )
+        ).toImmutableList()
     val state =
         rememberNavigationBarState(
             navController = navController,
-            bottomBarScreens = bottomBarScreens,
+            bottomBarScreenList = bottomBarScreenList,
         )
     var isCenterTabClicked by remember { mutableStateOf(false) }
 
