@@ -28,5 +28,9 @@ gradlePlugin {
             id = "buildlogic.featuremodule"
             implementationClass = "FeatureModuleConventions"
         }
+        register("uiModule") {
+            id = "buildlogic.uimodule"
+            implementationClass = "UiModuleConventions"
+        }
     }
 }
