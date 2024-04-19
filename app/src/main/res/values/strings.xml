@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">hobbyloopmember</string>
+    <string name="bt_home">홈</string>
+    <string name="bt_center">시설</string>
+    <string name="bt_reservation">수업예약</string>
+    <string name="bt_schedule">스케쥴</string>
+    <string name="bt_my">마이</string>
 </resources>

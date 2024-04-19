@@ -1,18 +1,20 @@
 package com.hobbyloop.feature.home
 
-import androidx.navigation.NavController
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.hobbyloop.feature.home.onboarding.navigateToOnBoarding
 
 internal const val HOME_ROUTE = "home"
 
-internal fun NavGraphBuilder.homeScreen(navController: NavController) {
+internal fun NavGraphBuilder.homeScreen(
+    onContentColor: (color: Color) -> Unit,
+    showOnBoarding: () -> Unit,
+) {
     composable(route = HOME_ROUTE) {
         HomeScreen(
-            showOnBoarding = {
-                navController.navigateToOnBoarding()
-            },
+            backgroundColor = Color.Cyan.copy(alpha = 0.1f),
+            onContentColor = onContentColor,
+            showOnBoarding = showOnBoarding,
         )
     }
 }
