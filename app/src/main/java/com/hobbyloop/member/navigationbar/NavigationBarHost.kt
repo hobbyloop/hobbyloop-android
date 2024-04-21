@@ -39,7 +39,7 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
     composable(NAVIGATION_BAR_HOST_ROUTE) {
         val scope = rememberCoroutineScope()
 
-        var targetBackgroundColor by remember { mutableStateOf(BottomBarScreen.Home.backgroundColor) }
+        var targetBackgroundColor by remember { mutableStateOf(BottomBarScreen.HOME.backgroundColor) }
         val backgroundColor by animateColorAsState(
             targetBackgroundColor,
             label = "animateBottomBarBackgroundColor",

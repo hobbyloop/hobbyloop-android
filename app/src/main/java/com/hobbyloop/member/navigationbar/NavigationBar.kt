@@ -48,14 +48,7 @@ fun BottomBar(
     modifier: Modifier = Modifier,
     onBackgroundColor: (Color) -> Unit,
 ) {
-    val bottomBarScreenList =
-        listOf(
-            BottomBarScreen.Home,
-            BottomBarScreen.Facility,
-            BottomBarScreen.Reservation,
-            BottomBarScreen.Schedule,
-            BottomBarScreen.My,
-        ).toImmutableList()
+    val bottomBarScreenList = BottomBarScreen.entries.toImmutableList()
 
     val state =
         rememberNavigationBarState(
@@ -87,7 +80,7 @@ fun BottomBar(
             isSelected = isCenterTabClicked,
             selectedColor = Color.Black,
             unselectedColor = Color.White,
-            route = BottomBarScreen.Reservation.route,
+            route = BottomBarScreen.RESERVATION.route,
             size = 50.dp,
             iconId = R.drawable.bt_reservation_ic,
             yOffset = (-57).dp,
@@ -169,7 +162,7 @@ fun ScreenContent(
     onScreenClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    if (isSelected && screen == BottomBarScreen.Reservation) {
+    if (isSelected && screen == BottomBarScreen.RESERVATION) {
         onCenterTabClicked(true)
     }
     Column(
@@ -184,7 +177,7 @@ fun ScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(screen.iconLabelSpacing),
     ) {
-        if (screen != BottomBarScreen.Reservation) {
+        if (screen != BottomBarScreen.RESERVATION) {
             Icon(
                 painter = painterResource(id = screen.unSelectedIcon),
                 contentDescription = stringResource(screen.title),
