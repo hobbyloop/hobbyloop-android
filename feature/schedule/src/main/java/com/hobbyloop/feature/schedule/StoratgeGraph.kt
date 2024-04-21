@@ -9,12 +9,12 @@ const val STORAGE_GRAPH_ROUTE = "storage-graph"
 
 fun NavGraphBuilder.storageGraph(
     navController: NavController,
-    onContentColor: (color: Color) -> Unit,
+    backgroundColor: Color,
 ) {
     navigation(
         startDestination = SCHEDULE_ROUTE,
         route = STORAGE_GRAPH_ROUTE,
     ) {
-        scheduleScreen(onContentColor = onContentColor)
+        scheduleScreen(backgroundColor = backgroundColor)
     }
 }

@@ -1,13 +1,14 @@
 package com.hobbyloop.member.navigationbar
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -19,6 +20,8 @@ import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
 import com.hobbyloop.feature.schedule.storageGraph
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 
@@ -34,15 +37,27 @@ fun NavController.navigateToNavigationBarHost() {
 
 fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
     composable(NAVIGATION_BAR_HOST_ROUTE) {
-        var contentColor by remember { mutableStateOf(Color.White) }
+        val scope = rememberCoroutineScope()
+
+        var targetBackgroundColor by remember { mutableStateOf(BottomBarScreen.Home.backgroundColor) }
+        val backgroundColor by animateColorAsState(
+            targetBackgroundColor,
+            label = "animateBottomBarBackgroundColor",
+        )
 
         Scaffold(
             bottomBar = {
                 BottomBar(
                     navController = navController,
-                    roundedCornerShapeColor = contentColor,
+                    onBackgroundColor = { backgroundColor ->
+                        scope.launch {
+                            delay(100)
+                            targetBackgroundColor = backgroundColor
+                        }
+                    },
                 )
             },
+            containerColor = backgroundColor,
         ) { padding ->
             NavHost(
                 modifier = Modifier.padding(padding),
@@ -52,32 +67,22 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
             ) {
                 homeGraph(
                     navController = navController,
-                    onContentColor = { color ->
-                        contentColor = color
-                    },
+                    backgroundColor = backgroundColor,
                 )
                 centerGraph(
-                    onContentColor = { color ->
-                        contentColor = color
-                    },
+                    backgroundColor = backgroundColor,
                 )
                 reservationGraph(
                     navController = navController,
-                    onContentColor = { color ->
-                        contentColor = color
-                    },
+                    backgroundColor = backgroundColor,
                 )
                 storageGraph(
                     navController = navController,
-                    onContentColor = { color ->
-                        contentColor = color
-                    },
+                    backgroundColor = backgroundColor,
                 )
                 myPageGraph(
                     navController = navController,
-                    onContentColor = { color ->
-                        contentColor = color
-                    },
+                    backgroundColor = backgroundColor,
                 )
             }
         }

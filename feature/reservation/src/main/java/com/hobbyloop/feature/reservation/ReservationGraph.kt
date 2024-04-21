@@ -9,14 +9,12 @@ const val RESERVATION_GRAPH_ROUTE = "reservation-graph"
 
 fun NavGraphBuilder.reservationGraph(
     navController: NavController,
-    onContentColor: (color: Color) -> Unit,
+    backgroundColor: Color,
 ) {
     navigation(
         startDestination = RESERVATION_ROUTE,
         route = RESERVATION_GRAPH_ROUTE,
     ) {
-        reservationScreen(
-            onContentColor = onContentColor,
-        )
+        reservationScreen(backgroundColor = backgroundColor)
     }
 }

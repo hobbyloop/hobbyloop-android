@@ -6,11 +6,10 @@ import androidx.navigation.compose.composable
 
 internal const val MY_PAGE_ROUTE = "my-page"
 
-internal fun NavGraphBuilder.myPageScreen(onContentColor: (color: Color) -> Unit) {
+internal fun NavGraphBuilder.myPageScreen(backgroundColor: Color) {
     composable(route = MY_PAGE_ROUTE) {
         MyPageScreen(
-            backgroundColor = Color.Yellow.copy(alpha = 0.1f),
-            onContentColor = onContentColor,
+            backgroundColor = backgroundColor,
         )
     }
 }

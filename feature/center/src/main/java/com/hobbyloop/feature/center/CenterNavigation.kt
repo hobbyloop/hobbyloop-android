@@ -6,11 +6,10 @@ import androidx.navigation.compose.composable
 
 internal const val CENTER_ROUTE = "center"
 
-internal fun NavGraphBuilder.centerScreen(onContentColor: (color: Color) -> Unit) {
+internal fun NavGraphBuilder.centerScreen(backgroundColor: Color) {
     composable(route = CENTER_ROUTE) {
         CenterScreen(
-            backgroundColor = Color.Gray.copy(alpha = 0.1f),
-            onContentColor = onContentColor,
+            backgroundColor = backgroundColor,
         )
     }
 }

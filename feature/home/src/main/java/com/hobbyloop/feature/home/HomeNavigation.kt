@@ -7,13 +7,12 @@ import androidx.navigation.compose.composable
 internal const val HOME_ROUTE = "home"
 
 internal fun NavGraphBuilder.homeScreen(
-    onContentColor: (color: Color) -> Unit,
+    backgroundColor: Color,
     showOnBoarding: () -> Unit,
 ) {
     composable(route = HOME_ROUTE) {
         HomeScreen(
-            backgroundColor = Color.Cyan.copy(alpha = 0.1f),
-            onContentColor = onContentColor,
+            backgroundColor = backgroundColor,
             showOnBoarding = showOnBoarding,
         )
     }

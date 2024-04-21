@@ -9,12 +9,12 @@ const val MY_PAGE_GRAPH_ROUTE = "my-page-graph"
 
 fun NavGraphBuilder.myPageGraph(
     navController: NavController,
-    onContentColor: (color: Color) -> Unit,
+    backgroundColor: Color,
 ) {
     navigation(
         startDestination = MY_PAGE_ROUTE,
         route = MY_PAGE_GRAPH_ROUTE,
     ) {
-        myPageScreen(onContentColor = onContentColor)
+        myPageScreen(backgroundColor = backgroundColor)
     }
 }

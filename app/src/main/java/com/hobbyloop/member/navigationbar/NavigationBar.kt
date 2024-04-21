@@ -46,7 +46,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun BottomBar(
     navController: NavController,
     modifier: Modifier = Modifier,
-    roundedCornerShapeColor: Color = Color.White,
+    onBackgroundColor: (Color) -> Unit,
 ) {
     val bottomBarScreenList =
         listOf(
@@ -56,6 +56,7 @@ fun BottomBar(
             BottomBarScreen.Schedule,
             BottomBarScreen.My,
         ).toImmutableList()
+
     val state =
         rememberNavigationBarState(
             navController = navController,
@@ -68,12 +69,6 @@ fun BottomBar(
             .fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter,
     ) {
-        Spacer(
-            modifier =
-                Modifier
-                    .matchParentSize()
-                    .background(roundedCornerShapeColor),
-        )
         BottomNavigationRow(
             state = state,
             selectedColor = Color.Black,
@@ -82,6 +77,9 @@ fun BottomBar(
             iconSize = 24.dp,
             onCenterTabClicked = { clicked ->
                 isCenterTabClicked = clicked
+            },
+            onBackgroundColor = { color ->
+                onBackgroundColor(color)
             },
         )
         FloatingActionIconButton(
@@ -106,6 +104,8 @@ private fun BottomNavigationRow(
     unselectedColor: Color,
     labelSize: TextUnit,
     iconSize: Dp,
+    onCenterTabClicked: (Boolean) -> Unit,
+    onBackgroundColor: (Color) -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.White,
     shadowElevation: Dp = 15.dp,
@@ -114,7 +114,6 @@ private fun BottomNavigationRow(
     horizontalPadding: Dp = 10.dp,
     applyRoundedCorners: Boolean = true,
     cornerRadius: Dp = 30.dp,
-    onCenterTabClicked: (Boolean) -> Unit,
 ) {
     Row(
         modifier =
@@ -139,8 +138,10 @@ private fun BottomNavigationRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         state.bottomBarScreens.forEach { screen ->
-            val isSelected by state.isRouteSelected(screen.route).collectAsState(initial = false)
 
+            state.getCurrentScreen()?.backgroundColor?.let { onBackgroundColor(it) }
+
+            val isSelected by state.isRouteSelected(screen.route).collectAsState(initial = false)
             ScreenContent(
                 screen = screen,
                 isSelected = isSelected,
