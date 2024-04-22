@@ -6,11 +6,10 @@ import androidx.navigation.compose.composable
 
 internal const val SCHEDULE_ROUTE = "storage"
 
-internal fun NavGraphBuilder.scheduleScreen(onContentColor: (color: Color) -> Unit) {
+internal fun NavGraphBuilder.scheduleScreen(backgroundColor: Color) {
     composable(route = SCHEDULE_ROUTE) {
         ScheduleScreen(
-            backgroundColor = Color.Blue.copy(alpha = 0.1f),
-            onContentColor = onContentColor,
+            backgroundColor = backgroundColor,
         )
     }
 }

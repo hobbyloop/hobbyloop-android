@@ -25,6 +25,14 @@ internal class NavigationBarState(
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    fun getCurrentScreen(): BottomBarScreen? {
+        return navController.currentBackStack.value
+            .mapNotNull { it.destination.route }
+            .lastOrNull { currentRoute -> bottomBarScreens.any { screen -> screen.route == currentRoute } }
+            ?.let { currentRoute -> bottomBarScreens.find { it.route == currentRoute } }
+    }
+
     fun openRoute(route: String) {
         navController.navigate(route) {
             popUpTo(navController.graph.findStartDestination().id) {

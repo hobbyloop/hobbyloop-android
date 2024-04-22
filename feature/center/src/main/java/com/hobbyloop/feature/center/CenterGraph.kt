@@ -6,11 +6,13 @@ import androidx.navigation.navigation
 
 const val CENTER_GRAPH_ROUTE = "center-graph"
 
-fun NavGraphBuilder.centerGraph(onContentColor: (color: Color) -> Unit) {
+fun NavGraphBuilder.centerGraph(backgroundColor: Color) {
     navigation(
         startDestination = CENTER_ROUTE,
         route = CENTER_GRAPH_ROUTE,
     ) {
-        centerScreen(onContentColor = onContentColor)
+        centerScreen(
+            backgroundColor = backgroundColor,
+        )
     }
 }

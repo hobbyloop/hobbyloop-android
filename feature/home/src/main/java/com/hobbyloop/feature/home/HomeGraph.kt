@@ -11,14 +11,14 @@ const val HOME_GRAPH_ROUTE = "home-graph"
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
-    onContentColor: (color: Color) -> Unit,
+    backgroundColor: Color,
 ) {
     navigation(
         startDestination = HOME_ROUTE,
         route = HOME_GRAPH_ROUTE,
     ) {
         homeScreen(
-            onContentColor = onContentColor,
+            backgroundColor = backgroundColor,
             showOnBoarding = {
                 navController.navigateToOnBoarding()
             },

@@ -11,12 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun ReservationScreen(
-    backgroundColor: Color,
-    onContentColor: (color: Color) -> Unit,
-) {
-    onContentColor(backgroundColor)
-
+internal fun ReservationScreen(backgroundColor: Color) {
     Scaffold { padding ->
         Column(
             modifier =

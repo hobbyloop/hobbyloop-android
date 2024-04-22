@@ -14,11 +14,8 @@ import androidx.compose.ui.graphics.Color
 @Composable
 internal fun HomeScreen(
     backgroundColor: Color,
-    onContentColor: (color: Color) -> Unit,
     showOnBoarding: () -> Unit,
 ) {
-    onContentColor(backgroundColor)
-
     Scaffold { padding ->
         Column(
             modifier =
