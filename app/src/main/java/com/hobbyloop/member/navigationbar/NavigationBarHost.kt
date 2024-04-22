@@ -19,7 +19,7 @@ import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
-import com.hobbyloop.feature.schedule.storageGraph
+import com.hobbyloop.feature.schedule.scheduleGraph
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -73,15 +73,12 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                     backgroundColor = backgroundColor,
                 )
                 reservationGraph(
-                    navController = navController,
                     backgroundColor = backgroundColor,
                 )
-                storageGraph(
-                    navController = navController,
+                scheduleGraph(
                     backgroundColor = backgroundColor,
                 )
                 myPageGraph(
-                    navController = navController,
                     backgroundColor = backgroundColor,
                 )
             }

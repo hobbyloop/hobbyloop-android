@@ -11,7 +11,6 @@ fun NavController.navigateToLoginGraph() {
 }
 
 fun NavGraphBuilder.loginGraph(
-    navController: NavController,
     onSignUpClick: () -> Unit,
 ) {
     navigation(
