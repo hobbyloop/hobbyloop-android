@@ -1,7 +1,13 @@
 package com.hobbyloop.member.navigationbar
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -13,24 +19,45 @@ import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
-import com.hobbyloop.feature.storage.storageGraph
+import com.hobbyloop.feature.schedule.storageGraph
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 internal const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 
 fun NavController.navigateToNavigationBarHost() {
     navigate(NAVIGATION_BAR_HOST_ROUTE) {
-        popUpTo(graph.startDestinationId) {
+        popUpTo(0) {
             inclusive = true
         }
+        launchSingleTop = true
+        restoreState = true
     }
 }
 
 fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
     composable(NAVIGATION_BAR_HOST_ROUTE) {
+        val scope = rememberCoroutineScope()
+
+        var targetBackgroundColor by remember { mutableStateOf(BottomBarScreen.HOME.backgroundColor) }
+        val backgroundColor by animateColorAsState(
+            targetBackgroundColor,
+            label = "animateBottomBarBackgroundColor",
+        )
+
         Scaffold(
             bottomBar = {
-                NavigationBar(navController = navController)
+                BottomBar(
+                    navController = navController,
+                    onBackgroundColor = { backgroundColor ->
+                        scope.launch {
+                            delay(100)
+                            targetBackgroundColor = backgroundColor
+                        }
+                    },
+                )
             },
+            containerColor = backgroundColor,
         ) { padding ->
             NavHost(
                 modifier = Modifier.padding(padding),
@@ -38,11 +65,25 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                 startDestination = HOME_GRAPH_ROUTE,
                 route = NAVIGATION_BAR_HOST_ROUTE,
             ) {
-                homeGraph(navController)
-                centerGraph()
-                reservationGraph(navController)
-                storageGraph(navController)
-                myPageGraph(navController)
+                homeGraph(
+                    navController = navController,
+                    backgroundColor = backgroundColor,
+                )
+                centerGraph(
+                    backgroundColor = backgroundColor,
+                )
+                reservationGraph(
+                    navController = navController,
+                    backgroundColor = backgroundColor,
+                )
+                storageGraph(
+                    navController = navController,
+                    backgroundColor = backgroundColor,
+                )
+                myPageGraph(
+                    navController = navController,
+                    backgroundColor = backgroundColor,
+                )
             }
         }
     }

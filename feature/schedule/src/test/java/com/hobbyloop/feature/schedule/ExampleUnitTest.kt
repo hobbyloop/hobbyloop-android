@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.storage
+package com.hobbyloop.feature.schedule
 
 import org.junit.Assert.*
 import org.junit.Test

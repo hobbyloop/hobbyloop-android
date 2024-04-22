@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hobbyloop.feature.storage"
+    namespace = "com.hobbyloop.feature.schedule"
     compileSdk = 34
 
     defaultConfig {

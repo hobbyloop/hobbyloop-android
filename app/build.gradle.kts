@@ -70,7 +70,7 @@ dependencies {
     implementation(project(":feature:reservation"))
     implementation(project(":feature:reservation-detail"))
     implementation(project(":feature:sign-up"))
-    implementation(project(":feature:storage"))
+    implementation(project(":feature:schedule"))
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -92,4 +92,6 @@ dependencies {
     lintChecks(libs.compose.lint.checks)
 
     implementation(libs.navigation.compose)
+
+    implementation(libs.kotlinx.collections.immutable)
 }

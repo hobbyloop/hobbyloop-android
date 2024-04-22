@@ -1,20 +1,20 @@
-package com.hobbyloop.feature.mypage
+package com.hobbyloop.feature.schedule
 
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 
-const val MY_PAGE_GRAPH_ROUTE = "my-page-graph"
+const val STORAGE_GRAPH_ROUTE = "storage-graph"
 
-fun NavGraphBuilder.myPageGraph(
+fun NavGraphBuilder.storageGraph(
     navController: NavController,
     backgroundColor: Color,
 ) {
     navigation(
-        startDestination = MY_PAGE_ROUTE,
-        route = MY_PAGE_GRAPH_ROUTE,
+        startDestination = SCHEDULE_ROUTE,
+        route = STORAGE_GRAPH_ROUTE,
     ) {
-        myPageScreen(backgroundColor = backgroundColor)
+        scheduleScreen(backgroundColor = backgroundColor)
     }
 }
