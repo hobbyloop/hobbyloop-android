@@ -205,8 +205,8 @@ private fun FloatingActionIconButton(
     route: String,
     size: Dp,
     iconId: Int,
-    yOffset: Dp,
     modifier: Modifier = Modifier,
+    yOffset: Dp = (-57).dp,
     backgroundColor: Color = MaterialTheme.colorScheme.primary,
     contentDescription: String? = "",
 ) {
