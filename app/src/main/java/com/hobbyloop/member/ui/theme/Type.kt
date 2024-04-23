@@ -4,6 +4,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
@@ -17,6 +18,12 @@ val Typography =
                 lineHeight = 24.sp,
                 letterSpacing = 0.5.sp,
             ),
+        labelLarge = TextStyle(
+            fontFamily = FontFamily.SansSerif,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            lineHeight = TextUnit.Unspecified
+        ),
     /* Other default text styles to override
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

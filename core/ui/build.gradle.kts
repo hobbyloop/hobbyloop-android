@@ -7,4 +7,7 @@ android {
 }
 
 dependencies {
+    api(libs.ui)
+    api(libs.ui.tooling)
+    api(libs.ui.tooling.preview)
 }
