@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,7 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.core.ui.componenet.HorizontalLine
+import com.hobbyloop.core.ui.componenet.SingleLineText
 import com.hobbyloop.core.ui.icons.HblIcons
+import com.hobbyloop.core.ui.util.DevicePreviews
 
 @Composable
 internal fun LoginScreen(onSignUpClick: () -> Unit) {
@@ -44,14 +47,19 @@ fun LoginScreens(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Spacer(modifier = Modifier.height(100.dp))
-        Icon(painter = painterResource(id = HblIcons.AppLogo.resourceId), contentDescription = null)
-        Spacer(modifier = Modifier.height(181.dp))
+
+        Spacer(modifier = Modifier.weight(0.4f))
+        Icon(
+            painter = painterResource(id = HblIcons.AppLogo.resourceId),
+            tint = Color.Unspecified,
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.weight(0.6f))
         LoginButtons(onSignUpClick)
         Spacer(modifier = Modifier.height(83.dp))
         HorizontalLine(Modifier.padding(PaddingValues(horizontal = 20.dp)))
-        Spacer(modifier = Modifier.height(55.dp))
-        Text(
+        SingleLineText(
+            modifier = Modifier.padding(vertical = 55.dp),
             text = stringResource(R.string.lost_account),
             style = MaterialTheme.typography.labelLarge
         )
@@ -131,13 +139,13 @@ fun LoginButton(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-        ,
+            .padding(horizontal = 40.dp),
         colors = ButtonDefaults.buttonColors(containerColor = backgroundColor),
         contentPadding = PaddingValues(vertical = 12.dp),
         shape = RoundedCornerShape(10.dp),
     ) {
         leadingIcon()
-        Text(
+        SingleLineText(
             text = buttonText,
             color = textColor,
             modifier = Modifier.padding(start = 8.dp),
@@ -146,11 +154,11 @@ fun LoginButton(
     }
 }
 
-@Preview
+@DevicePreviews
 @Composable
 private fun LoginButtonsPreview() {
     MaterialTheme {
-        LoginButtons(onSignUpClick = {})
+        LoginScreen(onSignUpClick = {})
     }
 }
 
