@@ -88,9 +88,9 @@ fun LoginButtons(
             backgroundColor = Color(0xFFFEE500),
             leadingIcon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_android_black_24dp),
+                    painterResource(id = HblIcons.kakao.resourceId),
                     contentDescription = null,
-                    tint = Color.Black
+                    tint = Color.Unspecified
                 )
             }
         )
@@ -100,9 +100,9 @@ fun LoginButtons(
             backgroundColor = Color.White,
             leadingIcon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_android_black_24dp),
+                    painterResource(id = HblIcons.google.resourceId),
                     contentDescription = null,
-                    tint = Color.Black
+                    tint = Color.Unspecified
                 )
             }
         )
@@ -112,9 +112,9 @@ fun LoginButtons(
             backgroundColor = Color(0xFF03C75A),
             leadingIcon = {
                 Icon(
-                    painterResource(id = R.drawable.ic_android_black_24dp),
+                    painterResource(id = HblIcons.naver.resourceId),
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.Unspecified
                 )
             },
             textColor = Color.White
