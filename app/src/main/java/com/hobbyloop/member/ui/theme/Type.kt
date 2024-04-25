@@ -29,17 +29,17 @@ val Typography =
         labelLarge = TextStyle(
             fontFamily =FontFamily(Font(font.pretendard)),
             fontSize = 14.sp,
-            fontWeight = FontWeight.SemiBold,
-            lineHeight = TextUnit.Unspecified
+            fontStyle = FontStyle.Normal,
+            fontWeight = FontWeight.W500,
         ),
-        // SingUpTitle ...
+        // signupTitle ...
         titleLarge = TextStyle(
             fontFamily =FontFamily(Font(font.pretendard)),
             fontSize = 22.sp,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.W700,
         ),
-        // SingUpSubTitle
+        // signupSubTitle
         titleMedium = TextStyle(
             fontFamily =FontFamily(Font(font.pretendard_bold)),
             fontSize = 18.sp,
@@ -52,6 +52,7 @@ val Typography =
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.W500,
         ),
+
 
         /* Other default text styles to override
         titleLarge = TextStyle(

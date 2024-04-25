@@ -10,7 +10,7 @@ internal fun NavGraphBuilder.signUpScreen(
     onNavigationBarClick: () -> Unit,
 ) {
     composable(route = SIGNUP_ROUTE) {
-        SingUpScreen(
+        SignUpScreen(
             onBackClick = onBackClick,
             onNavigationBarClick = onNavigationBarClick,
         )
