@@ -33,8 +33,7 @@ private val LightColorScheme =
         tertiary = Pink40,
         background = Color.White,
         onTertiary = BLACK30,
-        onBackground = GRAY
-
+        onBackground = GRAY,
         /* Other default colors to override
         background = Color(0xFFFFFBFE),
         surface = Color(0xFFFFFBFE),

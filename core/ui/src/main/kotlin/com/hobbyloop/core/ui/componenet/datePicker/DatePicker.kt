@@ -1,5 +1,6 @@
 package com.hobbyloop.core.ui.componenet.datePicker
 
+import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -44,6 +45,8 @@ import com.hobbyloop.core.ui.componenet.datePicker.util.withYear
  * selectorEffectEnabled : 선택 효과 활성화 여부
  * onDateChanged : 날짜가 변경될 때 호출할 콜백 함수
  */
+
+
 @Composable
 fun DatePicker(
     offset: Int = 3,
@@ -67,7 +70,7 @@ fun DatePicker(
 
     // 선택 날짜 변경시 콜백 실행
     LaunchedEffect(selectedDate) {
-        onDateChanged(selectedDate.day, selectedDate.month, selectedDate.year, selectedDate.date)
+        onDateChanged(selectedDate.year, selectedDate.month, selectedDate.day, selectedDate.date)
     }
 
     // 텍스트 크기 설정 범위 내에서 조정
@@ -75,20 +78,17 @@ fun DatePicker(
 
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().padding(8.dp)
             .height(IntrinsicSize.Max)
-            .background(Color.White),
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
 
         val height = (fontSize + 11).dp
-
         Row(
             modifier = Modifier
                 .fillMaxSize()
-
         ) {
-
             Spacer(modifier = Modifier.weight(0.5f))
             WheelView(modifier = Modifier
                 .weight(1f),

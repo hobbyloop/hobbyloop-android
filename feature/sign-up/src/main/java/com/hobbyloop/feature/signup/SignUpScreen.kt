@@ -11,13 +11,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,17 +31,41 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.core.ui.componenet.ActiveStateButton
+import com.hobbyloop.core.ui.componenet.HorizontalLine
+import com.hobbyloop.core.ui.componenet.ModalBottomSheet
 import com.hobbyloop.core.ui.componenet.TopBar
+import com.hobbyloop.core.ui.componenet.UnderLineClickableText
+import com.hobbyloop.core.ui.componenet.datePicker.DatePicker
+import com.hobbyloop.core.ui.icons.HblIcons
 import com.hobbyloop.feature.signup.componenet.EnhancedInputField
+import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
 
 @Composable
 fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}) {
     val viewModel = SignUpViewModel()
-    SignUpLayout(viewModel, onBackClick = onBackClick, onNavigationBarClick = onNavigationBarClick)
+    ModalBottomSheet(
+        sheetContent = {
+            DatePicker(onDateChanged = { year, month, day, date ->
+                viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
+            })
+        },
+        content = { showSheet ->
+            SignUpLayout(
+                viewModel,
+                onBackClick = onBackClick,
+                onNavigationBarClick = onNavigationBarClick,
+                showSheet = showSheet
+            )
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,7 +74,8 @@ fun SignUpLayout(
     viewModel: SignUpViewModel,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onNavigationBarClick: () -> Unit
+    onNavigationBarClick: () -> Unit,
+    showSheet: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -61,13 +91,17 @@ fun SignUpLayout(
                 containerColor = Color.Transparent
             )
         )
-        SignUpForm(viewModel, Modifier.padding(16.dp), onNavigationBarClick)
+        SignUpForm(viewModel, Modifier.padding(16.dp), onNavigationBarClick, showSheet = showSheet)
     }
 }
 
 @Composable
-fun SignUpForm(viewModel: SignUpViewModel, modifier: Modifier, onNavigationBarClick: () -> Unit) {
-
+fun SignUpForm(
+    viewModel: SignUpViewModel,
+    modifier: Modifier,
+    onNavigationBarClick: () -> Unit,
+    showSheet: () -> Unit
+) {
     val userInfo by viewModel.userInfo.collectAsState()
     val validState by viewModel.validationState.collectAsState()
     val isFormValid by viewModel.isFormValid.collectAsState()
@@ -77,7 +111,7 @@ fun SignUpForm(viewModel: SignUpViewModel, modifier: Modifier, onNavigationBarCl
             .padding(top = 66.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
 
         // 메인 타이틀
@@ -96,7 +130,7 @@ fun SignUpForm(viewModel: SignUpViewModel, modifier: Modifier, onNavigationBarCl
             value = userInfo.nickname,
             headerText = stringResource(R.string.signup_nickname),
             hintText = stringResource(R.string.signup_nickname_hint),
-            errorText =  stringResource(R.string.signup_nickname_error),
+            errorText = stringResource(R.string.signup_nickname_error),
             isValid = validState.isNicknameValid,
             valueChange = viewModel::updateNickname
         )
@@ -104,20 +138,116 @@ fun SignUpForm(viewModel: SignUpViewModel, modifier: Modifier, onNavigationBarCl
         // 성별
         GenderSelection(selectedGender = userInfo.gender, selectGender = viewModel::selectGender)
 
+        DateSelection(
+            userInfo.birthDay,
+            showSheet = showSheet
+        )
+
         PhoneNumberVerificationForm(viewModel = viewModel)
 
-        Spacer(Modifier.weight(1f))
+        TermsCheck(viewModel)
 
-        // 회원가입 완료 버튼
-        ActiveStateButton(
-            textRes = R.string.signup_endSignUp,
-            enabled = isFormValid,
-            onClick = onNavigationBarClick,
-            textStyle = MaterialTheme.typography.labelLarge
+        Column(modifier = Modifier.padding(vertical = 16.dp) , horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(stringResource(R.string.signup_retouch), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onBackground)
+            Spacer(modifier = Modifier.height(8.dp))
+            ActiveStateButton(
+                modifier = Modifier.height(48.dp),
+                textRes = R.string.signup_endSignUp,
+                enabled = isFormValid,
+                onClick = onNavigationBarClick,
+                textStyle = MaterialTheme.typography.labelLarge
+            )
+        }
+    }
+}
+
+@Composable
+fun TermsCheck(viewModel: SignUpViewModel) {
+    val userInfo by viewModel.userInfo.collectAsState()
+    Column {
+        InfoHeadTitle(text = stringResource(id = R.string.signup_Terms), isEssential = false)
+        val allChecked = userInfo.dataCollectionConsent && userInfo.marketingConsent
+        CheckboxWithLabel(
+            label = Terms.All.label,
+            checked = allChecked,
+            onCheckedChange = { viewModel.updateConsents(Terms.All, !allChecked) })
+        HorizontalLine(modifier = Modifier.padding(vertical = 8.dp))
+        CheckboxWithLabel(
+            label = Terms.MarketingConsent.label,
+            checked = userInfo.marketingConsent,
+            onCheckedChange = {
+                viewModel.updateConsents(
+                    Terms.MarketingConsent,
+                    !userInfo.marketingConsent
+                )
+            },
+            moreInfo = true,
+            isEssential = false
+        )
+        CheckboxWithLabel(
+            label = Terms.DataCollectionConsent.label,
+            checked = userInfo.dataCollectionConsent,
+            onCheckedChange = {
+                viewModel.updateConsents(
+                    Terms.DataCollectionConsent,
+                    !userInfo.dataCollectionConsent
+                )
+            },
+            moreInfo = true,
+            isEssential = false
         )
     }
 }
 
+
+@Composable
+fun CheckboxWithLabel(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    label: String,
+    moreInfo: Boolean = false,
+    isEssential: Boolean = true
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(end = 4.dp),
+                onClick = { onCheckedChange(!checked) },
+            ) {
+                Icon(
+                    painter = painterResource(id = if (checked) HblIcons.check.resourceId else HblIcons.unCheck.resourceId),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+            }
+            Text(text = label + if (!isEssential) " [선택]" else "", style = MaterialTheme.typography.labelLarge)
+        }
+        if (moreInfo) {
+            UnderLineClickableText("자세히")
+        }
+    }
+}
+
+@Composable
+fun DateSelection(birthDay: String, showSheet: () -> Unit) {
+    Column {
+        InfoHeadTitle(text = stringResource(id = R.string.signup_birthday))
+        EnhancedLeadingIconInputField(
+            leadingIcon = HblIcons.calendar.resourceId,
+            onClick = showSheet,
+            value = birthDay,
+            textStyle = MaterialTheme.typography.labelLarge
+        )
+    }
+}
 
 @Composable
 fun SignUpMainTitle() {
@@ -129,7 +259,7 @@ fun SignUpMainTitle() {
         Text(
             stringResource(R.string.signup_info),
             style = MaterialTheme.typography.titleMedium,
-            color = Color(0xFFA0A0A0)
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }
@@ -170,7 +300,6 @@ fun GenderSelection(selectedGender: Gender?, selectGender: (Gender) -> Unit) {
 }
 
 @Composable
-@OptIn(ExperimentalComposeUiApi::class)
 fun InputInfoContent(
     modifier: Modifier = Modifier,
     headerText: String = "",
