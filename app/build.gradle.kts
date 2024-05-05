@@ -7,6 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
 
     implementation(project(":feature:center"))
     implementation(project(":feature:center-detail"))
