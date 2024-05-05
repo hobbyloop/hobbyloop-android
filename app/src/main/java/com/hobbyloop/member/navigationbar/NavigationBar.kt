@@ -39,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.hobbyloop.member.R
-import com.hobbyloop.member.ui.theme.Gray40
 import kotlinx.collections.immutable.toImmutableList
+import theme.HobbyLoopColor
 
 @Composable
 fun BottomBar(
@@ -65,7 +65,7 @@ fun BottomBar(
         BottomNavigationRow(
             state = state,
             selectedColor = Color.Black,
-            unselectedColor = Gray40,
+            unselectedColor = HobbyLoopColor.Gray40,
             labelSize = 12.sp,
             iconSize = 24.dp,
             onCenterTabClicked = { clicked ->
