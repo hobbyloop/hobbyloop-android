@@ -15,6 +15,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import theme.Orange50
+import theme.Pink40
+import theme.Pink80
+import theme.PurpleGrey40
+import theme.PurpleGrey80
 
 private val DarkColorScheme =
     darkColorScheme(
