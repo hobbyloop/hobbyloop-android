@@ -45,9 +45,9 @@ fun ModalBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
-                        color = Color(0xFFFCFCFC),
+                        color = Color.White,
                         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                    )
+                    ).padding(bottom = 32.dp)
             ) {
                 Column {
                     Row(
@@ -73,9 +73,11 @@ fun ModalBottomSheet(
                 }
             }
         },
-        sheetBackgroundColor = Color.Transparent,
+        sheetBackgroundColor = Color.White,
         sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-        modifier = modifier
+        modifier = modifier.background(
+            color = Color.White
+        )
     ) {
         content {
             if (!sheetState.isVisible) {

@@ -42,20 +42,24 @@ import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.ModalBottomSheet
 import com.hobbyloop.core.ui.componenet.TopBar
 import com.hobbyloop.core.ui.componenet.UnderLineClickableText
-import com.hobbyloop.core.ui.componenet.datePicker.DatePicker
 import com.hobbyloop.core.ui.icons.HblIcons
 import com.hobbyloop.feature.signup.componenet.EnhancedInputField
 import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
+import com.kimdowoo.datepicker.componenet.SpinnerDatePicker
 
 @Composable
 fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}) {
     val viewModel = SignUpViewModel()
     ModalBottomSheet(
+        modifier = Modifier,
         sheetContent = {
-            DatePicker(onDateChanged = { year, month, day, date ->
-                viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
-            })
+            SpinnerDatePicker(
+                modifier = Modifier,
+                onDateChanged = { year, month, day ->
+                    viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
+                }
+            )
         },
         content = { showSheet ->
             SignUpLayout(
@@ -147,8 +151,15 @@ fun SignUpForm(
 
         TermsCheck(viewModel)
 
-        Column(modifier = Modifier.padding(vertical = 16.dp) , horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(stringResource(R.string.signup_retouch), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onBackground)
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                stringResource(R.string.signup_retouch),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
             Spacer(modifier = Modifier.height(8.dp))
             ActiveStateButton(
                 modifier = Modifier.height(48.dp),
@@ -228,7 +239,10 @@ fun CheckboxWithLabel(
                     tint = Color.Unspecified
                 )
             }
-            Text(text = label + if (!isEssential) " [선택]" else "", style = MaterialTheme.typography.labelLarge)
+            Text(
+                text = label + if (!isEssential) " [선택]" else "",
+                style = MaterialTheme.typography.labelLarge
+            )
         }
         if (moreInfo) {
             UnderLineClickableText("자세히")
