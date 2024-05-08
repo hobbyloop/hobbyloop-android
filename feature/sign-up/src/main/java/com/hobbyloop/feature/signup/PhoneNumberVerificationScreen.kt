@@ -23,12 +23,24 @@ import com.hobbyloop.core.ui.componenet.ActiveStateButton
 import com.hobbyloop.core.ui.util.DevicePreviews
 import com.hobbyloop.feature.signup.componenet.EnhancedInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
+import com.hobbyloop.feature.signup.state.CodeInfo
+import com.hobbyloop.feature.signup.state.UserInfo
+import com.hobbyloop.feature.signup.state.ValidationState
 
 @Composable
-fun PhoneNumberVerificationForm(viewModel: SignUpViewModel) {
-    val userInfo by viewModel.userInfo.collectAsState()
-    val verificationState by viewModel.validationState.collectAsState()
-    val codeInfo by viewModel.codeInfo.collectAsState()
+fun PhoneNumberVerificationForm(
+    phoneNumber: String,
+    isPhoneNumberValid: Boolean,
+    updatePhoneNumber: (String) -> Unit,
+    sendVerificationCode: () -> Unit,
+    code: String,
+    isVerificationCodeValid: Boolean,
+    showProgress: Boolean,
+    updateVerificationCodeInfo: (String) -> Unit,
+    verifyCode: () -> Unit,
+    isResendAvailable: Boolean,
+    isCodeSent: Boolean
+) {
 
     Column {
         InfoHeadTitle(text = stringResource(R.string.signup_phoneNumber))
@@ -38,11 +50,11 @@ fun PhoneNumberVerificationForm(viewModel: SignUpViewModel) {
         ) {
             EnhancedInputField(
                 modifier = Modifier.weight(0.65f),
-                isValid = verificationState.isPhoneNumberValid,
+                isValid = isPhoneNumberValid,
                 hintText = stringResource(R.string.signup_phoneNumber_hint),
                 errorText = stringResource(R.string.signup_phoneNumber_error),
-                value = userInfo.phoneNumber,
-                valueChange = viewModel::updatePhoneNumber,
+                value = phoneNumber,
+                valueChange = updatePhoneNumber,
                 textStyle = MaterialTheme.typography.labelLarge,
                 isPhoneNumber = true
             )
@@ -51,26 +63,35 @@ fun PhoneNumberVerificationForm(viewModel: SignUpViewModel) {
                     .weight(0.35f)
                     .height(48.dp)
                     .padding(start = 8.dp),
-                textRes = if (codeInfo.isResendAvailable) R.string.signup_reCodeSent else R.string.signup_codeSent,
-                onClick = viewModel::sendVerificationCode,
-                enabled = verificationState.isPhoneNumberValid,
+                textRes = if (isResendAvailable) R.string.signup_reCodeSent else R.string.signup_codeSent,
+                onClick = sendVerificationCode,
+                enabled = isPhoneNumberValid,
                 textStyle = MaterialTheme.typography.labelLarge
             )
         }
 
-        if (codeInfo.isCodeSent) {
+        if (isCodeSent) {
             Spacer(modifier = Modifier.height(10.dp))
-            VerificationCodeInput(viewModel)
+            VerificationCodeInput(
+                code = code,
+                isVerificationCodeValid = isVerificationCodeValid,
+                showProgress = showProgress,
+                updateVerificationCodeInfo = updateVerificationCodeInfo,
+                verifyCode = verifyCode
+            )
         }
     }
 }
 
 
 @Composable
-fun VerificationCodeInput(viewModel: SignUpViewModel) {
-    val userInfo by viewModel.userInfo.collectAsState()
-    val verificationState by viewModel.validationState.collectAsState()
-    val codeInfo by viewModel.codeInfo.collectAsState()
+fun VerificationCodeInput(
+    code: String,
+    isVerificationCodeValid: Boolean,
+    showProgress: Boolean,
+    updateVerificationCodeInfo: (String) -> Unit,
+    verifyCode: () -> Unit
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
@@ -80,11 +101,11 @@ fun VerificationCodeInput(viewModel: SignUpViewModel) {
 
         EnhancedInputField(
             modifier = Modifier.weight(0.65f),
-            value = codeInfo.code,
+            value = code,
             hintText = stringResource(R.string.signup_code_hint),
             errorText = stringResource(R.string.signup_code_error),
             isValid = true,
-            valueChange = viewModel::updateVerificationCode,
+            valueChange = updateVerificationCodeInfo,
             keyboardController = keyboardController,
             textStyle = MaterialTheme.typography.labelLarge
         )
@@ -94,14 +115,14 @@ fun VerificationCodeInput(viewModel: SignUpViewModel) {
                 .height(48.dp)
                 .weight(0.35f)
                 .padding(start = 8.dp),
-            textRes = if (codeInfo.isVerificationCodeValid) R.string.signup_codeVerified else R.string.signup_checkCode,
+            textRes = if (isVerificationCodeValid) R.string.signup_codeVerified else R.string.signup_checkCode,
             onClick = {
-                viewModel.verifyCode()
+                verifyCode()
                 keyboardController?.hide()
             },
-            enabled = !codeInfo.isVerificationCodeValid,
+            enabled = !isVerificationCodeValid,
             textStyle = MaterialTheme.typography.labelLarge,
-            showProgress = codeInfo.showProgress
+            showProgress = showProgress
         )
     }
 }

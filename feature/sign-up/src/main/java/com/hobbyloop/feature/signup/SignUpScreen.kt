@@ -37,6 +37,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hobbyloop.core.ui.componenet.ActiveStateButton
 import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.ModalBottomSheet
@@ -50,7 +52,7 @@ import com.kimdowoo.datepicker.componenet.SpinnerDatePicker
 
 @Composable
 fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}) {
-    val viewModel = SignUpViewModel()
+    val viewModel: SignUpViewModel = viewModel()
     ModalBottomSheet(
         modifier = Modifier,
         sheetContent = {
@@ -106,9 +108,11 @@ fun SignUpForm(
     onNavigationBarClick: () -> Unit,
     showSheet: () -> Unit
 ) {
-    val userInfo by viewModel.userInfo.collectAsState()
-    val validState by viewModel.validationState.collectAsState()
-    val isFormValid by viewModel.isFormValid.collectAsState()
+
+    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
+    val validState by viewModel.validationState.collectAsStateWithLifecycle()
+    val isFormValid by viewModel.isFormValid.collectAsStateWithLifecycle()
+    val codeInfo by viewModel.codeInfo.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -117,8 +121,6 @@ fun SignUpForm(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-
-        // 메인 타이틀
         SignUpMainTitle()
 
         InputInfoContent(
@@ -139,7 +141,6 @@ fun SignUpForm(
             valueChange = viewModel::updateNickname
         )
 
-        // 성별
         GenderSelection(selectedGender = userInfo.gender, selectGender = viewModel::selectGender)
 
         DateSelection(
@@ -147,9 +148,25 @@ fun SignUpForm(
             showSheet = showSheet
         )
 
-        PhoneNumberVerificationForm(viewModel = viewModel)
+        PhoneNumberVerificationForm(
+            phoneNumber = userInfo.phoneNumber,
+            isPhoneNumberValid = validState.isPhoneNumberValid,
+            code = codeInfo.code,
+            isVerificationCodeValid = codeInfo.isVerificationCodeValid,
+            showProgress = codeInfo.showProgress,
+            isResendAvailable = codeInfo.isResendAvailable,
+            isCodeSent = codeInfo.isCodeSent,
+            updateVerificationCodeInfo = viewModel::updateVerificationCode,
+            verifyCode = viewModel::verifyCode,
+            updatePhoneNumber = viewModel::updatePhoneNumber,
+            sendVerificationCode = viewModel::sendVerificationCode,
+        )
 
-        TermsCheck(viewModel)
+        TermsCheck(
+            dataCollectionConsent = userInfo.dataCollectionConsent,
+            marketingConsent = userInfo.marketingConsent,
+            updateConsents = viewModel::updateConsents
+        )
 
         Column(
             modifier = Modifier.padding(vertical = 16.dp),
@@ -173,23 +190,26 @@ fun SignUpForm(
 }
 
 @Composable
-fun TermsCheck(viewModel: SignUpViewModel) {
-    val userInfo by viewModel.userInfo.collectAsState()
+fun TermsCheck(
+    dataCollectionConsent: Boolean,
+    marketingConsent: Boolean,
+    updateConsents: (Terms, Boolean) -> Unit
+) {
     Column {
         InfoHeadTitle(text = stringResource(id = R.string.signup_Terms), isEssential = false)
-        val allChecked = userInfo.dataCollectionConsent && userInfo.marketingConsent
+        val allChecked = dataCollectionConsent && marketingConsent
         CheckboxWithLabel(
             label = Terms.All.label,
             checked = allChecked,
-            onCheckedChange = { viewModel.updateConsents(Terms.All, !allChecked) })
+            onCheckedChange = { updateConsents(Terms.All, !allChecked) })
         HorizontalLine(modifier = Modifier.padding(vertical = 8.dp))
         CheckboxWithLabel(
             label = Terms.MarketingConsent.label,
-            checked = userInfo.marketingConsent,
+            checked = marketingConsent,
             onCheckedChange = {
-                viewModel.updateConsents(
+                updateConsents(
                     Terms.MarketingConsent,
-                    !userInfo.marketingConsent
+                    !marketingConsent
                 )
             },
             moreInfo = true,
@@ -197,11 +217,11 @@ fun TermsCheck(viewModel: SignUpViewModel) {
         )
         CheckboxWithLabel(
             label = Terms.DataCollectionConsent.label,
-            checked = userInfo.dataCollectionConsent,
+            checked = dataCollectionConsent,
             onCheckedChange = {
-                viewModel.updateConsents(
+                updateConsents(
                     Terms.DataCollectionConsent,
-                    !userInfo.dataCollectionConsent
+                    !dataCollectionConsent
                 )
             },
             moreInfo = true,

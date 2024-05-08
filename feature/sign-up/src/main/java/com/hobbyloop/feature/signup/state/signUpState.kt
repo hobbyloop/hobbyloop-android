@@ -1,22 +1,21 @@
 package com.hobbyloop.feature.signup.state
 
+import androidx.compose.runtime.Stable
 import com.hobbyloop.feature.signup.Gender
 
 
-// 서버로 보낼 정보들
+@Stable
 data class UserInfo(
-    var name: String = "",
-    var nickname: String = "",
-    var phoneNumber: String = "",
-    var birthDay: String = "",
-    var gender: Gender? = null,
-    // 수신 정보 동의
-    var marketingConsent: Boolean = false,
-    // 정보 수집 동의
-    var dataCollectionConsent: Boolean = false
+    val name: String = "",
+    val nickname: String = "",
+    val phoneNumber: String = "",
+    val birthDay: String = "",
+    val gender: Gender? = null,
+    val marketingConsent: Boolean = false,
+    val dataCollectionConsent: Boolean = false
 )
 
-
+@Stable
 data class ValidationState(
     val isNameValid: Boolean = false,
     val isNicknameValid: Boolean = false,
@@ -25,11 +24,11 @@ data class ValidationState(
     val isGenderSelected: Boolean = false,
 )
 
+@Stable
 data class CodeInfo(
-    var code: String = "",
-
-    var isCodeSent: Boolean = false,
-    var isResendAvailable: Boolean = false,
-    var isVerificationCodeValid: Boolean = false,
-    var showProgress: Boolean = false,
+    val code: String = "",
+    val isCodeSent: Boolean = false,
+    val isResendAvailable: Boolean = false,
+    val isVerificationCodeValid: Boolean = false,
+    val showProgress: Boolean = false,
 )
