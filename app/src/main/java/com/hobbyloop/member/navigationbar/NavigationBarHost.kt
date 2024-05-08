@@ -23,7 +23,7 @@ import com.hobbyloop.feature.schedule.scheduleGraph
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-internal const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
+const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 
 fun NavController.navigateToNavigationBarHost() {
     navigate(NAVIGATION_BAR_HOST_ROUTE) {
