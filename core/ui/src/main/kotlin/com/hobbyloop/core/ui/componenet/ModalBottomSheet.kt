@@ -24,8 +24,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.hobbyloop.ui.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -47,7 +49,8 @@ fun ModalBottomSheet(
                     .background(
                         color = Color.White,
                         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-                    ).padding(bottom = 32.dp)
+                    )
+                    .padding(bottom = 32.dp)
             ) {
                 Column {
                     Row(
@@ -57,7 +60,7 @@ fun ModalBottomSheet(
                         horizontalArrangement = Arrangement.End
                     ) {
                         Text(
-                            text = "완료",
+                            text = stringResource(R.string.complete),
                             modifier = Modifier
                                 .padding(24.dp)
                                 .clickable {

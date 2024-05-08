@@ -265,7 +265,7 @@ fun CheckboxWithLabel(
             )
         }
         if (moreInfo) {
-            UnderLineClickableText("자세히")
+            UnderLineClickableText(stringResource(R.string.signup_detail))
         }
     }
 }

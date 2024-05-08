@@ -22,4 +22,5 @@
     <string name="signup_checkCode">인증확인</string>
     <string name="signup_codeVerified">인증완료</string>
     <string name="signup_retouch">입력 하신 정보들은 마이페이지에서 언제든 수정 가능해요</string>
+    <string name="signup_detail">자세히</string>
 </resources>
