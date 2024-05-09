@@ -181,7 +181,9 @@ fun SignUpForm(
             ActiveStateButton(
                 modifier = Modifier.height(48.dp),
                 textRes = R.string.signup_endSignUp,
-                enabled = isFormValid,
+                // TODO 개발 중 네비게이션을 위한 버튼 활성화, 추후 제거
+                // enabled = isFormValid,
+                enabled = true,
                 onClick = onNavigationBarClick,
                 textStyle = MaterialTheme.typography.labelLarge
             )

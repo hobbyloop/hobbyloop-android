@@ -1,4 +1,4 @@
-package com.hobbyloop.member.ui.theme
+package theme
 
 import android.app.Activity
 import android.os.Build
@@ -15,25 +15,26 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.hobbyloop.member.ui.theme.Typography
 
 private val DarkColorScheme =
     darkColorScheme(
-        primary = LavenderBlue,
+        primary = HobbyLoopColor.Primary,
         secondary = PurpleGrey80,
         tertiary = Pink80,
         background = Color.White,
-        onTertiary = BLACK30,
-        onBackground = GRAY,
+        onTertiary = HobbyLoopColor.Gray100,
+        onBackground = HobbyLoopColor.Gray60,
     )
 
 private val LightColorScheme =
     lightColorScheme(
-        primary = LavenderBlue,
+        primary = HobbyLoopColor.Primary,
         secondary = PurpleGrey40,
         tertiary = Pink40,
         background = Color.White,
-        onTertiary = BLACK30,
-        onBackground = GRAY,
+        onTertiary = HobbyLoopColor.Gray100,
+        onBackground = HobbyLoopColor.Gray60,
         /* Other default colors to override
         background = Color(0xFFFFFBFE),
         surface = Color(0xFFFFFBFE),

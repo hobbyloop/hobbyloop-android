@@ -5,3 +5,6 @@ plugins {
 android {
     namespace = "com.hobbyloop.feature.home"
 }
+dependencies {
+    implementation(project(":core:ui"))
+}
