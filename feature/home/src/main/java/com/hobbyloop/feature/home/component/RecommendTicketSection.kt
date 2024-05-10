@@ -159,7 +159,7 @@ fun BigTicket(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Image(painter = painterResource(id = com.hobbyloop.ui.R.drawable.ic_star), contentDescription = null)
+                    Image(painter = painterResource(id = R.drawable.ic_star_12_color), contentDescription = null)
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(item.rating, style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray60))
                     Spacer(modifier = Modifier.width(2.dp))
