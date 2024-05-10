@@ -150,7 +150,7 @@ fun Ticket(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(painter = painterResource(id = com.hobbyloop.ui.R.drawable.ic_star), contentDescription = null)
+                Image(painter = painterResource(id = com.hobbyloop.ui.R.drawable.ic_star_12_color), contentDescription = null)
                 Spacer(modifier = Modifier.width(2.dp))
                 Text(
                     item.rating,

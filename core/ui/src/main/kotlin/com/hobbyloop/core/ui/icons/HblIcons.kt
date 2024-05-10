@@ -1,8 +1,6 @@
 package com.hobbyloop.core.ui.icons
 
 import androidx.annotation.DrawableRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.hobbyloop.core.ui.icons.Icon.*
 import com.hobbyloop.ui.R
@@ -18,7 +16,7 @@ object HblIcons {
 
 
     val unCheck = DrawableResourceIcon(R.drawable.ic_uncheck)
-    val check = DrawableResourceIcon(R.drawable.ic_check)
+    val check = DrawableResourceIcon(R.drawable.ic_check_box_on_color)
 
     val back = DrawableResourceIcon(R.drawable.ic_back)
     val calendar = DrawableResourceIcon(R.drawable.ic_calendar)
