@@ -46,7 +46,6 @@ import theme.HobbyLoopColor
 fun BottomBar(
     navController: NavController,
     modifier: Modifier = Modifier,
-    onBackgroundColor: (Color) -> Unit,
 ) {
     val bottomBarScreenList = BottomBarScreen.entries.toImmutableList()
 
@@ -70,9 +69,6 @@ fun BottomBar(
             iconSize = 24.dp,
             onCenterTabClicked = { clicked ->
                 isCenterTabClicked = clicked
-            },
-            onBackgroundColor = { color ->
-                onBackgroundColor(color)
             },
         )
         FloatingActionIconButton(
@@ -98,7 +94,6 @@ private fun BottomNavigationRow(
     labelSize: TextUnit,
     iconSize: Dp,
     onCenterTabClicked: (Boolean) -> Unit,
-    onBackgroundColor: (Color) -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.White,
     shadowElevation: Dp = 15.dp,
@@ -131,8 +126,6 @@ private fun BottomNavigationRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         state.bottomBarScreens.forEach { screen ->
-
-            state.getCurrentScreen()?.backgroundColor?.let { onBackgroundColor(it) }
 
             val isSelected by state.isRouteSelected(screen.route).collectAsState(initial = false)
             ScreenContent(

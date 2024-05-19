@@ -29,6 +29,7 @@ class FeatureModuleConventions : Plugin<Project> {
 
         dependencies{
             add("implementation", project(":core:ui"))
+            add("implementation", project(":core:domain"))
         }
     }
 }

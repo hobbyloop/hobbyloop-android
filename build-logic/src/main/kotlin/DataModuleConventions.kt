@@ -6,6 +6,7 @@ import internal.configureKotlinExtensions
 import internal.configureUnitTest
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
 
 class DataModuleConventions : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -18,5 +19,10 @@ class DataModuleConventions : Plugin<Project> {
         configureKotlinExtensions()
         configureAndroidTest()
         configureUnitTest()
+
+        dependencies{
+            add("implementation", project(":core:domain"))
+            add("implementation", project(":core:network"))
+        }
     }
 }
