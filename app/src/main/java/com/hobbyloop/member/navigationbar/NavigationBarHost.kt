@@ -47,7 +47,9 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                     centerGraph()
                     reservationGraph()
                     scheduleGraph()
-                    myPageGraph()
+                    myPageGraph(
+                        navController = navController,
+                    )
                 }
                 Box(
                     modifier =
