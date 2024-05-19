@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.signup.componenet
+package com.hobbyloop.core.ui.componenet.inputField
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

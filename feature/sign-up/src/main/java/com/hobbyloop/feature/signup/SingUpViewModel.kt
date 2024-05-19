@@ -2,6 +2,7 @@ package com.hobbyloop.feature.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hobbyloop.core.ui.selection.Gender
 import com.hobbyloop.feature.signup.state.CodeInfo
 import com.hobbyloop.feature.signup.state.UserInfo
 import com.hobbyloop.feature.signup.state.ValidationState
@@ -113,13 +114,6 @@ class SignUpViewModel : ViewModel() {
     private fun validatePhoneNumber(phone: String): Boolean =
         phone.length == 11 && phone.startsWith("010")
 }
-
-
-enum class Gender(val label: String) {
-    Male("남성"),
-    Female("여성")
-}
-
 
 enum class Terms(val label: String) {
     All("전체 동의"),

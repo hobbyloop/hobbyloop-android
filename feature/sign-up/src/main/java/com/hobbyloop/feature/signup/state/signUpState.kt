@@ -1,7 +1,7 @@
 package com.hobbyloop.feature.signup.state
 
 import androidx.compose.runtime.Stable
-import com.hobbyloop.feature.signup.Gender
+import com.hobbyloop.core.ui.selection.Gender
 
 
 @Stable
