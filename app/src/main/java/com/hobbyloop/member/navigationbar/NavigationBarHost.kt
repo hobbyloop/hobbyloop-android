@@ -1,13 +1,11 @@
 package com.hobbyloop.member.navigationbar
 
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -20,8 +18,6 @@ import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
 import com.hobbyloop.feature.reservation.reservationGraph
 import com.hobbyloop.feature.schedule.scheduleGraph
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 const val NAVIGATION_BAR_HOST_ROUTE = "navigation_bar_host"
 
@@ -37,50 +33,33 @@ fun NavController.navigateToNavigationBarHost() {
 
 fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
     composable(NAVIGATION_BAR_HOST_ROUTE) {
-        val scope = rememberCoroutineScope()
-
-        var targetBackgroundColor by remember { mutableStateOf(BottomBarScreen.HOME.backgroundColor) }
-        val backgroundColor by animateColorAsState(
-            targetBackgroundColor,
-            label = "animateBottomBarBackgroundColor",
-        )
-
-        Scaffold(
-            bottomBar = {
-                BottomBar(
+        Scaffold { padding ->
+            Box(modifier = Modifier) {
+                NavHost(
+                    modifier = Modifier.padding(padding),
                     navController = navController,
-                    onBackgroundColor = { backgroundColor ->
-                        scope.launch {
-                            delay(100)
-                            targetBackgroundColor = backgroundColor
-                        }
-                    },
-                )
-            },
-            containerColor = backgroundColor,
-        ) { padding ->
-            NavHost(
-                modifier = Modifier.padding(padding),
-                navController = navController,
-                startDestination = HOME_GRAPH_ROUTE,
-                route = NAVIGATION_BAR_HOST_ROUTE,
-            ) {
-                homeGraph(
-                    navController = navController,
-                    backgroundColor = backgroundColor,
-                )
-                centerGraph(
-                    backgroundColor = backgroundColor,
-                )
-                reservationGraph(
-                    backgroundColor = backgroundColor,
-                )
-                scheduleGraph(
-                    backgroundColor = backgroundColor,
-                )
-                myPageGraph(
-                    backgroundColor = backgroundColor,
-                )
+                    startDestination = HOME_GRAPH_ROUTE,
+                    route = NAVIGATION_BAR_HOST_ROUTE,
+                ) {
+                    homeGraph(
+                        navController = navController,
+                    )
+                    centerGraph()
+                    reservationGraph()
+                    scheduleGraph()
+                    myPageGraph()
+                }
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .align(Alignment.BottomCenter),
+                ) {
+                    BottomBar(
+                        navController = navController,
+                    )
+                }
             }
         }
     }

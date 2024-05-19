@@ -1,6 +1,5 @@
 package com.hobbyloop.feature.home
 
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
@@ -11,14 +10,12 @@ const val HOME_GRAPH_ROUTE = "home-graph"
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
-    backgroundColor: Color,
 ) {
     navigation(
         startDestination = HOME_ROUTE,
         route = HOME_GRAPH_ROUTE,
     ) {
         homeScreen(
-            backgroundColor = backgroundColor,
             showOnBoarding = {
                 navController.navigateToOnBoarding()
             },
