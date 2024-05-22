@@ -36,5 +36,13 @@ gradlePlugin {
             id = "buildlogic.networkmodule"
             implementationClass = "NetworkModuleConventions"
         }
+        register("dataStoreModule") {
+            id = "buildlogic.dataStoreModule"
+            implementationClass = "DataStoreModuleConventions"
+        }
+        register("commonModule") {
+            id = "buildlogic.commonModule"
+            implementationClass = "CommonModuleConventions"
+        }
     }
 }
