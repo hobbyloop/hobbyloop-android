@@ -7,4 +7,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.paging.compose)
+    implementation(project(":core:ui"))
 }

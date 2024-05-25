@@ -8,6 +8,8 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
 
     implementation(project(":feature:center"))
     implementation(project(":feature:center-detail"))
