@@ -11,7 +11,8 @@ object HobbyLoopColor {
     val Gray60 = Color(0xFFA0A0A0)
     val Gray40 = Color(0xFFD7D7D7)
     val Gray20 = Color(0xFFF9F9F9)
-
+    val SUB = Color(0xFFFF9292)
+    val SUB20 = Color(0x33FF9292)
     val White = Color(0xFFFFFFFF)
 
     val Alert = Color(0xFFEB2323)

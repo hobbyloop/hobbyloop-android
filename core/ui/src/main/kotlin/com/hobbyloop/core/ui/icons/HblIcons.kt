@@ -14,6 +14,8 @@ object HblIcons {
     val naver = DrawableResourceIcon(R.drawable.ic_naver)
 
 
+    // home
+
 
     val unCheck = DrawableResourceIcon(R.drawable.ic_uncheck)
     val check = DrawableResourceIcon(R.drawable.ic_check_box_on_color)

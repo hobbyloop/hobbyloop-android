@@ -2,6 +2,7 @@ package com.hobbyloop.feature.signup
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -92,7 +93,13 @@ fun SignUpLayout(
             modifier = Modifier
                 .height(66.dp)
                 .align(Alignment.TopCenter),
-            onNavigationClick = onBackClick,
+            navigationIcon = {
+                Icon(
+                    modifier = Modifier.clickable { onBackClick() },
+                    painter = painterResource(id = HblIcons.back.resourceId),
+                    contentDescription = null,
+                )
+            },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = Color.Transparent
             )
