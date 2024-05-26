@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hobbyloop.featuer.reservationdetail"
+    namespace = "com.hobbyloop.feature.reservation.detail"
 }
 
 dependencies {

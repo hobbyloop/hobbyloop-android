@@ -6,10 +6,15 @@ import androidx.navigation.compose.composable
 
 internal const val RESERVATION_ROUTE = "reservation"
 
-internal fun NavGraphBuilder.reservationScreen(backgroundColor: Color) {
+internal fun NavGraphBuilder.reservationScreen(
+    backgroundColor: Color,
+    showReservationDetail: () -> Unit,
+) {
+
     composable(route = RESERVATION_ROUTE) {
         ReservationScreen(
             backgroundColor = backgroundColor,
+            showReservationDetail = showReservationDetail
         )
     }
 }

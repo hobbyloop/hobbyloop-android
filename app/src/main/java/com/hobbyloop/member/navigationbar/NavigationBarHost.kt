@@ -18,6 +18,8 @@ import com.hobbyloop.feature.center.centerGraph
 import com.hobbyloop.feature.home.HOME_GRAPH_ROUTE
 import com.hobbyloop.feature.home.homeGraph
 import com.hobbyloop.feature.mypage.myPageGraph
+import com.hobbyloop.feature.reservation.detail.navigateToReservationDetail
+import com.hobbyloop.feature.reservation.detail.reservationDetailGraph
 import com.hobbyloop.feature.reservation.reservationGraph
 import com.hobbyloop.feature.schedule.scheduleGraph
 import kotlinx.coroutines.delay
@@ -74,12 +76,21 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                 )
                 reservationGraph(
                     backgroundColor = backgroundColor,
+                    showReservationDetail = {
+                        navController.navigateToReservationDetail()
+                    },
                 )
                 scheduleGraph(
                     backgroundColor = backgroundColor,
                 )
                 myPageGraph(
                     backgroundColor = backgroundColor,
+                )
+                reservationDetailGraph(
+                    backgroundColor = backgroundColor,
+                    onCloseClick = {
+                        navController.popBackStack()
+                    },
                 )
             }
         }
