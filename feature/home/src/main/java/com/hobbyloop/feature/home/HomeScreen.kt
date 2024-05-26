@@ -1,5 +1,6 @@
 package com.hobbyloop.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -32,10 +33,12 @@ internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     scrollState: ScrollState = rememberScrollState()
 ) {
-    val state = viewModel.uiState.collectAsState()
+    val state = viewModel.container.stateFlow.collectAsState()
+
     Scaffold(
         topBar = { HomeTopBar() },
     ) { padding ->
+        Log.d("HomeScreen", "HomeScreen: $state")
         Column(
             modifier = Modifier
                 .padding(padding)
@@ -60,7 +63,7 @@ internal fun HomeScreen(
                     .background(color = Color.White)
                     .padding(vertical = 24.dp)
             ) {
-                BannerAdvertise()
+                BannerAdvertise(banners = state.value.ads)
                 Spacer(modifier = Modifier.height(32.dp))
                 CategorySelector(items = state.value.categorySelectorItems)
             }
@@ -74,7 +77,7 @@ internal fun HomeScreen(
                 firstText = "이번주",
                 highlightText = " HOT ",
                 lastText = "이용권",
-                items = state.value.hotTicketItems
+                items = state.value.hotTickets
             )
 
             Spacer(modifier = Modifier.height(16.dp))
