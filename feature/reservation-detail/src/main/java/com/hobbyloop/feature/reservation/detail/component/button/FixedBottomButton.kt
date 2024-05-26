@@ -20,13 +20,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.hobbyloop.feature.reservation.detail.Purple
 
 @Composable
-fun BottomButton(
-    isSelected: Boolean,
+fun FixedBottomButton(
+    isSelected: Boolean = false,
     onClick: () -> Unit,
     text: String,
     selectedColor: Color,
@@ -54,7 +56,11 @@ fun BottomButton(
                 containerColor = Color.Transparent
             )
         ) {
-            Text(text = text)
+            Text(
+                text = text,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
         }
     }
 }
@@ -64,7 +70,7 @@ fun BottomButton(
 fun BottomButtonSelectedPreview() {
     var isSelected by remember { mutableStateOf(true) }
 
-    BottomButton(
+    FixedBottomButton(
         isSelected = isSelected,
         onClick = { isSelected = !isSelected },
         text = "선택완료",
@@ -83,7 +89,7 @@ fun BottomButtonSelectedPreview() {
 fun BottomButtonNotSelectedPreview() {
     var isSelected by remember { mutableStateOf(false) }
 
-    BottomButton(
+    FixedBottomButton(
         isSelected = isSelected,
         onClick = { isSelected = !isSelected },
         text = "선택완료",
