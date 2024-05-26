@@ -1,4 +1,4 @@
-package com.hobbyloop.featuer.reservationdetail
+package com.hobbyloop.feature.reservation.detail
 
 import org.junit.Test
 
