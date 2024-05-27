@@ -14,7 +14,6 @@ dependencies {
     implementation(project(":feature:login"))
     implementation(project(":feature:my-page"))
     implementation(project(":feature:reservation"))
-    implementation(project(":feature:reservation-detail"))
     implementation(project(":feature:sign-up"))
     implementation(project(":feature:schedule"))
 }
