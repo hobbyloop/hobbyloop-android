@@ -78,6 +78,14 @@ object HobbyLoopTypo {
         lineHeight = 10.sp,
         color = HobbyLoopColor.Gray100
     )
+
+    val text12 = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+        color = HobbyLoopColor.Gray100
+    )
 }
 
 // Set of Material typography styles to start with
