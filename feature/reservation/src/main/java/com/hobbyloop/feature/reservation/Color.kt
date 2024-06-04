@@ -17,3 +17,4 @@ val Gray60 = Color(0XFFA0A0A0)
 val Orange50 = Color(0xFFFF5F05)
 
 val Purple = Color(0XFF8368ED)
+val Pink = Color(0XFFFF9292)

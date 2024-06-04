@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
-import com.hobbyloop.feature.reservation.center_list.RESERVATION_CENTER_LIST_ROUTE
-import com.hobbyloop.feature.reservation.center_list.reservationCenterListScreen
+import com.hobbyloop.feature.reservation.ticket_list.RESERVATION_TICKET_LIST_ROUTE
+import com.hobbyloop.feature.reservation.ticket_list.reservationTicketListScreen
 import com.hobbyloop.feature.reservation.center_detail.navigateToReservationCenterDetail
 import com.hobbyloop.feature.reservation.center_detail.reservationCenterDetailScreen
 
@@ -19,7 +19,7 @@ fun NavGraphBuilder.reservationGraph(
     onCloseClick: () -> Unit,
 ) {
     navigation(
-        startDestination = RESERVATION_CENTER_LIST_ROUTE,
+        startDestination = RESERVATION_TICKET_LIST_ROUTE,
         route = RESERVATION_GRAPH_ROUTE,
         deepLinks = listOf(
             navDeepLink { uriPattern = RESERVATION_DEEPLINK }
@@ -29,9 +29,9 @@ fun NavGraphBuilder.reservationGraph(
         popEnterTransition = { screenFadeIn() },
         popExitTransition = { screenFadeOut() },
     ) {
-        reservationCenterListScreen(
+        reservationTicketListScreen(
             backgroundColor = backgroundColor,
-            showReservationDetail = { centerId ->
+            navigateToReservationTicketDetail = { centerId ->
                 navController.navigateToReservationCenterDetail(centerId)
             }
         )
