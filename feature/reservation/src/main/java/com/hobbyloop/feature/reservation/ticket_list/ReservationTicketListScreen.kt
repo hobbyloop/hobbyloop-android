@@ -1,9 +1,12 @@
 package com.hobbyloop.feature.reservation.ticket_list
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -12,14 +15,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
-import com.hobbyloop.feature.reservation.ticket_list.component.center_card.CenterCard
-import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar
-import com.hobbyloop.feature.reservation.component.column.HostColumn
-import com.hobbyloop.feature.reservation.component.column.ScrollType
+import com.hobbyloop.feature.reservation.Gray20
 import com.hobbyloop.feature.reservation.model.CenterInfo
+import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.Ticket
+import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
+import com.hobbyloop.feature.reservation.ticket_list.component.ticket_card.TicketCard
+import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar
 
 @Composable
 internal fun ReservationTicketListScreen(
@@ -52,34 +54,38 @@ internal fun ReservationTicketListScreen(
         },
         containerColor = Color.White,
     ) { padding ->
-        HostColumn(
-            scrollType = ScrollType.VERTICAL,
+        LazyColumn(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            ReservationTicketListHeader(totalTicketCount = ticketList.size)
+            item {
+                ReservationTicketListHeader(totalTicketCount = ticketList.size)
+            }
 
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp),
-            ) {
-                items(
-                    count = ticketList.size,
-                    key = { index -> ticketList[index].ticketInfo.first.centerId }
-                ) { index ->
-                    ticketList[index].let { ticket ->
-                        CenterCard(
-                            centerImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
-                            centerName = ticket.ticketInfo.first.centerName,
-                            isRefundable = ticket.ticketInfo.first.isRefundable,
-                            classInfoList = ticket.ticketInfo.second,
-                            navigateToReservationTicketDetail = { classId ->
-                                navigateToReservationTicketDetail(classId)
-                            },
-                        )
-                    }
+            items(
+                count = ticketList.size,
+                key = { index -> ticketList[index].ticketInfo.first.centerId }
+            ) { index ->
+                ticketList[index].let { ticket ->
+                    TicketCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .padding(16.dp),
+                        centerImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
+                        centerName = ticket.ticketInfo.first.centerName,
+                        isRefundable = ticket.ticketInfo.first.isRefundable,
+                        classInfoList = ticket.ticketInfo.second,
+                        navigateToReservationTicketDetail = { ticketId ->
+                            navigateToReservationTicketDetail(ticketId)
+                        }
+                    )
+
+                    Spacer(modifier = Modifier
+                        .fillMaxWidth()
+                        .height(16.dp)
+                        .background(Gray20))
                 }
             }
         }

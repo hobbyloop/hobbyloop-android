@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.reservation.ticket_list.component.center_card
+package com.hobbyloop.feature.reservation.ticket_list.component.ticket_card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.util.DateUtil.formatDateTimeRange
 
 @Composable
-fun CenterCard(
+fun TicketCard(
     centerImageUrl: String,
     classInfoList: List<ClassInfo>,
     centerName: String,
@@ -26,7 +26,7 @@ fun CenterCard(
     navigateToReservationTicketDetail: (classId: String) -> Unit,
 ) {
     Column {
-        CenterCardHeader(
+        TicketCardHeader(
             centerImageUrl = centerImageUrl,
             centerName = centerName,
             isRefundable = isRefundable,
@@ -55,9 +55,9 @@ fun CenterCard(
 
 @Preview
 @Composable
-fun PreviewCenterCard() {
+fun PreviewTicketCardIsRefundable() {
     Surface {
-        CenterCard(
+        TicketCard(
             centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             classInfoList = listOf(
                 ClassInfo(1, "2024-05-11 08:00 - 09:00", "아침 요가", "초급", 10, 12),
@@ -65,6 +65,27 @@ fun PreviewCenterCard() {
             ),
             centerName = "발란스 스튜디오",
             isRefundable = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(16.dp),
+            navigateToReservationTicketDetail = { },
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewTicketCardIsNotRefundable() {
+    Surface {
+        TicketCard(
+            centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
+            classInfoList = listOf(
+                ClassInfo(1, "2024-05-11 08:00 - 09:00", "아침 요가", "초급", 10, 12),
+                ClassInfo(2, "2024-05-11 10:00 - 11:00", "고급 요가", "고급", 5, 5)
+            ),
+            centerName = "발란스 스튜디오",
+            isRefundable = false,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()

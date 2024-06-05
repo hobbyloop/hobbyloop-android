@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.reservation.ticket_list.component.center_card
+package com.hobbyloop.feature.reservation.ticket_list.component.ticket_card
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -29,7 +29,7 @@ import com.hobbyloop.feature.reservation.Gray60
 import com.hobbyloop.feature.reservation.R
 
 @Composable
-fun CenterCardHeader(
+fun TicketCardHeader(
     centerImageUrl: String,
     centerName: String,
     isRefundable: Boolean,
@@ -67,7 +67,7 @@ fun CenterCardHeader(
             Surface(
                 shape = RoundedCornerShape(16.dp),
                 border = BorderStroke(1.dp, Gray40),
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(horizontal = 8.dp)
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -86,9 +86,9 @@ fun CenterCardHeader(
 
 @Preview
 @Composable
-fun PreviewCenterCardHeaderNonRefundable() {
+fun PreviewTicketCardHeaderNonRefundable() {
     Surface {
-        CenterCardHeader(
+        TicketCardHeader(
             centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             centerName = "Kendall",
             isRefundable = false
@@ -98,9 +98,9 @@ fun PreviewCenterCardHeaderNonRefundable() {
 
 @Preview
 @Composable
-fun PreviewCenterCardHeaderRefundable() {
+fun PreviewTicketCardHeaderRefundable() {
     Surface {
-        CenterCardHeader(
+        TicketCardHeader(
             centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             centerName = "Kendall",
             isRefundable = true

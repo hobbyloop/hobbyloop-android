@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.reservation.ticket_list.component.center_card
+package com.hobbyloop.feature.reservation.ticket_list.component.ticket_card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
