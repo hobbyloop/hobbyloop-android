@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.center_detail.model.ClassInfo
+import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.util.DateUtil.formatDateTimeRange
 
 @Composable

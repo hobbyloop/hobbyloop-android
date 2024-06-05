@@ -7,8 +7,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
 import com.hobbyloop.feature.reservation.ticket_list.RESERVATION_TICKET_LIST_ROUTE
 import com.hobbyloop.feature.reservation.ticket_list.reservationTicketListScreen
-import com.hobbyloop.feature.reservation.center_detail.navigateToReservationCenterDetail
-import com.hobbyloop.feature.reservation.center_detail.reservationCenterDetailScreen
+import com.hobbyloop.feature.reservation.ticket_detail.navigateToReservationTicketDetail
+import com.hobbyloop.feature.reservation.ticket_detail.reservationCenterDetailScreen
 
 const val RESERVATION_GRAPH_ROUTE = "reservation-graph"
 private const val RESERVATION_DEEPLINK = "$ROOT_DEEPLINK/reservation"
@@ -32,7 +32,7 @@ fun NavGraphBuilder.reservationGraph(
         reservationTicketListScreen(
             backgroundColor = backgroundColor,
             navigateToReservationTicketDetail = { centerId ->
-                navController.navigateToReservationCenterDetail(centerId)
+                navController.navigateToReservationTicketDetail(centerId)
             }
         )
 

@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.center_detail.model.ClassInfo
+import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
 import com.hobbyloop.feature.reservation.ticket_list.component.center_card.CenterCard
 import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar

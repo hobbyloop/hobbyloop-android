@@ -1,7 +1,7 @@
 package com.hobbyloop.feature.reservation.ticket_list
 
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.center_detail.model.ClassInfo
+import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.CenterInfo
 import com.hobbyloop.feature.reservation.model.Ticket
 import dagger.hilt.android.lifecycle.HiltViewModel
