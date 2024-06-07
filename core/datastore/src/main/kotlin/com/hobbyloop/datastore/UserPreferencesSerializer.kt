@@ -3,6 +3,7 @@ package com.hobbyloop.datastore
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
+import com.hobbyloop.core.datastore.UserPreferences
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject

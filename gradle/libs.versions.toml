@@ -28,6 +28,7 @@ protobufPlugin = "0.9.4"
 protobuf = "3.25.2"
 androidxDataStore = "1.1.1"
 uiDesktop = "1.6.7"
+androidxCoreSplashscreen = "1.0.0"
 
 [libraries]
 android-tools-build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -57,6 +58,7 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 inject = "javax.inject:javax.inject:1"
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
 #ktor
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }

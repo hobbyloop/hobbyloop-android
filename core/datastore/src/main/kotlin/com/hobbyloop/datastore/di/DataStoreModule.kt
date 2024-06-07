@@ -7,6 +7,7 @@ import androidx.datastore.dataStoreFile
 import com.hobbyloop.core.common.corutine.Dispatcher
 import com.hobbyloop.core.common.corutine.Dispatchers.*
 import com.hobbyloop.core.common.corutine.di.ApplicationScope
+import com.hobbyloop.core.datastore.UserPreferences
 import com.hobbyloop.datastore.UserPreferencesSerializer
 import dagger.Module
 import dagger.Provides

@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.SingleLineText
 import com.hobbyloop.core.ui.icons.HblIcons
@@ -31,7 +31,7 @@ import com.hobbyloop.feature.login.model.LoginProviderType
 
 @Composable
 internal fun LoginScreen(onSignUpClick: () -> Unit) {
-    val viewModel: LoginViewModel = viewModel()
+    val viewModel: LoginViewModel = hiltViewModel()
     LoginScreens(onSignUpClick = onSignUpClick, onSocialLoginClick = viewModel::login)
 }
 
@@ -69,18 +69,15 @@ fun LoginScreens(
 
 @Composable
 fun LoginButtons(
-    onSignUpClick: () -> Unit,
-    onSocialLoginClick: (context: Context, LoginProviderType) -> Unit
+    onSignUpClick: () -> Unit, onSocialLoginClick: (context: Context, LoginProviderType) -> Unit
 ) {
 
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        LoginButton(
-            buttonText = stringResource(R.string.kakao_login),
+        LoginButton(buttonText = stringResource(R.string.kakao_login),
             onClick = { onSocialLoginClick(context, LoginProviderType.KAKAO) },
             backgroundColor = Color(0xFFFEE500),
             leadingIcon = {
@@ -89,10 +86,8 @@ fun LoginButtons(
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
-            }
-        )
-        LoginButton(
-            buttonText = stringResource(R.string.google_login),
+            })
+        LoginButton(buttonText = stringResource(R.string.google_login),
             onClick = { onSocialLoginClick(context, LoginProviderType.GOOGLE) },
             backgroundColor = Color.White,
             leadingIcon = {
@@ -101,8 +96,7 @@ fun LoginButtons(
                     contentDescription = null,
                     tint = Color.Unspecified
                 )
-            }
-        )
+            })
         LoginButton(
             buttonText = stringResource(R.string.naver_login),
             onClick = { onSocialLoginClick(context, LoginProviderType.NAVER) },
