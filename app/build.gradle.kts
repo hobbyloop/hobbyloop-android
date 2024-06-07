@@ -2,13 +2,8 @@ plugins {
     id("buildlogic.appmodule")
 }
 
-android {
-    namespace = "com.hobbyloop.member"
-}
-
 dependencies {
     implementation(project(":core:ui"))
-
     implementation(project(":feature:center"))
     implementation(project(":feature:center-detail"))
     implementation(project(":feature:home"))
@@ -18,4 +13,5 @@ dependencies {
     implementation(project(":feature:reservation-detail"))
     implementation(project(":feature:sign-up"))
     implementation(project(":feature:schedule"))
+    implementation("com.kakao.sdk:v2-user:2.12.1")
 }

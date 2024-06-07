@@ -10,6 +10,7 @@ import internal.configureUnitTest
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import java.util.Properties
 
 class AppModuleConventions : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -18,9 +19,19 @@ class AppModuleConventions : Plugin<Project> {
             apply("org.jlleitschuh.gradle.ktlint")
         }
 
+        val localProperties = Properties().apply {
+            val localPropertiesFile = rootProject.file("local.properties")
+            localPropertiesFile.inputStream().use { load(it) }
+        }
+
+        val kakaoSdkKey: String = localProperties.getProperty("KAKAO_SDK_KEY", "")
+
         extensions.configure<BaseAppModuleExtension> {
+            compileSdk = 34
+
             defaultConfig {
                 applicationId = "com.hobbyloop.member"
+                minSdk = 21
                 targetSdk = 34
                 versionCode = 1
                 versionName = "1.0"
@@ -29,6 +40,9 @@ class AppModuleConventions : Plugin<Project> {
                 vectorDrawables {
                     useSupportLibrary = true
                 }
+
+                buildConfigField("String", "KAKAO_SDK_KEY", "\"$kakaoSdkKey\"")
+                manifestPlaceholders["kakaoScheme"] = "kakao$kakaoSdkKey"
             }
             buildTypes {
                 release {
@@ -44,6 +58,12 @@ class AppModuleConventions : Plugin<Project> {
                     excludes += "/META-INF/{AL2.0,LGPL2.1}"
                 }
             }
+
+            buildFeatures {
+                buildConfig = true
+            }
+
+            namespace = "com.hobbyloop.member"
         }
 
         configureAndroid<BaseAppModuleExtension>()
