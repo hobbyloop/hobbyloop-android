@@ -25,6 +25,7 @@ include(":core:datastore")
 include(":core:database")
 include(":core:domain")
 include(":core:ui")
+include(":core:common")
 
 include(":feature:login")
 include(":feature:sign-up")
