@@ -23,6 +23,7 @@ kotlinx-serialization-plugin = "1.6.21"
 kotlinx-serialization = "1.5.1"
 lifecycle-runtime-compose = "2.7.0"
 kotlinx-coroutines-core = "1.6.4"
+orbit = "4.3.2"
 protobufPlugin = "0.9.4"
 protobuf = "3.25.2"
 androidxDataStore = "1.1.1"
@@ -69,6 +70,10 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
+
+#orbit
+orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
+orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
