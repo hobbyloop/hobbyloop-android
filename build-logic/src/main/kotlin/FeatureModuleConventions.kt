@@ -6,6 +6,7 @@ import internal.configureHilt
 import internal.configureImageLoading
 import internal.configureKotlinExtensions
 import internal.configureNavigation
+import internal.configureOrbitMvi
 import internal.configureUnitTest
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -25,6 +26,7 @@ class FeatureModuleConventions : Plugin<Project> {
         configureAndroidTest()
         configureUnitTest()
         configureImageLoading()
+        configureOrbitMvi()
 
 
         dependencies{
