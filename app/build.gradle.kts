@@ -4,6 +4,9 @@ plugins {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+
     implementation(project(":feature:center"))
     implementation(project(":feature:center-detail"))
     implementation(project(":feature:home"))
