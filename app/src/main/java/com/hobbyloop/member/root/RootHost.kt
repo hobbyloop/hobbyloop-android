@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.hobbyloop.feature.login.loginGraph
-import com.hobbyloop.feature.signup.navigateToSignUpGraph
 import com.hobbyloop.feature.signup.signUpGraph
 import com.hobbyloop.member.navigationbar.navigateToNavigationBarHost
 import com.hobbyloop.member.navigationbar.navigationBarHost
@@ -22,9 +21,7 @@ internal fun RootHost() {
             navController = navigationBarController,
         )
         loginGraph(
-            onSignUpClick = {
-                rootController.navigateToSignUpGraph()
-            },
+            onSignUpClick = {},
         )
         signUpGraph(
             onBackClick = { rootController.popBackStack() },
