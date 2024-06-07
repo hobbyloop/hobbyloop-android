@@ -21,7 +21,9 @@ class AppModuleConventions : Plugin<Project> {
 
         val localProperties = Properties().apply {
             val localPropertiesFile = rootProject.file("local.properties")
-            localPropertiesFile.inputStream().use { load(it) }
+            if (localPropertiesFile.exists()) {
+                localPropertiesFile.inputStream().use { load(it) }
+            }
         }
 
         val kakaoSdkKey: String = localProperties.getProperty("KAKAO_SDK_KEY", "")
