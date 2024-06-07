@@ -12,7 +12,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.hobbyloop.feature.login.LOGIN_GRAPH_ROUTE
 import com.hobbyloop.member.navigationbar.NAVIGATION_BAR_HOST_ROUTE
 import com.hobbyloop.member.root.RootHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +49,8 @@ class MainActivity : ComponentActivity() {
     private fun RenderMainContent(uiState: MainActivityUiState.Success) {
         val startDestination =
             if (uiState.userData.jwt.isEmpty()) {
-                LOGIN_GRAPH_ROUTE
+                NAVIGATION_BAR_HOST_ROUTE
+                // LOGIN_GRAPH_ROUTE
             } else {
                 NAVIGATION_BAR_HOST_ROUTE
             }
