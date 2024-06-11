@@ -23,6 +23,7 @@ class DataModuleConventions : Plugin<Project> {
         dependencies{
             add("implementation", project(":core:domain"))
             add("implementation", project(":core:network"))
+            add("implementation", project(":core:datastore"))
         }
     }
 }

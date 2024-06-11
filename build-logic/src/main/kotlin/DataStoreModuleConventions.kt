@@ -20,6 +20,7 @@ class DataStoreModuleConventions : Plugin<Project> {
 
         dependencies {
             add("implementation", project(":core:common"))
+            add("implementation", project(":core:domain"))
             add("androidTestImplementation", kotlin("test"))
             add("testImplementation", kotlin("test"))
         }

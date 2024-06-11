@@ -9,13 +9,13 @@ import com.hobbyloop.member.navigationbar.navigateToNavigationBarHost
 import com.hobbyloop.member.navigationbar.navigationBarHost
 
 @Composable
-internal fun RootHost() {
+internal fun RootHost(startDestination: String) {
     val rootController = rememberNavController()
     val navigationBarController = rememberNavController()
 
     NavHost(
         navController = rootController,
-        startDestination = "login_graph",
+        startDestination = startDestination,
     ) {
         navigationBarHost(
             navController = navigationBarController,
