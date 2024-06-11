@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.reservation.ticket_detail.component.top_bar
+package com.hobbyloop.feature.reservation.component.top_bar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -41,8 +43,19 @@ fun ReservationDetailTopAppBar(
         Text(
             text = title,
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
+            fontWeight = FontWeight(700),
             modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewReservationDetailTopAppBar() {
+    Surface {
+        ReservationDetailTopAppBar(
+            title = "수업예약",
+            onCloseClick = { },
         )
     }
 }

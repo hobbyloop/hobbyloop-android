@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -39,8 +40,9 @@ fun CardContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         GradientBox(
-            width = 70.dp,
-            height = 38.dp,
+            modifier = Modifier
+                .width(70.dp)
+                .height(38.dp),
             borderWidth = 2.dp,
             gradientColors = listOf(
                 Color(0xFF88B967),

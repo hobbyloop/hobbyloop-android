@@ -32,13 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hobbyloop.feature.reservation.Gray20
+import com.hobbyloop.feature.reservation.Gray60
 import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.component.button.FixedBottomButton
+import com.hobbyloop.feature.reservation.component.top_bar.ReservationDetailTopAppBar
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassContent
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassPager
 import com.hobbyloop.feature.reservation.ticket_detail.component.InstructorInfo
 import com.hobbyloop.feature.reservation.ticket_detail.component.bottom_sheet.ClassWaitRegistration
-import com.hobbyloop.feature.reservation.ticket_detail.component.top_bar.ReservationDetailTopAppBar
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailState
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
 import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.CalendarView
@@ -49,6 +50,7 @@ internal fun ReservationTicketDetailScreen(
     viewModel: ReservationTicketDetailViewModel = hiltViewModel(),
     backgroundColor: Color,
     onCloseClick: () -> Unit,
+    navigateToReservationClassDetail: (classId: String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
@@ -76,7 +78,11 @@ internal fun ReservationTicketDetailScreen(
             ClassWaitRegistration(
                 isUpdating = isUpdating,
                 onRegisterWaitClick = {
-                    selectedWaitClassInfo?.let { ReservationTicketDetailIntent.ReserveClass(classInfo = it) }
+                    selectedWaitClassInfo?.let {
+                        ReservationTicketDetailIntent.ReserveClass(
+                            classInfo = it
+                        )
+                    }
                         ?.let { viewModel.handleIntent(intent = it) }
                 })
         },
@@ -151,7 +157,9 @@ internal fun ReservationTicketDetailScreen(
                                             ClassPager(
                                                 classInfo = reservation,
                                                 onResetInstructorDetailsVisible = {
-                                                    viewModel.handleIntent(ReservationTicketDetailIntent.ResetInstructorDetailsVisible)
+                                                    viewModel.handleIntent(
+                                                        ReservationTicketDetailIntent.ResetInstructorDetailsVisible
+                                                    )
                                                 }
                                             ) { instructorWithClasses ->
 
@@ -204,11 +212,9 @@ internal fun ReservationTicketDetailScreen(
                                                 Spacer(modifier = Modifier.height(137.dp))
                                             }
                                         } else {
-//                                            Column {
-//                                                for (i in 1..10) {
-//                                                    Text(text = "수강권 없음", fontSize = 20.sp)
-//                                                }
-//                                            }
+                                            /**
+                                             * 수업이 없는 조건문
+                                             */
                                         }
                                     }
                                 }
@@ -216,13 +222,13 @@ internal fun ReservationTicketDetailScreen(
                         }
 
                         FixedBottomButton(
-                            isSelected = (uiState as ReservationDetailState.Success).selectedClassInfo == null,
+                            isSelected = (uiState as ReservationDetailState.Success).selectedClassInfo != null,
                             onClick = {
-                                // TODO: 선택 완료 클릭 후 다음 화면 넘어가도록 구현해야함
+                                navigateToReservationClassDetail((uiState as ReservationDetailState.Success).selectedClassInfo?.classId.toString())
                             },
                             text = "선택완료",
-                            selectedColor = Color.Gray,
-                            unselectedColor = Purple,
+                            selectedColor = Purple,
+                            unselectedColor = Gray60,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
                                 .fillMaxWidth()

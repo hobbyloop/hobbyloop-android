@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -28,9 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +37,7 @@ import com.hobbyloop.feature.reservation.Gray20
 import com.hobbyloop.feature.reservation.Gray40
 import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.R
+import com.hobbyloop.feature.reservation.component.box.OutlinedGradientBox
 import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.util.YearlyCalendarUtils
@@ -139,45 +137,25 @@ fun ClassInfoBox(
     onSelect: () -> Unit,
     onSelectWaitClassInfo: () -> Unit,
 ) {
-    val borderModifier = Modifier.border(
-        width = 2.dp,
-        brush = if (isSelected) {
-            Brush.linearGradient(
-                colors = listOf(
-                    Color(0xFF9EB6FC),
-                    Color(0xFFFFAAAA)
-                ),
-            )
-        } else {
-            SolidColor(Color.White)
-        },
-        shape = RoundedCornerShape(
+    OutlinedGradientBox(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        borderWidth = 2.dp,
+        gradientColors = listOf(
+            Color(0xFF9EB6FC),
+            Color(0xFFFFAAAA)
+        ),
+        borderShape = RoundedCornerShape(
             topStart = 30.dp,
             topEnd = 8.dp,
             bottomEnd = 8.dp,
             bottomStart = 8.dp
-        )
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .then(borderModifier)
-            .background(
-                color = Gray20,
-                shape = RoundedCornerShape(
-                    topStart = 30.dp,
-                    topEnd = 8.dp,
-                    bottomEnd = 8.dp,
-                    bottomStart = 8.dp
-                )
-            )
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = onSelect
-            )
+        ),
+        isSelectedColorAvailable = true,
+        isSelected = isSelected,
+        unSelectedColor = Gray20,
+        onClick = onSelect
     ) {
         if (classInfo.fullReservationCount == classInfo.currentReservationCount) {
             Box(

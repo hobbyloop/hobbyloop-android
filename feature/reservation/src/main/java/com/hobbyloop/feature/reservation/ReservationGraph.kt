@@ -5,6 +5,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
+import com.hobbyloop.feature.reservation.reservation_detail.navigateToReservationDetail
+import com.hobbyloop.feature.reservation.reservation_detail.reservationDetailScreen
+import com.hobbyloop.feature.reservation.reservation_completion.navigateToReservationCompletion
+import com.hobbyloop.feature.reservation.reservation_completion.reservationCompletionScreen
 import com.hobbyloop.feature.reservation.ticket_list.RESERVATION_TICKET_LIST_ROUTE
 import com.hobbyloop.feature.reservation.ticket_list.reservationTicketListScreen
 import com.hobbyloop.feature.reservation.ticket_detail.navigateToReservationTicketDetail
@@ -31,14 +35,28 @@ fun NavGraphBuilder.reservationGraph(
     ) {
         reservationTicketListScreen(
             backgroundColor = backgroundColor,
-            navigateToReservationTicketDetail = { centerId ->
-                navController.navigateToReservationTicketDetail(centerId)
+            navigateToReservationTicketDetail = { ticketId ->
+                navController.navigateToReservationTicketDetail(ticketId)
             }
         )
 
         reservationCenterDetailScreen(
             backgroundColor = backgroundColor,
-            onCloseClick = onCloseClick
+            onCloseClick = onCloseClick,
+            navigateToReservationClassDetail = { classId ->
+                navController.navigateToReservationDetail(classId)
+            }
+        )
+
+        reservationDetailScreen(
+            onCloseClick = onCloseClick,
+            navigateToReservationCompletion = { classId ->
+                navController.navigateToReservationCompletion(classId)
+            }
+        )
+
+        reservationCompletionScreen(
+            navigateToHomeScreen = { }
         )
     }
 }

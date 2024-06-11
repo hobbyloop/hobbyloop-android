@@ -18,7 +18,7 @@ import com.hobbyloop.feature.reservation.util.DateUtil.formatDateTimeRange
 
 @Composable
 fun TicketCard(
-    centerImageUrl: String,
+    centerIconImageUrl: String,
     classInfoList: List<ClassInfo>,
     centerName: String,
     isRefundable: Boolean,
@@ -27,7 +27,7 @@ fun TicketCard(
 ) {
     Column {
         TicketCardHeader(
-            centerImageUrl = centerImageUrl,
+            centerIconImageUrl = centerIconImageUrl,
             centerName = centerName,
             isRefundable = isRefundable,
             modifier = modifier
@@ -58,7 +58,7 @@ fun TicketCard(
 fun PreviewTicketCardIsRefundable() {
     Surface {
         TicketCard(
-            centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
+            centerIconImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             classInfoList = listOf(
                 ClassInfo(1, "2024-05-11 08:00 - 09:00", "아침 요가", "초급", 10, 12),
                 ClassInfo(2, "2024-05-11 10:00 - 11:00", "고급 요가", "고급", 5, 5)
@@ -79,7 +79,7 @@ fun PreviewTicketCardIsRefundable() {
 fun PreviewTicketCardIsNotRefundable() {
     Surface {
         TicketCard(
-            centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
+            centerIconImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             classInfoList = listOf(
                 ClassInfo(1, "2024-05-11 08:00 - 09:00", "아침 요가", "초급", 10, 12),
                 ClassInfo(2, "2024-05-11 10:00 - 11:00", "고급 요가", "고급", 5, 5)

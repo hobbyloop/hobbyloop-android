@@ -1,11 +1,8 @@
 package com.hobbyloop.feature.reservation.ticket_list.component.ticket_card
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,10 +24,11 @@ import com.hobbyloop.feature.reservation.Gray20
 import com.hobbyloop.feature.reservation.Gray40
 import com.hobbyloop.feature.reservation.Gray60
 import com.hobbyloop.feature.reservation.R
+import com.hobbyloop.feature.reservation.component.button.SurfaceButton
 
 @Composable
 fun TicketCardHeader(
-    centerImageUrl: String,
+    centerIconImageUrl: String,
     centerName: String,
     isRefundable: Boolean,
     modifier: Modifier = Modifier,
@@ -41,7 +39,7 @@ fun TicketCardHeader(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         AsyncImage(
-            model = centerImageUrl,
+            model = centerIconImageUrl,
             contentScale = ContentScale.Crop,
             contentDescription = "업체 이미지",
             modifier = Modifier
@@ -64,22 +62,18 @@ fun TicketCardHeader(
         )
 
         if (isRefundable) {
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                border = BorderStroke(1.dp, Gray40),
-                modifier = Modifier.padding(horizontal = 8.dp)
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "중도환불 가능업체",
-                        fontSize = 14.sp,
-                        color = Color.Black
-                    )
-                }
-            }
+            SurfaceButton(
+                text = "중도환불 가능업체",
+                horizontalPadding = 12.dp,
+                verticalPadding = 8.dp,
+                fontSize = 14.sp,
+                selectable = false,
+                unselectedTextColor = Color.Black,
+                unselectedBorderColor = Gray40,
+                shape =  RoundedCornerShape(999.dp),
+                borderWidth = 1.dp,
+                isSelected = false,
+            )
         }
     }
 }
@@ -89,7 +83,7 @@ fun TicketCardHeader(
 fun PreviewTicketCardHeaderNonRefundable() {
     Surface {
         TicketCardHeader(
-            centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
+            centerIconImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             centerName = "Kendall",
             isRefundable = false
         )
@@ -101,7 +95,7 @@ fun PreviewTicketCardHeaderNonRefundable() {
 fun PreviewTicketCardHeaderRefundable() {
     Surface {
         TicketCardHeader(
-            centerImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
+            centerIconImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA0MTZfMTA0%2FMDAxNTU1NDE1NTAzNTgx.n4hiEiGSF91TMegRtR5o3SA1RZbE6S6SnrnTGNNunlMg.PJoW33HktJZos6K3ENRRpZs3cNdYgSYv_3ph6RzIDx8g.JPEG.bemine9_9%2F0405_2_3.jpg&type=sc960_832",
             centerName = "Kendall",
             isRefundable = true
         )

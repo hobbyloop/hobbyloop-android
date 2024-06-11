@@ -73,7 +73,7 @@ internal fun ReservationTicketListScreen(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .padding(16.dp),
-                        centerImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
+                        centerIconImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
                         centerName = ticket.ticketInfo.first.centerName,
                         isRefundable = ticket.ticketInfo.first.isRefundable,
                         classInfoList = ticket.ticketInfo.second,

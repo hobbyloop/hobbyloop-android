@@ -24,16 +24,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hobbyloop.feature.reservation.Gray60
 import com.hobbyloop.feature.reservation.Purple
 
 @Composable
 fun FixedBottomButton(
-    isSelected: Boolean = false,
     onClick: () -> Unit,
     text: String,
-    selectedColor: Color,
-    unselectedColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    selectedColor: Color = Purple,
+    unselectedColor: Color = Gray60,
 ) {
     Box(
         modifier = modifier
@@ -49,7 +50,9 @@ fun FixedBottomButton(
         contentAlignment = Alignment.Center
     ) {
         Button(
-            onClick = onClick,
+            onClick = { if (isSelected) {
+                onClick()
+            } },
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
@@ -74,8 +77,8 @@ fun BottomButtonSelectedPreview() {
         isSelected = isSelected,
         onClick = { isSelected = !isSelected },
         text = "선택완료",
-        selectedColor = Color.Gray,
-        unselectedColor = Purple,
+        selectedColor = Purple,
+        unselectedColor = Color.Gray,
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
@@ -93,8 +96,8 @@ fun BottomButtonNotSelectedPreview() {
         isSelected = isSelected,
         onClick = { isSelected = !isSelected },
         text = "선택완료",
-        selectedColor = Color.Gray,
-        unselectedColor = Purple,
+        selectedColor = Purple,
+        unselectedColor = Color.Gray,
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)

@@ -22,7 +22,8 @@ fun NavController.navigateToReservationTicketDetail(ticketId: String) {
 
 internal fun NavGraphBuilder.reservationCenterDetailScreen(
     backgroundColor: Color,
-    onCloseClick: () -> Unit
+    onCloseClick: () -> Unit,
+    navigateToReservationClassDetail: (classId: String) -> Unit,
 ) {
     dialog(
         route = RESERVATION_TICKET_DETAIL_ROUTE,
@@ -30,7 +31,8 @@ internal fun NavGraphBuilder.reservationCenterDetailScreen(
     ) {
         ReservationTicketDetailScreen(
             backgroundColor = backgroundColor,
-            onCloseClick = onCloseClick
+            onCloseClick = onCloseClick,
+            navigateToReservationClassDetail = navigateToReservationClassDetail
         )
     }
 }

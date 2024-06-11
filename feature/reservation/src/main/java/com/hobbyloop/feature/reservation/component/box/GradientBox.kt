@@ -5,8 +5,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,8 +22,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun GradientBox(
-    width: Dp,
-    height: Dp,
+    modifier: Modifier,
     borderWidth: Dp,
     gradientColors: List<Color>,
     borderShape: Shape,
@@ -33,8 +33,7 @@ fun GradientBox(
 
     Box(
         modifier = Modifier
-            .width(width)
-            .height(height)
+            .then(modifier)
             .border(
                 width = borderWidth,
                 brush = Brush.linearGradient(colors = listOf(Color.Transparent, Color.Transparent)),
@@ -59,8 +58,10 @@ fun GradientBox(
 fun PreviewGradientBox() {
     Surface {
         GradientBox(
-            width = 70.dp,
-            height = 38.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(193.dp)
+                .padding(horizontal = 16.dp),
             borderWidth = 2.dp,
             gradientColors = listOf(
                 Color(0xFF88B967),
@@ -73,7 +74,7 @@ fun PreviewGradientBox() {
                 bottomEnd = 2.dp,
                 bottomStart = 12.dp
             ),
-            onClick = {  }
+            onClick = { }
         ) {
         }
     }
