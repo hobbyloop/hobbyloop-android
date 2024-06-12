@@ -22,17 +22,28 @@ import com.hobbyloop.feature.reservation.model.Ticket
 import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
 import com.hobbyloop.feature.reservation.ticket_list.component.ticket_card.TicketCard
 import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 internal fun ReservationTicketListScreen(
     viewModel: ReservationTicketListViewModel = hiltViewModel(),
     navigateToReservationTicketDetail: (classId: String) -> Unit,
 ) {
-    val ticketList = viewModel.createDummyTicketList()
+    val state = viewModel.collectAsState().value
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is TicketListStateSideEffect.NavigateToReservationTicketDetail -> {
+                navigateToReservationTicketDetail(
+                    sideEffect.classId
+                )
+            }
+        }
+    }
 
     ReservationTicketListScreen(
-        ticketList = ticketList,
-        navigateToReservationTicketDetail = navigateToReservationTicketDetail
+        ticketList = state.ticketList,
+        navigateToReservationTicketDetail = viewModel::navigateToReservationTicketDetail
     )
 }
 

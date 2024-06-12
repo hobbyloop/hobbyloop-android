@@ -1,14 +1,47 @@
 package com.hobbyloop.feature.reservation.ticket_list
 
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.CenterInfo
+import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.Ticket
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
+import javax.annotation.concurrent.Immutable
 import javax.inject.Inject
 
 @HiltViewModel
-class ReservationTicketListViewModel @Inject constructor() : ViewModel() {
+class ReservationTicketListViewModel @Inject constructor() : ViewModel(),
+    ContainerHost<TicketListState, TicketListStateSideEffect> {
+
+    override val container: Container<TicketListState, TicketListStateSideEffect> = container(
+        initialState = TicketListState(),
+        buildSettings = {
+            this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                //TODO 추후 에러 핸들링
+            }
+        }
+    )
+
+    init {
+        intent {
+            reduce {
+                state.copy(
+                    ticketList = createDummyTicketList()
+                )
+            }
+        }
+    }
+
+    fun navigateToReservationTicketDetail(classId: String) = intent {
+        postSideEffect(TicketListStateSideEffect.NavigateToReservationTicketDetail(classId = classId))
+    }
+
 
     fun createDummyTicketList(): List<Ticket> {
         val centerInfo1 = CenterInfo(
@@ -78,3 +111,16 @@ class ReservationTicketListViewModel @Inject constructor() : ViewModel() {
         return listOf(ticket1, ticket2, ticket3, ticket4)
     }
 }
+
+
+@Immutable
+data class TicketListState(
+    val classId: String = "",
+    val ticketList: List<Ticket> = emptyList()
+)
+
+sealed interface TicketListStateSideEffect {
+    class NavigateToReservationTicketDetail(val classId: String) : TicketListStateSideEffect
+}
+
+
