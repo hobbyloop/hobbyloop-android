@@ -34,7 +34,7 @@ import com.hobbyloop.feature.reservation.Gray20
 import com.hobbyloop.feature.reservation.Gray80
 import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.reservation_detail.component.section.SectionHeader
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
 import com.hobbyloop.feature.reservation.component.box.GradientBox
 import com.hobbyloop.feature.reservation.component.button.SurfaceButton
 

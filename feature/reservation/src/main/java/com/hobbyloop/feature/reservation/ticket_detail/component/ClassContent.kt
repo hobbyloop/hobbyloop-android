@@ -257,7 +257,7 @@ fun ClassInfoBox(
 fun ClassTimeRow(classInfo: ClassInfo) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
-            painter = painterResource(id = R.drawable.reservation_check_border_ic),
+            painter = painterResource(id = R.drawable.dot_ic),
             tint = Purple,
             contentDescription = "가능한 시간 표시 점",
         )

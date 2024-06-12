@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.hobbyloop.feature.reservation.Gray60
 import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.reservation_detail.component.section.SectionHeader
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
 import com.hobbyloop.feature.reservation.component.text_field.ClassDetailReservationTextField
 import com.hobbyloop.feature.reservation.component.text_field.TextFieldStyle
 import com.hobbyloop.feature.reservation.util.TextFieldUtil

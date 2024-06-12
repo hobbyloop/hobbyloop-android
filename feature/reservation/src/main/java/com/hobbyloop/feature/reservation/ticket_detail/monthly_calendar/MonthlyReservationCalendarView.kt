@@ -126,7 +126,7 @@ fun MonthlyReservationCalendarView(
                     }
 
                     Icon(
-                        painter = painterResource(id = R.drawable.reservation_check_border_ic),
+                        painter = painterResource(id = R.drawable.dot_ic),
                         contentDescription = "Reservation",
                         modifier = Modifier
                             .size(8.dp)

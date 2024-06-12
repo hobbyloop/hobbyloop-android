@@ -20,14 +20,14 @@ fun NavController.navigateToReservationCompletion(classId: String) {
 }
 
 internal fun NavGraphBuilder.reservationCompletionScreen(
-    navigateToHomeScreen: () -> Unit,
+    navigateToReservationHome: () -> Unit,
 ) {
     dialog(
         route = RESERVATION_COMPLETION_ROUTE,
         dialogProperties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         ReservationCompletionScreen(
-            navigateToHomeScreen = navigateToHomeScreen
+            navigateToReservationHome = navigateToReservationHome
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.hobbyloop.feature.reservation
 
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigation
@@ -56,7 +57,15 @@ fun NavGraphBuilder.reservationGraph(
         )
 
         reservationCompletionScreen(
-            navigateToHomeScreen = { }
+            navigateToReservationHome = {
+                navController.navigate(RESERVATION_TICKET_LIST_ROUTE) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
         )
     }
 }

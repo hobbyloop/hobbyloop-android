@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.reservation_detail.component.section.SectionHeader
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
 
 @Composable
 fun ClassNoticeSection(

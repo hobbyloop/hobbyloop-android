@@ -25,7 +25,7 @@ import com.hobbyloop.feature.reservation.Gray20
 import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationInformation
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationMethod
-import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailSectionHeader
+import com.hobbyloop.feature.reservation.component.ticket.TicketCard
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassNoticeSection
 import com.hobbyloop.feature.reservation.component.button.FixedBottomButton
 import com.hobbyloop.feature.reservation.component.top_bar.ReservationDetailTopAppBar
@@ -112,7 +112,7 @@ internal fun ReservationDetailScreen(
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
 
-                ClassDetailSectionHeader(
+                TicketCard(
                     centerIconImageUrl = centerIconImageUrl,
                     classTitle = classTitle,
                     centerName = centerName,

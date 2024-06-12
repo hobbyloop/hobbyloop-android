@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.reservation.reservation_detail.component
+package com.hobbyloop.feature.reservation.component.ticket
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +40,7 @@ import com.hobbyloop.feature.reservation.component.box.OutlinedGradientBox
 import com.hobbyloop.feature.reservation.component.divider.DottedVerticalDivider
 
 @Composable
-fun ClassDetailSectionHeader(
+fun TicketCard(
     centerIconImageUrl: String,
     classTitle: String,
     centerName: String,
@@ -119,7 +119,7 @@ fun ClassDetailSectionHeader(
                             )
 
                             Text(
-                                text = instructorName,
+                                text = "$instructorName 강사님",
                                 style = TextStyle(
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight(500),
@@ -162,6 +162,7 @@ fun ClassDetailSectionHeader(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.app_logo_small_ic),
+                        tint = Color.Unspecified,
                         contentDescription = "앱 로고 아이콘"
                     )
                 }
@@ -172,12 +173,12 @@ fun ClassDetailSectionHeader(
 
 @Preview
 @Composable
-fun PreviewClassDetailSectionHeader() {
+fun PreviewTicketCard() {
     Surface {
         Box(
             modifier = Modifier.padding(20.dp)
         ) {
-            ClassDetailSectionHeader(
+            TicketCard(
                 centerIconImageUrl = "Brodie",
                 classTitle = "6:1 체형교정 필라테스",
                 centerName = "필라피티 스튜디오",
