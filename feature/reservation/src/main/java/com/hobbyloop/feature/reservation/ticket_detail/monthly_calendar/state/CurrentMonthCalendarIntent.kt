@@ -7,7 +7,7 @@ import com.hobbyloop.feature.reservation.ticket_detail.monthly_calendar.model.Da
 sealed class CurrentMonthCalendarIntent {
     data object LoadDates : CurrentMonthCalendarIntent()
     data class LoadReservations(val classInfo: List<Pair<Instructor, List<ClassInfo>>>) : CurrentMonthCalendarIntent()
-    data class UpdateCenterScrollOffset(val offset: Int) : CurrentMonthCalendarIntent()
-    data class UpdateCurrentCenterIndex(val index: Int) : CurrentMonthCalendarIntent()
+    data class UpdateCenterScrollOffset(val centerScrollOffset: Int) : CurrentMonthCalendarIntent()
+    data class UpdateCurrentCenterIndex(val centerIndex: Int) : CurrentMonthCalendarIntent()
     data class UpdateCurrentCenterIndexWithDates(val dates: List<DateInfo>) : CurrentMonthCalendarIntent()
 }
