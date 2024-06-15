@@ -83,18 +83,18 @@ fun ClassWaitRegistration(
         }
 
         FixedBottomButton(
-            onClick = {
-                onRegisterWaitClick()
-            },
+            isSelected = true,
             text = "대기신청",
-            selectedColor = Color.Gray,
-            unselectedColor = Purple,
+            selectedColor = Purple,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
                 .height(48.dp)
                 .padding(horizontal = 16.dp)
-                .offset(y = (-25).dp)
+                .offset(y = (-25).dp),
+            onClick = {
+                onRegisterWaitClick()
+            },
         )
 
         if (isUpdating) {

@@ -1,6 +1,5 @@
 package com.hobbyloop.feature.reservation.ticket_detail
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
@@ -21,7 +20,6 @@ fun NavController.navigateToReservationTicketDetail(ticketId: String) {
 }
 
 internal fun NavGraphBuilder.reservationCenterDetailScreen(
-    backgroundColor: Color,
     onCloseClick: () -> Unit,
     navigateToReservationClassDetail: (classId: String) -> Unit,
 ) {
@@ -30,7 +28,6 @@ internal fun NavGraphBuilder.reservationCenterDetailScreen(
         dialogProperties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         ReservationTicketDetailScreen(
-            backgroundColor = backgroundColor,
             onCloseClick = onCloseClick,
             navigateToReservationClassDetail = navigateToReservationClassDetail
         )

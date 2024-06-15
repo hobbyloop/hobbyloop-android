@@ -42,7 +42,6 @@ fun NavGraphBuilder.reservationGraph(
         )
 
         reservationCenterDetailScreen(
-            backgroundColor = backgroundColor,
             onCloseClick = onCloseClick,
             navigateToReservationClassDetail = { classId ->
                 navController.navigateToReservationDetail(classId)

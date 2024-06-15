@@ -2,31 +2,39 @@ package com.hobbyloop.feature.reservation.ticket_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailState
-import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailEvent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
+import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class ReservationTicketDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+) : ViewModel(), ContainerHost<ReservationDetailState, ReservationTicketDetailSideEffect> {
 
     private val args = ReservationCenterDetailArgs(savedStateHandle)
     private val ticketId = args.ticketId
 
-    private val _uiState = MutableStateFlow<ReservationDetailState>(ReservationDetailState.Loading)
-    val uiState: StateFlow<ReservationDetailState> = _uiState.asStateFlow()
+    override val container: Container<ReservationDetailState, ReservationTicketDetailSideEffect> =
+        container(
+            initialState = ReservationDetailState.Loading,
+            buildSettings = {
+                this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+                    // TODO: 추후 에러 핸들링
+                }
+            }
+        )
 
     init {
         handleIntent(ReservationTicketDetailIntent.LoadClasses)
@@ -40,56 +48,29 @@ class ReservationTicketDetailViewModel @Inject constructor(
             is ReservationTicketDetailIntent.ToggleInstructorDetailsVisible -> toggleInstructorDetailsVisible()
             is ReservationTicketDetailIntent.ResetInstructorDetailsVisible -> resetInstructorDetailsVisible()
             is ReservationTicketDetailIntent.ReserveClass -> reserveClass(intent.classInfo)
-            is ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket -> setReservationBottomSheetOpen(intent.isOpen)
+            is ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket -> setReservationBottomSheetOpen(
+                intent.isOpen
+            )
+
             is ReservationTicketDetailIntent.SetUpdating -> setUpdating(intent.isUpdating)
         }
     }
 
-    private fun handleEvent(event: ReservationTicketDetailEvent) {
-        when (event) {
-            is ReservationTicketDetailEvent.ClassesLoaded -> {
-                _uiState.update {
-                    ReservationDetailState.Success(
-                        classInfoList = event.classInfoList
-                    )
-                }
+    private fun loadClasses() = intent {
+        try {
+            delay(2000)
+            val classes = createDummyData()
+            reduce {
+                ReservationDetailState.Success(
+                    centerName = "발란스 스튜디오",
+                    classInfoList = classes
+                )
             }
-            is ReservationTicketDetailEvent.LoadFailed -> {
-                _uiState.update {
-                    ReservationDetailState.Error(
-                        errorMessage = event.error
-                    )
-                }
-            }
-            is ReservationTicketDetailEvent.ReservationTicketSuccess -> {
-                handleIntent(ReservationTicketDetailIntent.SetUpdating(isUpdating = false))
-                _uiState.update { currentState ->
-                    if (currentState is ReservationDetailState.Success) {
-                        currentState.copy(
-                            isReservationBottomSheetOpen = false,
-                            selectedClassInfo = null,
-                            selectedWaitClassInfo = null
-                        )
-                    } else {
-                        currentState
-                    }
-                }
-            }
-            is ReservationTicketDetailEvent.ReservationTicketFailed -> {
-
-            }
-        }
-    }
-
-    private fun loadClasses() {
-        viewModelScope.launch {
-            _uiState.update { ReservationDetailState.Loading }
-            try {
-                val classes = createDummyData()
-                delay(3000) // 로딩 화면 확인을 위한 딜레이, 추후 제거 할 것
-                handleEvent(ReservationTicketDetailEvent.ClassesLoaded(classes))
-            } catch (e: Exception) {
-                handleEvent(ReservationTicketDetailEvent.LoadFailed(e.message ?: "Unknown error"))
+        } catch (e: Exception) {
+            reduce {
+                ReservationDetailState.Error(
+                    errorMessage = e.message ?: "Unknown error"
+                )
             }
         }
     }
@@ -114,7 +95,8 @@ class ReservationTicketDetailViewModel @Inject constructor(
                 ClassInfo(21, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
                 ClassInfo(22, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
                 ClassInfo(23, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
-                ClassInfo(24, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13), ClassInfo(1, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
+                ClassInfo(24, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
+                ClassInfo(1, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
                 ClassInfo(1, "2024-06-5 08:00 - 09:00", "아침 요가", "초급", 10, 13),
                 ClassInfo(1, "2024-06-7 08:00 - 09:00", "아침 요가", "초급", 10, 13),
                 ClassInfo(2, "2024-06-7 10:00 - 11:00", "고급 요가", "고급", 5, 5),
@@ -139,86 +121,102 @@ class ReservationTicketDetailViewModel @Inject constructor(
         return instructors.zip(classes)
     }
 
-    private fun selectClassInfo(selectedClassInfo: ClassInfo) {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(selectedClassInfo = selectedClassInfo)
+    private fun selectClassInfo(selectedClassInfo: ClassInfo) = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(selectedClassInfo = selectedClassInfo)
             } else {
-                currentState
+                state
             }
         }
     }
 
-    private fun selectWaitClassInfo(selectedWaitClassInfo: ClassInfo) {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(selectedWaitClassInfo = selectedWaitClassInfo)
+    private fun selectWaitClassInfo(selectedWaitClassInfo: ClassInfo) = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(selectedWaitClassInfo = selectedWaitClassInfo)
             } else {
-                currentState
+                state
             }
         }
     }
 
-    private fun toggleInstructorDetailsVisible() {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(isInstructorDetailsVisible = !currentState.isInstructorDetailsVisible)
+    private fun toggleInstructorDetailsVisible() = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(isInstructorDetailsVisible = !(state as ReservationDetailState.Success).isInstructorDetailsVisible)
             } else {
-                currentState
+                state
             }
         }
     }
 
-    private fun resetInstructorDetailsVisible() {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(isInstructorDetailsVisible = false)
+    private fun resetInstructorDetailsVisible() = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(isInstructorDetailsVisible = false)
             } else {
-                currentState
+                state
             }
         }
     }
 
-    /**
-     * TODO: 바텀시트를 오픈시키는 함수로 현재 로직에 오류가 있지만, Orbit을 적용시키면서 SideEffect로 관리할 예정이라 일단 냅둠
-     */
-    private fun setReservationBottomSheetOpen(isOpen: Boolean) {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(isReservationBottomSheetOpen = !currentState.isReservationBottomSheetOpen)
+    private fun setReservationBottomSheetOpen(isOpen: Boolean) = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(isReservationBottomSheetOpen = isOpen)
             } else {
-                currentState
+                state
             }
         }
     }
 
-    private fun setUpdating(isUpdating: Boolean) {
-        _uiState.update { currentState ->
-            if (currentState is ReservationDetailState.Success) {
-                currentState.copy(isUpdating = isUpdating)
+    private fun setUpdating(isUpdating: Boolean) = intent {
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(isUpdating = isUpdating)
             } else {
-                currentState
+                state
             }
         }
     }
 
-
-    private fun reserveClass(classInfo: ClassInfo) {
-        viewModelScope.launch {
-            try {
-                // TODO: 서버에 예약 요청을 보내는 척하는 함수 호출(나중에 서버 통신 함수로 교체 해야함)
-                simulateReserveClass(classInfo)
-            } catch (e: Exception) {
-                handleEvent(ReservationTicketDetailEvent.ReservationTicketFailed(e.message ?: "Unknown error"))
-            }
+    private fun reserveClass(classInfo: ClassInfo) = intent {
+        reduce {
+            (state as? ReservationDetailState.Success)?.copy(isUpdating = true) ?: state
+        }
+        try {
+            simulateReserveClass(classInfo)
+            postSideEffect(ReservationTicketDetailSideEffect.ReservationTicketSuccess("Reservation successful"))
+        } catch (e: Exception) {
+            postSideEffect(
+                ReservationTicketDetailSideEffect.ReservationTicketFailed(
+                    e.message ?: "Unknown error"
+                )
+            )
         }
     }
 
-    private suspend fun simulateReserveClass(classInfo: ClassInfo) {
-        handleIntent(ReservationTicketDetailIntent.SetUpdating(isUpdating = true))
+    fun navigateToReservationClassDetail() = intent {
+        postSideEffect(ReservationTicketDetailSideEffect.NavigateToReservationClassDetail(classId = (state as ReservationDetailState.Success).selectedClassInfo?.classId.toString()))
+    }
+
+    private suspend fun simulateReserveClass(classInfo: ClassInfo) = intent {
+        // TODO: 서버에 예약 요청을 보내는 척하는 함수 호출(나중에 서버 통신 함수로 교체 해야함)
         delay(2000) // 서버 호출을 흉내내기 위해 2초 지연
 
         // 실제 서버 호출 로직이 이곳에 들어갈 예정이며 아래의 코드는 서버 성공을 가정하고 호출함
-        handleEvent(ReservationTicketDetailEvent.ReservationTicketSuccess("Reservation successful"))
+        reduce {
+            if (state is ReservationDetailState.Success) {
+                (state as ReservationDetailState.Success).copy(
+                    isReservationBottomSheetOpen = false,
+                    selectedClassInfo = null,
+                    selectedWaitClassInfo = null,
+                    isUpdating = false
+                )
+            } else {
+                state
+            }
+        }
     }
 }

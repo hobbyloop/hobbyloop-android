@@ -1,6 +1,5 @@
 package com.hobbyloop.feature.reservation.reservation_completion
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,8 +42,6 @@ internal fun ReservationCompletionScreen(
         }
     }
     
-    Log.d("state", "${state}")
-
     ReservationCompletionScreen(
         name = state.name,
         phoneName = state.phoneNumber,
