@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
@@ -149,10 +150,15 @@ fun DayStatusIndicator(
             )
         }
         if (calendarDay.reservation != null) {
+            val yOffset = if (calendarDay.day.toString() == selectedDay?.day.toString() && monthName.dropLast(1) == selectedDay?.month.toString() && selectedDay?.year == year) {
+                0.dp
+            } else 8.dp
+
             Icon(
                 painter = painterResource(id = R.drawable.dot_ic),
                 contentDescription = "Reservation",
-                modifier = Modifier.align(Alignment.TopCenter)
+                modifier = Modifier.align(Alignment.TopCenter).offset(y = yOffset),
+                tint = Color.Black,
             )
         }
         content()

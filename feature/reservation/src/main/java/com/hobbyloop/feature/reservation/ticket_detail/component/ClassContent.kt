@@ -78,7 +78,8 @@ fun ClassesTitle() {
     Row {
         Icon(
             painter = painterResource(id = R.drawable.clock_ic),
-            contentDescription = "가능수업 아이콘"
+            contentDescription = "가능수업 아이콘",
+            tint = Color.Unspecified
         )
 
         Spacer(modifier = Modifier.width(6.dp))

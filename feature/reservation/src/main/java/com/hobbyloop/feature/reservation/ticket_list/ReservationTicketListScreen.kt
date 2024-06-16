@@ -33,11 +33,7 @@ internal fun ReservationTicketListScreen(
     val state = viewModel.collectAsState().value
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is TicketListStateSideEffect.NavigateToReservationTicketDetail -> {
-                navigateToReservationTicketDetail(
-                    sideEffect.classId
-                )
-            }
+            is TicketListStateSideEffect.NavigateToReservationTicketDetail -> navigateToReservationTicketDetail(sideEffect.classId)
         }
     }
 

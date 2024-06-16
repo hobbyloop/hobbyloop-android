@@ -30,7 +30,8 @@ fun ReservationTicketListAppBar(
     ) {
         Icon(
             painter = painterResource(id = R.drawable.app_logo_ic),
-            contentDescription = "앱 로고"
+            contentDescription = "앱 로고",
+            tint = Color.Unspecified
         )
 
         Spacer(modifier = Modifier.weight(1f))

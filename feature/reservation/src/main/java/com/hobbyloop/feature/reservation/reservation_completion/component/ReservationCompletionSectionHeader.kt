@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,7 +57,8 @@ fun ReservationCompletionSectionHeader(
                 Icon(
                     modifier = Modifier.align(Alignment.Center),
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "체크 아이콘"
+                    contentDescription = "체크 아이콘",
+                    tint = Color.Black
                 )
             }
 

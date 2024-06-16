@@ -43,6 +43,7 @@ fun RoundRippleIcon(
         Icon(
             painter = painterResource(id = iconResId),
             contentDescription = contentDescription,
+            tint = Color.Unspecified
         )
     }
 }

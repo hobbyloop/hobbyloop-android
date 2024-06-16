@@ -43,9 +43,9 @@ fun ClassWaitRegistration(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
-                tint = Purple,
                 painter = painterResource(id = R.drawable.hourglass_waiting_ic),
-                contentDescription = "대기가능 모래시계 아이콘"
+                contentDescription = "대기가능 모래시계 아이콘",
+                tint = Color.Unspecified
             )
 
             Spacer(modifier = Modifier.height(14.dp))

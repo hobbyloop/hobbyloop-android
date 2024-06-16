@@ -45,7 +45,7 @@ internal fun ReservationCompletionScreen(
     ReservationCompletionScreen(
         name = state.name,
         phoneName = state.phoneNumber,
-        navigateToReservationHome = navigateToReservationHome
+        navigateToReservationHome = viewModel::navigateToHomeScreen
     )
 }
 

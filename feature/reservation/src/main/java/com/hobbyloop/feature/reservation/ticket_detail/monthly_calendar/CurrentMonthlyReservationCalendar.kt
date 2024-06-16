@@ -85,7 +85,7 @@ fun CurrentMonthlyReservationCalendar(
         positionBasedModeLeftTextColor = positionBasedModeLeftTextColor,
         positionBasedModeRightTextColor = positionBasedModeRightTextColor,
         positionBasedModeCenterTextColor = positionBasedModeCenterTextColor,
-        handleIntent = { viewModel.handleIntent(it) },
+        handleIntent = viewModel::handleIntent,
         content = content
     )
 }
@@ -188,7 +188,8 @@ fun CurrentMonthlyReservationCalendarView(
                         contentDescription = "Reservation",
                         modifier = Modifier
                             .size(8.dp)
-                            .align(Alignment.CenterHorizontally)
+                            .align(Alignment.CenterHorizontally),
+                        tint = Color.Black,
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))

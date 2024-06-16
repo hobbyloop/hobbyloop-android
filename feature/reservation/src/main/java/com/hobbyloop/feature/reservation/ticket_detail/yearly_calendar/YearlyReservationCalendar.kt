@@ -57,7 +57,7 @@ fun YearlyReservationCalendar(
         calendarYear = state.calendarYear,
         errorMessage = state.errorMessage,
         isLoading = state.isLoading,
-        handleIntent = { viewModel.handleIntent(it) },
+        handleIntent = viewModel::handleIntent,
         content = content
     )
 }

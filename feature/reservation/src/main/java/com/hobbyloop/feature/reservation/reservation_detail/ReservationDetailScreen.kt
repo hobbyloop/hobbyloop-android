@@ -41,11 +41,7 @@ internal fun ReservationDetailScreen(
     val state = viewModel.collectAsState().value
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is ClassDetailSideEffect.NavigateToReservationCompletion -> {
-                navigateToReservationCompletion(
-                    sideEffect.classId
-                )
-            }
+            is ClassDetailSideEffect.NavigateToReservationCompletion -> navigateToReservationCompletion(sideEffect.classId)
         }
     }
 

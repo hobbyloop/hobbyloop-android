@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,7 +55,8 @@ fun InstructorInfo(
             Row {
                 Icon(
                     painter = painterResource(id = R.drawable.instructor_type_ic),
-                    contentDescription = "강사 유형"
+                    contentDescription = "강사 유형",
+                    tint = Color.Unspecified
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 AnimatedContent(
@@ -91,7 +93,8 @@ fun InstructorInfo(
                 )
                 Icon(
                     painter = painterResource(id = if (isInstructorDetailsVisibleState) R.drawable.arrow_upward else R.drawable.arrow_downward_ic),
-                    contentDescription = "더 많은 정보 보기"
+                    contentDescription = "더 많은 정보 보기",
+                    tint = Color.Unspecified
                 )
             }
         }

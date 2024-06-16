@@ -58,9 +58,7 @@ internal fun ReservationTicketDetailScreen(
     val state = viewModel.collectAsState().value
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is ReservationTicketDetailSideEffect.NavigateToReservationClassDetail -> {
-                navigateToReservationClassDetail(sideEffect.classId)
-            }
+            is ReservationTicketDetailSideEffect.NavigateToReservationClassDetail -> navigateToReservationClassDetail(sideEffect.classId)
             is ReservationTicketDetailSideEffect.ReservationTicketSuccess -> {}
             is ReservationTicketDetailSideEffect.ReservationTicketFailed -> {}
         }
@@ -77,7 +75,7 @@ internal fun ReservationTicketDetailScreen(
             isReservationBottomSheetOpen = state.isReservationBottomSheetOpen,
             onCloseClick = onCloseClick,
             navigateToReservationClassDetail = viewModel::navigateToReservationClassDetail,
-            handleIntent = { viewModel.handleIntent(it) }
+            handleIntent = viewModel::handleIntent
         )
     } else {
         // Handle loading and error states
