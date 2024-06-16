@@ -79,9 +79,7 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                         navController.popBackStack()
                     },
                 )
-                scheduleGraph(
-                    backgroundColor = backgroundColor,
-                )
+                scheduleGraph()
                 myPageGraph(
                     backgroundColor = backgroundColor,
                 )

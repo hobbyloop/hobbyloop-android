@@ -1,5 +1,8 @@
 package com.hobbyloop.feature.reservation.util
 
+import java.text.SimpleDateFormat
+import java.util.Locale
+
 object TextUtil {
 
     fun String.formatAsPhoneNumber(): String {
@@ -29,5 +32,22 @@ object TextUtil {
             }
         }
         return this
+    }
+
+    fun String.toTicketInfoFormattedString(): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm - HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy. MM. dd EEE HH:mm - HH:mm", Locale.getDefault())
+
+        return try {
+            val datePart = this.substring(0, 16)
+            val timePart = this.substring(16)
+
+            val date = inputFormat.parse("$datePart$timePart")
+
+            outputFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            this
+        }
     }
 }

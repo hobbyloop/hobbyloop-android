@@ -78,7 +78,8 @@ fun TicketCard(
                         .width(234.dp)
                         .fillMaxHeight()
                         .padding(start = 24.dp, end = 20.dp)
-                        .padding(vertical = 20.dp)
+                        .padding(vertical = 20.dp),
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)

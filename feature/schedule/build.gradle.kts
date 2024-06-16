@@ -7,4 +7,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:reservation"))
+
+    // orbit
+    implementation(libs.orbit.core)
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
 }
