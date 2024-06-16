@@ -21,7 +21,6 @@ import com.hobbyloop.feature.reservation.component.button.NavigationIconButton
 import com.hobbyloop.feature.reservation.model.ClassInfo
 import com.hobbyloop.feature.reservation.model.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.monthly_calendar.CurrentMonthlyReservationCalendar
-import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.component.YearlyReservationCalendarView
 import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.model.DaySelected
 
 @Composable
@@ -61,7 +60,7 @@ fun CalendarView(
 
         when (calendarTypeState) {
             CalendarType.YEAR -> {
-                YearlyReservationCalendarView(
+                YearlyReservationCalendar(
                     classData = classData,
                     modifier = Modifier
                         .fillMaxWidth()

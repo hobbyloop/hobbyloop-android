@@ -27,7 +27,6 @@ fun Week(
                 onDaySelected = { daySelected ->
                     onDayClicked(daySelected)
                 }
-
             )
         }
     }
