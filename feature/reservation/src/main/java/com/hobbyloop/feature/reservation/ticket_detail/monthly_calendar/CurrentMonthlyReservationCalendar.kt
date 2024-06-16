@@ -43,6 +43,7 @@ import com.hobbyloop.feature.reservation.ticket_detail.monthly_calendar.model.Da
 import com.hobbyloop.feature.reservation.ticket_detail.monthly_calendar.state.CurrentMonthCalendarIntent
 import com.hobbyloop.feature.reservation.ticket_detail.monthly_calendar.state.CurrentMonthCalendarSideEffect
 import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.model.DaySelected
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -163,6 +164,7 @@ fun CurrentMonthlyReservationCalendarView(
 
     // 화면 진입 후 현재 날짜 데이터로 스크롤 위치로 스크롤을 트리거 함
     LaunchedEffect(Unit) {
+        delay(50)
         listState.animateScrollToItem(currentCenterIndex)
     }
 

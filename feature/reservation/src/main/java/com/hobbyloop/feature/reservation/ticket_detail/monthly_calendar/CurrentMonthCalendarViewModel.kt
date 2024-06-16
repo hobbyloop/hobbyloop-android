@@ -76,14 +76,20 @@ class CurrentMonthCalendarViewModel @Inject constructor(
     }
 
     /**
-     * 현재 달의 데이터를 가져오는 함수
-     * - 호출 시점은 화면이 표시된 직후로, 가장 먼저 호출되어 현재 달의 데이터를 가져와야 함 (init)
+     * 현재 달의 데이터를 가져와 UiState의 dateList 프로퍼티를 업데이트하고, [handleEvent(CurrentMonthCalendarEvent.DatesLoaded(dates))]
+     * 업데이트가 완료된 후 현재 달의 데이터를 기반으로 현재 날짜의 인덱스를 추출하여 UiState의 currentCenterIndex 프로퍼티를 업데이트하는 함수. [handleIntent(CurrentMonthCalendarIntent.UpdateCurrentCenterIndexWithDates(dates))]
+     *
+     * 현재 달의 데이터를 가져와 UiState의 dateList 프로퍼티를 업데이트한 후 순차적으로,
+     * 현재 달의 데이터를 기반으로 현재 날짜의 인덱스를 추출하여 UiState의 currentCenterIndex 프로퍼티를 업데이트 해야 하므로
+     * blockingIntent{}를 사용하였음.
+     *
+     * 이 함수는 화면이 표시된 직후(init 블록) 호출되며, 가장 먼저 현재 달의 데이터를 가져와야 하는 로직임.
      */
     private fun loadDates() = blockingIntent {
         try {
             val dates = prepareDateListWithBuffers(bufferCount)
-            handleEvent(CurrentMonthCalendarEvent.DatesLoaded(dates))
-            handleIntent(CurrentMonthCalendarIntent.UpdateCurrentCenterIndexWithDates(dates))
+            handleEvent(CurrentMonthCalendarEvent.DatesLoaded(dates)) // 현재 달의 데이터를 가져와 UiState의 dateList 프로퍼티를 업데이트
+            handleIntent(CurrentMonthCalendarIntent.UpdateCurrentCenterIndexWithDates(dates)) // UiState의 dateList 프로퍼티 업데이트가 완료된 후 순차적으로, 현재 달의 데이터를 기반으로 현재 날짜의 인덱스를 추출하여 UiState의 currentCenterIndex 프로퍼티를 업데이트
         } catch (e: Exception) {
             handleEvent(CurrentMonthCalendarEvent.LoadFailed(e.message ?: "Unknown error"))
         }
