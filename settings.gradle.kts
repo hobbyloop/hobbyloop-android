@@ -11,6 +11,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
     }
 }
 
@@ -23,6 +25,7 @@ include(":core:datastore")
 include(":core:database")
 include(":core:domain")
 include(":core:ui")
+include(":core:common")
 
 include(":feature:login")
 include(":feature:sign-up")

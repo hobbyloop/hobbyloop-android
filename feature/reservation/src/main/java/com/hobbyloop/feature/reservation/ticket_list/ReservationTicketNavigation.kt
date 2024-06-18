@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 internal const val RESERVATION_TICKET_LIST_ROUTE = "reservationTicketList"
 
 internal fun NavGraphBuilder.reservationTicketListScreen(
-    backgroundColor: Color,
     navigateToReservationTicketDetail: (centerId: String) -> Unit,
 ) {
     composable(route = RESERVATION_TICKET_LIST_ROUTE) {

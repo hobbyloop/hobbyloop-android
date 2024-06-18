@@ -23,7 +23,7 @@ internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configu
         add("implementation", getLibrary("material3"))
         add("implementation", getLibrary("material"))
         add("implementation", getLibrary("lifecycle-runtime-ktx"))
-        add("implementation", getLibrary("lifecycle-runtime-compose"))
+        add("implementation", getLibrary("androidx-lifecycle-runtime-compose"))
         add("implementation", getLibrary("activity-compose"))
         add("debugImplementation", getLibrary("ui-tooling"))
     }

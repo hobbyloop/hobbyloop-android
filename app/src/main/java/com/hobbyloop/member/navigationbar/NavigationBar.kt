@@ -39,14 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.hobbyloop.member.R
-import com.hobbyloop.member.ui.theme.Gray40
 import kotlinx.collections.immutable.toImmutableList
+import theme.HobbyLoopColor
 
 @Composable
 fun BottomBar(
     navController: NavController,
     modifier: Modifier = Modifier,
-    onBackgroundColor: (Color) -> Unit,
 ) {
     val bottomBarScreenList = BottomBarScreen.entries.toImmutableList()
 
@@ -65,14 +64,11 @@ fun BottomBar(
         BottomNavigationRow(
             state = state,
             selectedColor = Color.Black,
-            unselectedColor = Gray40,
+            unselectedColor = HobbyLoopColor.Gray40,
             labelSize = 12.sp,
             iconSize = 24.dp,
             onCenterTabClicked = { clicked ->
                 isCenterTabClicked = clicked
-            },
-            onBackgroundColor = { color ->
-                onBackgroundColor(color)
             },
         )
         FloatingActionIconButton(
@@ -98,7 +94,6 @@ private fun BottomNavigationRow(
     labelSize: TextUnit,
     iconSize: Dp,
     onCenterTabClicked: (Boolean) -> Unit,
-    onBackgroundColor: (Color) -> Unit,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.White,
     shadowElevation: Dp = 15.dp,
@@ -131,8 +126,6 @@ private fun BottomNavigationRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         state.bottomBarScreens.forEach { screen ->
-
-            state.getCurrentScreen()?.backgroundColor?.let { onBackgroundColor(it) }
 
             val isSelected by state.isRouteSelected(screen.route).collectAsState(initial = false)
             ScreenContent(

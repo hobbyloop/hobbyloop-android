@@ -8,6 +8,7 @@ import internal.configureKotlinExtensions
 import internal.configureUnitTest
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
 
 /**
  * 추후 network 및 data 모듈에 필요한 라이브러리를 의논하여 선정하고, 각 모듈별로 필요한 라이브러리만을 사용할 것
@@ -25,5 +26,9 @@ class NetworkModuleConventions : Plugin<Project> {
         configureUnitTest()
         configureHttpNetworking()
         configureJsonConverter()
+
+        dependencies{
+            add("implementation", project(":core:domain"))
+        }
     }
 }

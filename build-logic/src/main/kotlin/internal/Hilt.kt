@@ -6,6 +6,7 @@ import org.gradle.kotlin.dsl.dependencies
 internal fun Project.configureHilt() {
     with(pluginManager) {
         apply("dagger.hilt.android.plugin")
+        apply("org.jetbrains.kotlin.kapt")
     }
 
     dependencies {

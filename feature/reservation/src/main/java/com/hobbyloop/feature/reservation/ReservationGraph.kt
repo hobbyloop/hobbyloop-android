@@ -19,7 +19,6 @@ const val RESERVATION_GRAPH_ROUTE = "reservation-graph"
 private const val RESERVATION_DEEPLINK = "$ROOT_DEEPLINK/reservation"
 
 fun NavGraphBuilder.reservationGraph(
-    backgroundColor: Color,
     navController: NavHostController,
     onCloseClick: () -> Unit,
 ) {
@@ -35,7 +34,6 @@ fun NavGraphBuilder.reservationGraph(
         popExitTransition = { screenFadeOut() },
     ) {
         reservationTicketListScreen(
-            backgroundColor = backgroundColor,
             navigateToReservationTicketDetail = { ticketId ->
                 navController.navigateToReservationTicketDetail(ticketId)
             }
