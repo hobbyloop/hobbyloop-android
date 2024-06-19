@@ -15,11 +15,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,7 +62,10 @@ internal fun ReservationTicketDetailScreen(
     val state = viewModel.collectAsState().value
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is ReservationTicketDetailSideEffect.NavigateToReservationClassDetail -> navigateToReservationClassDetail(sideEffect.classId)
+            is ReservationTicketDetailSideEffect.NavigateToReservationClassDetail -> navigateToReservationClassDetail(
+                sideEffect.classId
+            )
+
             is ReservationTicketDetailSideEffect.ReservationTicketSuccess -> {}
             is ReservationTicketDetailSideEffect.ReservationTicketFailed -> {}
         }
@@ -93,180 +100,377 @@ internal fun ReservationTicketDetailScreen(
     selectedWaitClassInfo: ClassInfo? = null,
     isInstructorDetailsVisible: Boolean = false,
     isReservationBottomSheetOpen: Boolean = false,
+    bottomSheetMode: BottomSheetMode = BottomSheetMode.BOTTOM_SHEET_SCAFFOLD, // 기본 값으로 BOTTOM_SHEET_SCAFFOLD 로 설정
     onCloseClick: () -> Unit = { },
     navigateToReservationClassDetail: () -> Unit = { },
     handleIntent: (ReservationTicketDetailIntent) -> Unit = { }
 ) {
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = rememberStandardBottomSheetState(
-            initialValue = SheetValue.Hidden,
-            skipHiddenState = false
-        )
-    )
+    val bottomSheetState = when (bottomSheetMode) {
+        BottomSheetMode.MODAL_BOTTOM_SHEET -> {
+            rememberModalBottomSheetState()
+        }
 
-    // UiState에서 관리하는 isReservationBottomSheetOpen 프로퍼티로 바텀 시트를 열고 닫는 LaunchedEffect
-    LaunchedEffect(isReservationBottomSheetOpen) {
-        if (isReservationBottomSheetOpen) {
-            bottomSheetScaffoldState.bottomSheetState.expand()
-        } else {
-            bottomSheetScaffoldState.bottomSheetState.hide()
+        BottomSheetMode.BOTTOM_SHEET_SCAFFOLD -> {
+            rememberBottomSheetScaffoldState(
+                bottomSheetState = rememberStandardBottomSheetState(
+                    initialValue = SheetValue.Hidden,
+                    skipHiddenState = false
+                )
+            )
         }
     }
 
-    // 바텀 시트를 드래그 이벤트로 닫을때 상태를 업데이트 하는 LaunchedEffect
-    LaunchedEffect(bottomSheetScaffoldState.bottomSheetState) {
-        snapshotFlow { bottomSheetScaffoldState.bottomSheetState.currentValue }
-            .distinctUntilChanged()
-            .collect { currentValue ->
-                val isExpanded = currentValue == SheetValue.Expanded
-                handleIntent(
-                    ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(isExpanded)
-                )
+    // UiState에서 관리하는 isReservationBottomSheetOpen 프로퍼티로 바텀 시트[ModalBottomSheet/BottomSheetScaffold]를 열고 닫는 LaunchedEffect
+    LaunchedEffect(isReservationBottomSheetOpen) {
+        if (isReservationBottomSheetOpen) {
+            when (bottomSheetMode) {
+                BottomSheetMode.MODAL_BOTTOM_SHEET -> {
+                    if (bottomSheetState is SheetState) {
+                        bottomSheetState.show()
+                    }
+                }
+
+                BottomSheetMode.BOTTOM_SHEET_SCAFFOLD -> {
+                    if (bottomSheetState is BottomSheetScaffoldState) {
+                        bottomSheetState.bottomSheetState.expand()
+                    }
+                }
             }
+        } else {
+            when (bottomSheetMode) {
+                BottomSheetMode.MODAL_BOTTOM_SHEET -> {
+                    if (bottomSheetState is SheetState) {
+                        bottomSheetState.hide()
+                    }
+                }
+
+                BottomSheetMode.BOTTOM_SHEET_SCAFFOLD -> {
+                    if (bottomSheetState is BottomSheetScaffoldState) {
+                        bottomSheetState.bottomSheetState.hide()
+                    }
+                }
+            }
+        }
     }
 
-    BottomSheetScaffold(
-        scaffoldState = bottomSheetScaffoldState,
-        sheetContent = {
-            ClassWaitRegistration(
-                isUpdating = isUpdating,
-                onRegisterWaitClick = {
-                    selectedWaitClassInfo?.let {
-                        ReservationTicketDetailIntent.ReserveClass(
-                            classInfo = it
+    // 바텀 시트(BottomSheetScaffoldState)를 드래그 이벤트로 닫을때 상태를 업데이트 하는 LaunchedEffect
+    if (bottomSheetMode == BottomSheetMode.BOTTOM_SHEET_SCAFFOLD) {
+        if (bottomSheetState is BottomSheetScaffoldState) {
+            LaunchedEffect(bottomSheetState.bottomSheetState) {
+                snapshotFlow { bottomSheetState.bottomSheetState.currentValue }
+                    .distinctUntilChanged()
+                    .collect { currentValue ->
+                        val isExpanded = currentValue == SheetValue.Expanded
+                        handleIntent(
+                            ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(
+                                isExpanded
+                            )
                         )
-                    }?.let {
-                        handleIntent(it)
                     }
-                })
-        },
-        sheetContainerColor = Color.White,
-        sheetContentColor = Color.White,
-        sheetPeekHeight = 0.dp
-    ) {
-        Scaffold(
-            topBar = {
-                ReservationDetailTopAppBar(
-                    title = centerName,
-                    onCloseClick = onCloseClick
-                )
-            },
-        ) { padding ->
-            val scrollState = rememberScrollState()
+            }
+        }
+    }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) {
-                if (classInfoList.isEmpty()) {
-                    CircularProgressIndicator(
-                        color = Purple,
-                        modifier = Modifier.align(Alignment.Center)
+    when (bottomSheetMode) {
+        BottomSheetMode.MODAL_BOTTOM_SHEET -> {
+            Scaffold(
+                topBar = {
+                    ReservationDetailTopAppBar(
+                        title = centerName,
+                        onCloseClick = onCloseClick
                     )
-                } else {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.White)
-                            .verticalScroll(scrollState),
-                    ) {
-                        CalendarView(
-                            classData = classInfoList,
-                            onResetInstructorDetailsVisible = {
-                                handleIntent(ReservationTicketDetailIntent.ResetInstructorDetailsVisible)
-                            }
-                        ) { daySelected ->
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .animateContentSize(animationSpec = tween(durationMillis = 1000))
-                            ) {
-                                Crossfade(
-                                    targetState = daySelected.classInfoList,
-                                    label = "ClassChangeAnimation"
-                                ) { reservation ->
-                                    if (reservation != null) {
-                                        ClassPager(
-                                            classInfo = reservation,
-                                            onResetInstructorDetailsVisible = {
-                                                handleIntent(
-                                                    ReservationTicketDetailIntent.ResetInstructorDetailsVisible
+                },
+            ) { padding ->
+                val scrollState = rememberScrollState()
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    if (classInfoList.isEmpty()) {
+                        CircularProgressIndicator(
+                            color = Purple,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    } else {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.White)
+                                .verticalScroll(scrollState),
+                        ) {
+                            CalendarView(
+                                classData = classInfoList,
+                                onResetInstructorDetailsVisible = {
+                                    handleIntent(ReservationTicketDetailIntent.ResetInstructorDetailsVisible)
+                                }
+                            ) { daySelected ->
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .animateContentSize(animationSpec = tween(durationMillis = 1000))
+                                ) {
+                                    Crossfade(
+                                        targetState = daySelected.classInfoList,
+                                        label = "ClassChangeAnimation"
+                                    ) { reservation ->
+                                        if (reservation != null) {
+                                            ClassPager(
+                                                classInfo = reservation,
+                                                onResetInstructorDetailsVisible = {
+                                                    handleIntent(
+                                                        ReservationTicketDetailIntent.ResetInstructorDetailsVisible
+                                                    )
+                                                }
+                                            ) { instructorWithClasses ->
+
+                                                // 강사 정보 컴포저블
+                                                InstructorInfo(
+                                                    instructorWithClasses = instructorWithClasses,
+                                                    isInstructorDetailsVisibleState = isInstructorDetailsVisible,
+                                                    onToggleInstructorDetailsVisible = {
+                                                        handleIntent(
+                                                            ReservationTicketDetailIntent.ToggleInstructorDetailsVisible
+                                                        )
+                                                    }
                                                 )
+
+                                                // 회색선 컴포저블 함수
+                                                Spacer(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(16.dp)
+                                                        .background(Gray20)
+                                                )
+
+                                                // 가능수업 + 수업에 대한 정보를 보여주는 Column 컴포저블
+                                                ClassContent(
+                                                    instructorWithClasses = instructorWithClasses,
+                                                    selectedClassInfoState = selectedClassInfo,
+                                                    onExpandBottomSheetClick = {
+                                                        handleIntent(
+                                                            ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(
+                                                                true
+                                                            )
+                                                        )
+                                                    },
+                                                    onSelectClassInfo = { classInfo ->
+                                                        handleIntent(
+                                                            ReservationTicketDetailIntent.SelectClassInfo(
+                                                                classInfo
+                                                            )
+                                                        )
+                                                    },
+                                                    onSelectWaitClassInfo = { classInfo ->
+                                                        handleIntent(
+                                                            ReservationTicketDetailIntent.SelectWaitClassInfo(
+                                                                classInfo
+                                                            )
+                                                        )
+                                                    }
+                                                )
+
+                                                Spacer(modifier = Modifier.height(137.dp))
                                             }
-                                        ) { instructorWithClasses ->
-
-                                            // 강사 정보 컴포저블
-                                            InstructorInfo(
-                                                instructorWithClasses = instructorWithClasses,
-                                                isInstructorDetailsVisibleState = isInstructorDetailsVisible,
-                                                onToggleInstructorDetailsVisible = {
-                                                    handleIntent(
-                                                        ReservationTicketDetailIntent.ToggleInstructorDetailsVisible
-                                                    )
-                                                }
-                                            )
-
-                                            // 회색선 컴포저블 함수
-                                            Spacer(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(16.dp)
-                                                    .background(Gray20)
-                                            )
-
-                                            // 가능수업 + 수업에 대한 정보를 보여주는 Column 컴포저블
-                                            ClassContent(
-                                                instructorWithClasses = instructorWithClasses,
-                                                selectedClassInfoState = selectedClassInfo,
-                                                onExpandBottomSheetClick = {
-                                                    handleIntent(
-                                                        ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(
-                                                            true
-                                                        )
-                                                    )
-                                                },
-                                                onSelectClassInfo = { classInfo ->
-                                                    handleIntent(
-                                                        ReservationTicketDetailIntent.SelectClassInfo(
-                                                            classInfo
-                                                        )
-                                                    )
-                                                },
-                                                onSelectWaitClassInfo = { classInfo ->
-                                                    handleIntent(
-                                                        ReservationTicketDetailIntent.SelectWaitClassInfo(
-                                                            classInfo
-                                                        )
-                                                    )
-                                                }
-                                            )
-
-                                            Spacer(modifier = Modifier.height(137.dp))
+                                        } else {
+                                            // 수업이 없는 조건문
                                         }
-                                    } else {
-                                        // 수업이 없는 조건문
                                     }
                                 }
                             }
                         }
-                    }
 
-                    FixedBottomButton(
-                        isSelected = selectedClassInfo != null,
-                        onClick = {
-                            navigateToReservationClassDetail()
-                        },
-                        text = "선택완료",
-                        selectedColor = Purple,
-                        unselectedColor = Gray60,
+                        FixedBottomButton(
+                            isSelected = selectedClassInfo != null,
+                            onClick = {
+                                navigateToReservationClassDetail()
+                            },
+                            text = "선택완료",
+                            selectedColor = Purple,
+                            unselectedColor = Gray60,
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                                .height(48.dp)
+                                .padding(horizontal = 16.dp)
+                                .offset(y = (-25).dp)
+                        )
+                    }
+                    if (isReservationBottomSheetOpen) {
+                        ModalBottomSheet(
+                            sheetState = bottomSheetState as SheetState,
+                            onDismissRequest = {
+                                handleIntent(
+                                    ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(
+                                        false
+                                    )
+                                )
+                            },
+                            containerColor = Color.White
+                        ) {
+                            ClassWaitRegistration(
+                                isUpdating = isUpdating,
+                                onRegisterWaitClick = {
+                                    selectedWaitClassInfo?.let {
+                                        ReservationTicketDetailIntent.ReserveClass(
+                                            classInfo = it
+                                        )
+                                    }?.let {
+                                        handleIntent(it)
+                                    }
+                                })
+                        }
+                    }
+                }
+            }
+        }
+
+        BottomSheetMode.BOTTOM_SHEET_SCAFFOLD -> {
+            BottomSheetScaffold(
+                scaffoldState = bottomSheetState as BottomSheetScaffoldState,
+                sheetContent = {
+                    ClassWaitRegistration(
+                        isUpdating = isUpdating,
+                        onRegisterWaitClick = {
+                            selectedWaitClassInfo?.let {
+                                ReservationTicketDetailIntent.ReserveClass(
+                                    classInfo = it
+                                )
+                            }?.let {
+                                handleIntent(it)
+                            }
+                        })
+                },
+                sheetContainerColor = Color.White,
+                sheetContentColor = Color.White,
+                sheetPeekHeight = 0.dp
+            ) {
+                Scaffold(
+                    topBar = {
+                        ReservationDetailTopAppBar(
+                            title = centerName,
+                            onCloseClick = onCloseClick
+                        )
+                    },
+                ) { padding ->
+                    val scrollState = rememberScrollState()
+
+                    Box(
                         modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .height(48.dp)
-                            .padding(horizontal = 16.dp)
-                            .offset(y = (-25).dp)
-                    )
+                            .fillMaxSize()
+                            .padding(padding)
+                    ) {
+                        if (classInfoList.isEmpty()) {
+                            CircularProgressIndicator(
+                                color = Purple,
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        } else {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(Color.White)
+                                    .verticalScroll(scrollState),
+                            ) {
+                                CalendarView(
+                                    classData = classInfoList,
+                                    onResetInstructorDetailsVisible = {
+                                        handleIntent(ReservationTicketDetailIntent.ResetInstructorDetailsVisible)
+                                    }
+                                ) { daySelected ->
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .animateContentSize(animationSpec = tween(durationMillis = 1000))
+                                    ) {
+                                        Crossfade(
+                                            targetState = daySelected.classInfoList,
+                                            label = "ClassChangeAnimation"
+                                        ) { reservation ->
+                                            if (reservation != null) {
+                                                ClassPager(
+                                                    classInfo = reservation,
+                                                    onResetInstructorDetailsVisible = {
+                                                        handleIntent(
+                                                            ReservationTicketDetailIntent.ResetInstructorDetailsVisible
+                                                        )
+                                                    }
+                                                ) { instructorWithClasses ->
+
+                                                    // 강사 정보 컴포저블
+                                                    InstructorInfo(
+                                                        instructorWithClasses = instructorWithClasses,
+                                                        isInstructorDetailsVisibleState = isInstructorDetailsVisible,
+                                                        onToggleInstructorDetailsVisible = {
+                                                            handleIntent(
+                                                                ReservationTicketDetailIntent.ToggleInstructorDetailsVisible
+                                                            )
+                                                        }
+                                                    )
+
+                                                    // 회색선 컴포저블 함수
+                                                    Spacer(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .height(16.dp)
+                                                            .background(Gray20)
+                                                    )
+
+                                                    // 가능수업 + 수업에 대한 정보를 보여주는 Column 컴포저블
+                                                    ClassContent(
+                                                        instructorWithClasses = instructorWithClasses,
+                                                        selectedClassInfoState = selectedClassInfo,
+                                                        onExpandBottomSheetClick = {
+                                                            handleIntent(
+                                                                ReservationTicketDetailIntent.SetReservationBottomSheetOpenTicket(
+                                                                    true
+                                                                )
+                                                            )
+                                                        },
+                                                        onSelectClassInfo = { classInfo ->
+                                                            handleIntent(
+                                                                ReservationTicketDetailIntent.SelectClassInfo(
+                                                                    classInfo
+                                                                )
+                                                            )
+                                                        },
+                                                        onSelectWaitClassInfo = { classInfo ->
+                                                            handleIntent(
+                                                                ReservationTicketDetailIntent.SelectWaitClassInfo(
+                                                                    classInfo
+                                                                )
+                                                            )
+                                                        }
+                                                    )
+
+                                                    Spacer(modifier = Modifier.height(137.dp))
+                                                }
+                                            } else {
+                                                // 수업이 없는 조건문
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            FixedBottomButton(
+                                isSelected = selectedClassInfo != null,
+                                onClick = {
+                                    navigateToReservationClassDetail()
+                                },
+                                text = "선택완료",
+                                selectedColor = Purple,
+                                unselectedColor = Gray60,
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .fillMaxWidth()
+                                    .height(48.dp)
+                                    .padding(horizontal = 16.dp)
+                                    .offset(y = (-25).dp)
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -333,3 +537,7 @@ fun PreviewReservationTicketDetailScreen() {
     )
 }
 
+enum class BottomSheetMode {
+    BOTTOM_SHEET_SCAFFOLD,
+    MODAL_BOTTOM_SHEET
+}
