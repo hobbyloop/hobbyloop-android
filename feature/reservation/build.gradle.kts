@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "com.hobbyloop.feature.reservation"
 }
+
+dependencies {
+    implementation(project(":core:data"))
+}

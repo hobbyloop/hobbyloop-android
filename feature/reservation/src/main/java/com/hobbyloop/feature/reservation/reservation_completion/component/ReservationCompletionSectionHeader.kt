@@ -22,10 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray80
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.component.box.GradientBox
-import com.hobbyloop.feature.reservation.util.TextUtil.extractFirstName
+import com.hobbyloop.core.ui.componenet.box.GradientBox
+import com.hobbyloop.core.ui.util.TextUtil.extractFirstName
+import theme.HobbyLoopColor
 
 @Composable
 fun ReservationCompletionSectionHeader(
@@ -46,8 +45,8 @@ fun ReservationCompletionSectionHeader(
                     .height(28.dp),
                 borderWidth = 2.dp,
                 gradientColors = listOf(
-                    Purple,
-                    Purple
+                    HobbyLoopColor.Primary,
+                    HobbyLoopColor.Primary
                 ),
                 borderShape = RoundedCornerShape(
                     topStart = 8.dp,
@@ -81,7 +80,7 @@ fun ReservationCompletionSectionHeader(
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight(500),
-                    color = Gray80
+                    color = HobbyLoopColor.Gray80
                 )
             )
 
@@ -90,7 +89,7 @@ fun ReservationCompletionSectionHeader(
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontWeight = FontWeight(500),
-                    color = Gray80
+                    color = HobbyLoopColor.Gray80
                 )
             )
         }

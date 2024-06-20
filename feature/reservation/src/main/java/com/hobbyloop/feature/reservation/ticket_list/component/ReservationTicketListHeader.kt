@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.Pink
+import theme.HobbyLoopColor
+import theme.Pink
 
 @Composable
 fun ReservationTicketListHeader(
@@ -50,7 +50,7 @@ fun ReservationTicketListHeader(
         Text(
             text = "예약하고 싶은 수업의 이용권을 선택해 주세요.",
             fontWeight = FontWeight(500),
-            color = Gray60,
+            color = HobbyLoopColor.Gray60,
             fontSize = 16.sp
         )
     }

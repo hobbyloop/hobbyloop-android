@@ -20,12 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.component.ticket.TicketCard
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
-import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.YearlyReservationCalendar
-import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar
-import com.hobbyloop.feature.reservation.util.TextUtil.toTicketInfoFormattedString
+import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
+import com.hobbyloop.core.ui.componenet.reservation.top_bar.ReservationNavBar
+import com.hobbyloop.core.ui.componenet.yearly_calendar.YearlyReservationCalendar
+import com.hobbyloop.core.ui.util.TextUtil.toTicketInfoFormattedString
+import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -53,7 +54,7 @@ internal fun ScheduleScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationTicketListAppBar(
+            ReservationNavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(66.dp)
@@ -76,12 +77,12 @@ internal fun ScheduleScreen(
                 classData = classInfoList,
                 modifier = Modifier
                     .fillMaxSize()
-            ) { daySelected ->
+            ) { daySelected: DaySelected ->
                 Crossfade(
                     targetState = daySelected.classInfoList,
                     animationSpec = tween(durationMillis = 1000),
                     label = "daySelectedChangeAnimation"
-                ) { classInfoList ->
+                ) { classInfoList: List<Pair<Instructor, List<ClassInfo>>>? ->
                     Column {
                         if (classInfoList == null) {
                             Spacer(modifier = Modifier.height(200.dp))

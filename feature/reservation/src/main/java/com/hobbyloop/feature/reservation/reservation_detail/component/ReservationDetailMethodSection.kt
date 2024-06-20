@@ -30,13 +30,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Gray80
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.section.SectionHeader
-import com.hobbyloop.feature.reservation.component.box.GradientBox
-import com.hobbyloop.feature.reservation.component.button.SurfaceButton
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
+import com.hobbyloop.core.ui.componenet.box.GradientBox
+import com.hobbyloop.core.ui.componenet.button.SurfaceButton
+import theme.HobbyLoopColor
 
 @Composable
 fun ClassDetailReservationMethod(
@@ -58,7 +56,7 @@ fun ClassDetailReservationMethod(
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             ),
-            iconRes = R.drawable.ticket_ic,
+            iconRes = R.drawable.ic_ticket_color,
             iconPadding = PaddingValues(top = 5.dp, bottom = 5.dp, start = 2.75.dp, end = 3.25.dp)
         )
 
@@ -73,10 +71,10 @@ fun ClassDetailReservationMethod(
                 verticalPadding = 6.dp,
                 fontSize = 12.sp,
                 selectable = true,
-                selectedTextColor = Purple,
-                unselectedTextColor = Gray80,
-                selectedBorderColor = Purple,
-                unselectedBorderColor = Gray20,
+                selectedTextColor = HobbyLoopColor.Primary,
+                unselectedTextColor = HobbyLoopColor.Gray80,
+                selectedBorderColor = HobbyLoopColor.Primary,
+                unselectedBorderColor = HobbyLoopColor.Gray20,
                 shape = RoundedCornerShape(999.dp),
                 borderWidth = 1.dp,
                 isSelected = selectedButtonIndex == 0,
@@ -91,10 +89,10 @@ fun ClassDetailReservationMethod(
                 verticalPadding = 6.dp,
                 fontSize = 12.sp,
                 selectable = true,
-                selectedTextColor = Purple,
-                unselectedTextColor = Gray80,
-                selectedBorderColor = Purple,
-                unselectedBorderColor = Gray20,
+                selectedTextColor = HobbyLoopColor.Primary,
+                unselectedTextColor = HobbyLoopColor.Gray80,
+                selectedBorderColor = HobbyLoopColor.Primary,
+                unselectedBorderColor = HobbyLoopColor.Gray20,
                 shape = RoundedCornerShape(999.dp),
                 borderWidth = 1.dp,
                 isSelected = selectedButtonIndex == 1,
@@ -136,8 +134,8 @@ fun ClassDetailReservationMethod(
                     contentDescription = "업체 이미지",
                     modifier = Modifier
                         .size(94.dp),
-                    placeholder = painterResource(id = R.drawable.loading_ic),
-                    error = painterResource(id = R.drawable.loading_ic)
+                    placeholder = painterResource(id = R.drawable.ic_close),
+                    error = painterResource(id = R.drawable.ic_close)
                 )
 
                 Spacer(modifier = Modifier.width(30.dp))

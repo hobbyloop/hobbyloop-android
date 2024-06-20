@@ -1,8 +1,8 @@
 package com.hobbyloop.feature.schedule
 
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay

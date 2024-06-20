@@ -26,11 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.hobbyloop.feature.reservation.Gray40
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.ui.R
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
+import theme.HobbyLoopColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -62,8 +61,8 @@ fun ClassPager(
                 contentDescription = "Slider Image $page",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
-                placeholder = painterResource(id = R.drawable.loading_ic),
-                error = painterResource(id = R.drawable.calendar_ic)
+                placeholder = painterResource(id = R.drawable.ic_close),
+                error = painterResource(id = R.drawable.ic_close)
             )
         }
 
@@ -81,7 +80,7 @@ fun ClassPager(
                     modifier = Modifier
                         .size(if (isSelected) 12.dp else 8.dp)
                         .clip(CircleShape)
-                        .background(if (isSelected) Purple else Gray40)
+                        .background(if (isSelected) HobbyLoopColor.Primary else HobbyLoopColor.Gray40)
                         .padding(4.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))

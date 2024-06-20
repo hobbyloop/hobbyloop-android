@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.util.DateUtil.formatDateTimeRange
+import com.hobbyloop.core.ui.util.DateUtil.formatDateTimeRange
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import theme.HobbyLoopColor
 
 @Composable
 fun TicketCard(
@@ -37,7 +37,7 @@ fun TicketCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(Gray20)
+                .background(HobbyLoopColor.Gray20)
         )
 
         Column {

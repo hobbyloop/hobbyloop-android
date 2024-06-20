@@ -1,11 +1,13 @@
 package com.hobbyloop.feature.reservation
 
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
+import com.hobbyloop.core.ui.ROOT_DEEPLINK
+import com.hobbyloop.core.ui.screenFadeIn
+import com.hobbyloop.core.ui.screenFadeOut
 import com.hobbyloop.feature.reservation.reservation_detail.navigateToReservationDetail
 import com.hobbyloop.feature.reservation.reservation_detail.reservationDetailScreen
 import com.hobbyloop.feature.reservation.reservation_completion.navigateToReservationCompletion

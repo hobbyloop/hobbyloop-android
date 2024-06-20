@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.section.SectionHeader
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
 
 @Composable
 fun ClassNoticeSection(
@@ -30,7 +30,7 @@ fun ClassNoticeSection(
     ) {
         SectionHeader(
             title = "공지사항",
-            iconRes = R.drawable.notice_ic,
+            iconRes = R.drawable.ic_megaphone_color,
             iconDescription = "공지사항 아이콘",
             textStyle = TextStyle(
                 color = Color.Black,

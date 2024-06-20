@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,9 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray80
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
+import com.hobbyloop.ui.R
+import theme.HobbyLoopColor
 
 @Composable
 fun ReservationCompletionSectionFooter(modifier: Modifier) {
@@ -64,8 +64,8 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.dot_ic),
-                    tint = Purple,
+                    painter = painterResource(id = R.drawable.ic_dot),
+                    tint = HobbyLoopColor.Primary,
                     contentDescription = "Reservation",
                 )
                 Text(
@@ -82,15 +82,15 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.call_ic),
-                    tint = Purple,
-                    contentDescription = "Reservation",
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(id = R.drawable.ic_call),
+                    contentDescription = "ReservationCallIcon",
                 )
                 Text(
                     text = "예약취소 : 업체문의",
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = Gray80
+                        color = HobbyLoopColor.Gray80
                     )
                 )
             }
@@ -100,15 +100,15 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.chat_ic),
-                    tint = Purple,
-                    contentDescription = "Reservation",
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(id = R.drawable.ic_chat),
+                    contentDescription = "ReservationChatIcon",
                 )
                 Text(
                     text = "플랫폼 시스템 오류 : 플랫폼 고객센터 문의",
                     style = TextStyle(
                         fontSize = 12.sp,
-                        color = Gray80
+                        color = HobbyLoopColor.Gray80
                     )
                 )
             }

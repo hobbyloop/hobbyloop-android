@@ -2,7 +2,6 @@ package com.hobbyloop.feature.reservation.reservation_completion.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -19,11 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.section.SectionHeader
-import com.hobbyloop.feature.reservation.util.TextUtil.formatAsPhoneNumber
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
+import com.hobbyloop.core.ui.util.TextUtil.formatAsPhoneNumber
+import theme.HobbyLoopColor
 
 @Composable
 fun ReservationCompletionUserInfoSection(
@@ -41,9 +39,9 @@ fun ReservationCompletionUserInfoSection(
         ) {
             SectionHeader(
                 title = "예약자 정보",
-                iconRes = R.drawable.user_ic,
+                iconRes = R.drawable.ic_user_color,
                 isIconTintEnabled = true,
-                iconTint = Purple,
+                iconTint = HobbyLoopColor.Primary,
                 iconDescription = "공지사항 아이콘",
                 textStyle = TextStyle(
                     color = Color.Black,
@@ -57,7 +55,7 @@ fun ReservationCompletionUserInfoSection(
             Text(
                 text = "정보는 마이페이지에서 수정 가능해요.",
                 style = TextStyle(
-                    color = Gray60,
+                    color = HobbyLoopColor.Gray60,
                     fontSize = 12.sp,
                     fontWeight = FontWeight(500),
                 )
@@ -76,7 +74,7 @@ fun ReservationCompletionUserInfoSection(
                     text = "예약자",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        color = Gray60
+                        color = HobbyLoopColor.Gray60
                     ),
                     modifier = Modifier.weight(0.3f)
                 )
@@ -97,7 +95,7 @@ fun ReservationCompletionUserInfoSection(
                     text = "전화번호",
                     style = TextStyle(
                         fontSize = 16.sp,
-                        color = Gray60
+                        color = HobbyLoopColor.Gray60
                     ),
                     modifier = Modifier.weight(0.3f)
                 )

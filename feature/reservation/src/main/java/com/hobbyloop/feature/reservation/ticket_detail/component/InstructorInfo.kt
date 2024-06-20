@@ -31,9 +31,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.ui.R
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 
 @Composable
 fun InstructorInfo(
@@ -54,7 +54,7 @@ fun InstructorInfo(
         ) {
             Row {
                 Icon(
-                    painter = painterResource(id = R.drawable.instructor_type_ic),
+                    painter = painterResource(id = R.drawable.ic_instructor_pila),
                     contentDescription = "강사 유형",
                     tint = Color.Unspecified
                 )
@@ -92,7 +92,7 @@ fun InstructorInfo(
                     fontSize = 14.sp
                 )
                 Icon(
-                    painter = painterResource(id = if (isInstructorDetailsVisibleState) R.drawable.arrow_upward else R.drawable.arrow_downward_ic),
+                    painter = painterResource(id = if (isInstructorDetailsVisibleState) R.drawable.ic_up else R.drawable.ic_down),
                     contentDescription = "더 많은 정보 보기",
                     tint = Color.Unspecified
                 )

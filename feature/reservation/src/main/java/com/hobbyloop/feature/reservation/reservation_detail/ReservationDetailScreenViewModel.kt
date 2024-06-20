@@ -2,8 +2,8 @@ package com.hobbyloop.feature.reservation.reservation_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.util.TextFieldUtil.isValidKoreanName
-import com.hobbyloop.feature.reservation.util.TextFieldUtil.isValidPhoneNumber
+import com.hobbyloop.core.ui.util.TextFieldUtil.isValidKoreanName
+import com.hobbyloop.core.ui.util.TextFieldUtil.isValidPhoneNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container

@@ -1,7 +1,7 @@
 package com.hobbyloop.feature.reservation.ticket_detail.state
 
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 
 sealed class ReservationDetailState {
     data object Loading : ReservationDetailState() //  화면 전체를 로딩 상태로 표시할 때 사용되는 상태

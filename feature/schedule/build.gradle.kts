@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:reservation"))
+    implementation(project(":core:data"))
 }

@@ -19,9 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.component.button.FixedBottomButton
+import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionMethodSection
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionSectionFooter
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionSectionHeader
@@ -29,6 +27,7 @@ import com.hobbyloop.feature.reservation.reservation_completion.component.Reserv
 import com.hobbyloop.feature.reservation.reservation_completion.component.top_bar.ReservationCompletionTopBar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import theme.HobbyLoopColor
 
 @Composable
 internal fun ReservationCompletionScreen(
@@ -83,7 +82,7 @@ internal fun ReservationCompletionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp)
-                        .background(Gray20)
+                        .background(HobbyLoopColor.Gray20)
                 )
 
                 ReservationCompletionMethodSection(
@@ -99,7 +98,7 @@ internal fun ReservationCompletionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp)
-                        .background(Gray20)
+                        .background(HobbyLoopColor.Gray20)
                 )
 
                 ReservationCompletionUserInfoSection(
@@ -112,7 +111,7 @@ internal fun ReservationCompletionScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp)
-                        .background(Gray20)
+                        .background(HobbyLoopColor.Gray20)
                 )
 
                 ReservationCompletionSectionFooter(
@@ -128,7 +127,7 @@ internal fun ReservationCompletionScreen(
                 isSelected = true,
                 onClick = navigateToReservationHome,
                 text = "예약하기",
-                selectedColor = Purple,
+                selectedColor = HobbyLoopColor.Primary,
                 unselectedColor = Color.Gray,
                 modifier = Modifier
                     .fillMaxWidth()

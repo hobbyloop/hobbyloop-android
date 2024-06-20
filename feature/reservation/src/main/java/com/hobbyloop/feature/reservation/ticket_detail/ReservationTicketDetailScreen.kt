@@ -34,24 +34,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.component.button.FixedBottomButton
-import com.hobbyloop.feature.reservation.component.top_bar.ReservationDetailTopAppBar
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
+import com.hobbyloop.feature.reservation.component.top_bar.ReservationTitleAppBar
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassContent
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassPager
 import com.hobbyloop.feature.reservation.ticket_detail.component.InstructorInfo
-import com.hobbyloop.feature.reservation.ticket_detail.component.bottom_sheet.ClassWaitRegistration
+import com.hobbyloop.feature.reservation.ticket_detail.component.ClassWaitRegistrationContent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailState
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailSideEffect
-import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.CalendarView
+import com.hobbyloop.core.ui.componenet.yearly_calendar.CalendarView
+import com.hobbyloop.data.repository.local.calendar.model.DaySelected
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import theme.HobbyLoopColor
 
 @Composable
 internal fun ReservationTicketDetailScreen(
@@ -100,7 +99,7 @@ internal fun ReservationTicketDetailScreen(
     selectedWaitClassInfo: ClassInfo? = null,
     isInstructorDetailsVisible: Boolean = false,
     isReservationBottomSheetOpen: Boolean = false,
-    bottomSheetMode: BottomSheetMode = BottomSheetMode.BOTTOM_SHEET_SCAFFOLD, // 기본 값으로 BOTTOM_SHEET_SCAFFOLD 로 설정
+    bottomSheetMode: BottomSheetMode = BottomSheetMode.MODAL_BOTTOM_SHEET, // 기본 값으로 MODAL_BOTTOM_SHEET 로 설정
     onCloseClick: () -> Unit = { },
     navigateToReservationClassDetail: () -> Unit = { },
     handleIntent: (ReservationTicketDetailIntent) -> Unit = { }
@@ -175,7 +174,7 @@ internal fun ReservationTicketDetailScreen(
         BottomSheetMode.MODAL_BOTTOM_SHEET -> {
             Scaffold(
                 topBar = {
-                    ReservationDetailTopAppBar(
+                    ReservationTitleAppBar(
                         title = centerName,
                         onCloseClick = onCloseClick
                     )
@@ -190,7 +189,7 @@ internal fun ReservationTicketDetailScreen(
                 ) {
                     if (classInfoList.isEmpty()) {
                         CircularProgressIndicator(
-                            color = Purple,
+                            color = HobbyLoopColor.Primary,
                             modifier = Modifier.align(Alignment.Center)
                         )
                     } else {
@@ -205,7 +204,7 @@ internal fun ReservationTicketDetailScreen(
                                 onResetInstructorDetailsVisible = {
                                     handleIntent(ReservationTicketDetailIntent.ResetInstructorDetailsVisible)
                                 }
-                            ) { daySelected ->
+                            ) { daySelected: DaySelected ->
                                 Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -214,7 +213,7 @@ internal fun ReservationTicketDetailScreen(
                                     Crossfade(
                                         targetState = daySelected.classInfoList,
                                         label = "ClassChangeAnimation"
-                                    ) { reservation ->
+                                    ) { reservation: List<Pair<Instructor, List<ClassInfo>>>? ->
                                         if (reservation != null) {
                                             ClassPager(
                                                 classInfo = reservation,
@@ -241,7 +240,7 @@ internal fun ReservationTicketDetailScreen(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .height(16.dp)
-                                                        .background(Gray20)
+                                                        .background(HobbyLoopColor.Gray20)
                                                 )
 
                                                 // 가능수업 + 수업에 대한 정보를 보여주는 Column 컴포저블
@@ -287,8 +286,8 @@ internal fun ReservationTicketDetailScreen(
                                 navigateToReservationClassDetail()
                             },
                             text = "선택완료",
-                            selectedColor = Purple,
-                            unselectedColor = Gray60,
+                            selectedColor = HobbyLoopColor.Primary,
+                            unselectedColor = HobbyLoopColor.Gray60,
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
                                 .fillMaxWidth()
@@ -309,7 +308,7 @@ internal fun ReservationTicketDetailScreen(
                             },
                             containerColor = Color.White
                         ) {
-                            ClassWaitRegistration(
+                            ClassWaitRegistrationContent(
                                 isUpdating = isUpdating,
                                 onRegisterWaitClick = {
                                     selectedWaitClassInfo?.let {
@@ -330,7 +329,7 @@ internal fun ReservationTicketDetailScreen(
             BottomSheetScaffold(
                 scaffoldState = bottomSheetState as BottomSheetScaffoldState,
                 sheetContent = {
-                    ClassWaitRegistration(
+                    ClassWaitRegistrationContent(
                         isUpdating = isUpdating,
                         onRegisterWaitClick = {
                             selectedWaitClassInfo?.let {
@@ -348,7 +347,7 @@ internal fun ReservationTicketDetailScreen(
             ) {
                 Scaffold(
                     topBar = {
-                        ReservationDetailTopAppBar(
+                        ReservationTitleAppBar(
                             title = centerName,
                             onCloseClick = onCloseClick
                         )
@@ -363,7 +362,7 @@ internal fun ReservationTicketDetailScreen(
                     ) {
                         if (classInfoList.isEmpty()) {
                             CircularProgressIndicator(
-                                color = Purple,
+                                color = HobbyLoopColor.Primary,
                                 modifier = Modifier.align(Alignment.Center)
                             )
                         } else {
@@ -414,7 +413,7 @@ internal fun ReservationTicketDetailScreen(
                                                         modifier = Modifier
                                                             .fillMaxWidth()
                                                             .height(16.dp)
-                                                            .background(Gray20)
+                                                            .background(HobbyLoopColor.Gray20)
                                                     )
 
                                                     // 가능수업 + 수업에 대한 정보를 보여주는 Column 컴포저블
@@ -460,8 +459,8 @@ internal fun ReservationTicketDetailScreen(
                                     navigateToReservationClassDetail()
                                 },
                                 text = "선택완료",
-                                selectedColor = Purple,
-                                unselectedColor = Gray60,
+                                selectedColor = HobbyLoopColor.Primary,
+                                unselectedColor = HobbyLoopColor.Gray60,
                                 modifier = Modifier
                                     .align(Alignment.BottomCenter)
                                     .fillMaxWidth()

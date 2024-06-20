@@ -20,13 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.section.SectionHeader
-import com.hobbyloop.feature.reservation.component.text_field.ClassDetailReservationTextField
-import com.hobbyloop.feature.reservation.component.text_field.TextFieldStyle
-import com.hobbyloop.feature.reservation.util.TextFieldUtil
+import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
+import com.hobbyloop.core.ui.componenet.textfield.CustomizableTextField
+import com.hobbyloop.core.ui.componenet.textfield.TextFieldStyle
+import com.hobbyloop.core.ui.util.TextFieldUtil
+import com.hobbyloop.ui.R
+import theme.HobbyLoopColor
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -51,9 +50,9 @@ fun ClassDetailReservationInformation(
         ) {
             SectionHeader(
                 title = "예약자 정보",
-                iconRes = R.drawable.user_ic,
+                iconRes = R.drawable.ic_user_color,
                 isIconTintEnabled = true,
-                iconTint = Purple,
+                iconTint = HobbyLoopColor.Primary,
                 iconDescription = "공지사항 아이콘",
                 textStyle = TextStyle(
                     color = Color.Black,
@@ -67,7 +66,7 @@ fun ClassDetailReservationInformation(
             Text(
                 text = "정보는 마이페이지에서 수정 가능해요.",
                 style = TextStyle(
-                    color = Gray60,
+                    color = HobbyLoopColor.Gray60,
                     fontSize = 12.sp,
                     fontWeight = FontWeight(500),
                 )
@@ -82,7 +81,7 @@ fun ClassDetailReservationInformation(
             )
         )
 
-        ClassDetailReservationTextField(
+        CustomizableTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             textFieldStyle = TextFieldStyle.KOREAN_NAME_STYLE,
@@ -104,7 +103,7 @@ fun ClassDetailReservationInformation(
             )
         )
 
-        ClassDetailReservationTextField(
+        CustomizableTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             textFieldStyle = TextFieldStyle.PHONE_NUMBER_STYLE,

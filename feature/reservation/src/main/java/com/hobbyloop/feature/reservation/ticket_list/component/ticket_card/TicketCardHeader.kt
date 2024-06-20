@@ -20,11 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Gray40
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.button.SurfaceButton
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.button.SurfaceButton
+import theme.HobbyLoopColor
 
 @Composable
 fun TicketCardHeader(
@@ -47,18 +45,18 @@ fun TicketCardHeader(
                 .clip(CircleShape)
                 .border(
                     width = 2.dp,
-                    color = Gray20,
+                    color = HobbyLoopColor.Gray20,
                     shape = CircleShape
                 ),
-            placeholder = painterResource(id = R.drawable.loading_ic),
-            error = painterResource(id = R.drawable.loading_ic)
+            placeholder = painterResource(id = R.drawable.ic_close),
+            error = painterResource(id = R.drawable.ic_close)
         )
 
         Text(
             text = centerName,
             fontWeight = FontWeight(700),
             fontSize = 16.sp,
-            color = Gray60
+            color = HobbyLoopColor.Gray60
         )
 
         if (isRefundable) {
@@ -69,7 +67,7 @@ fun TicketCardHeader(
                 fontSize = 14.sp,
                 selectable = false,
                 unselectedTextColor = Color.Black,
-                unselectedBorderColor = Gray40,
+                unselectedBorderColor = HobbyLoopColor.Gray40,
                 shape =  RoundedCornerShape(999.dp),
                 borderWidth = 1.dp,
                 isSelected = false,

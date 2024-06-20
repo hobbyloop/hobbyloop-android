@@ -2,8 +2,8 @@ package com.hobbyloop.feature.reservation.ticket_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailState
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailSideEffect

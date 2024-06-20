@@ -1,6 +1,6 @@
 package com.hobbyloop.feature.reservation.ticket_detail.state
 
-import com.hobbyloop.feature.reservation.model.ClassInfo
+import com.hobbyloop.domain.entity.class_info.ClassInfo
 
 sealed class ReservationTicketDetailIntent {
     data object LoadClasses : ReservationTicketDetailIntent()

@@ -33,14 +33,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Gray40
-import com.hobbyloop.feature.reservation.Purple
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.box.OutlinedGradientBox
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Instructor
-import com.hobbyloop.feature.reservation.ticket_detail.yearly_calendar.util.YearlyCalendarUtils
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.box.OutlinedGradientBox
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils
+import theme.HobbyLoopColor
 
 @Composable
 fun ClassContent(
@@ -77,7 +75,7 @@ fun ClassContent(
 fun ClassesTitle() {
     Row {
         Icon(
-            painter = painterResource(id = R.drawable.clock_ic),
+            painter = painterResource(id = R.drawable.ic_time_color),
             contentDescription = "가능수업 아이콘",
             tint = Color.Unspecified
         )
@@ -155,7 +153,7 @@ fun ClassInfoBox(
         ),
         isSelectedColorAvailable = true,
         isSelected = isSelected,
-        unSelectedColor = Gray20,
+        unSelectedColor = HobbyLoopColor.Gray20,
         onClick = onSelect
     ) {
         if (classInfo.fullReservationCount == classInfo.currentReservationCount) {
@@ -164,7 +162,7 @@ fun ClassInfoBox(
                     .align(Alignment.TopEnd)
                     .padding(end = 26.dp, top = 8.dp)
                     .background(
-                        color = Purple.copy(alpha = 0.3f),
+                        color = HobbyLoopColor.Primary.copy(alpha = 0.3f),
                         shape = RoundedCornerShape(12.dp)
                     )
                     .clickable(
@@ -178,7 +176,7 @@ fun ClassInfoBox(
             ) {
                 Text(
                     text = "대기가능",
-                    color = Purple,
+                    color = HobbyLoopColor.Primary,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -209,7 +207,7 @@ fun ClassInfoBox(
                 )
                 Text(
                     text = classInfo.difficulty,
-                    color = Purple,
+                    color = HobbyLoopColor.Primary,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )
@@ -219,7 +217,7 @@ fun ClassInfoBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(1.dp)
-                    .background(Gray40)
+                    .background(HobbyLoopColor.Gray40)
             )
 
             Row(
@@ -227,7 +225,7 @@ fun ClassInfoBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.user_ic),
+                    painter = painterResource(id = R.drawable.ic_user_color),
                     contentDescription = "유저 아이콘"
                 )
 
@@ -239,7 +237,7 @@ fun ClassInfoBox(
 
                 Text(
                     text = "${classInfo.currentReservationCount}",
-                    color = Purple,
+                    color = HobbyLoopColor.Primary,
                     fontSize = 14.sp
                 )
 
@@ -258,14 +256,14 @@ fun ClassInfoBox(
 fun ClassTimeRow(classInfo: ClassInfo) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Icon(
-            painter = painterResource(id = R.drawable.dot_ic),
-            tint = Purple,
+            painter = painterResource(id = com.hobbyloop.ui.R.drawable.ic_dot),
+            tint = HobbyLoopColor.Primary,
             contentDescription = "가능한 시간 표시 점",
         )
 
         Spacer(modifier = Modifier.width(6.dp))
 
-        Text(text = YearlyCalendarUtils.extractTime(classInfo.dateTime))
+        Text(text = com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils.extractTime(classInfo.dateTime))
     }
 }
 

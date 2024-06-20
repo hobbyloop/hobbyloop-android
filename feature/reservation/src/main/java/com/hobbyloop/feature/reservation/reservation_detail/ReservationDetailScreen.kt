@@ -21,16 +21,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.Purple
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationInformation
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationMethod
-import com.hobbyloop.feature.reservation.component.ticket.TicketCard
+import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassNoticeSection
-import com.hobbyloop.feature.reservation.component.button.FixedBottomButton
-import com.hobbyloop.feature.reservation.component.top_bar.ReservationDetailTopAppBar
+import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
+import com.hobbyloop.feature.reservation.component.top_bar.ReservationTitleAppBar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import theme.HobbyLoopColor
+import theme.HobbyLoopColor.Gray20
 
 @Composable
 internal fun ReservationDetailScreen(
@@ -88,7 +88,7 @@ internal fun ReservationDetailScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationDetailTopAppBar(
+            ReservationTitleAppBar(
                 title = "수업 예약",
                 onCloseClick = onCloseClick
             )
@@ -176,7 +176,7 @@ internal fun ReservationDetailScreen(
                 isSelected = isNameValid && isPhoneNumberValid && name.isNotEmpty() && phoneNumber.isNotEmpty(),
                 onClick = { navigateToReservationCompletion() },
                 text = "예약하기",
-                selectedColor = Purple,
+                selectedColor = HobbyLoopColor.Primary,
                 unselectedColor = Color.Gray,
                 modifier = Modifier
                     .fillMaxWidth()

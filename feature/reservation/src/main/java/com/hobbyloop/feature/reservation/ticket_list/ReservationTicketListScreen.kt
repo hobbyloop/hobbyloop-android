@@ -15,15 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.hobbyloop.feature.reservation.Gray20
-import com.hobbyloop.feature.reservation.model.CenterInfo
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Ticket
+import com.hobbyloop.domain.entity.center.CenterInfo
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.ticket.TicketInfo
 import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
 import com.hobbyloop.feature.reservation.ticket_list.component.ticket_card.TicketCard
-import com.hobbyloop.feature.reservation.ticket_list.component.top_bar.ReservationTicketListAppBar
+import com.hobbyloop.core.ui.componenet.reservation.top_bar.ReservationNavBar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import theme.HobbyLoopColor
 
 @Composable
 internal fun ReservationTicketListScreen(
@@ -45,12 +45,12 @@ internal fun ReservationTicketListScreen(
 
 @Composable
 internal fun ReservationTicketListScreen(
-    ticketList: List<Ticket>,
+    ticketList: List<TicketInfo>,
     navigateToReservationTicketDetail: (classId: String) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            ReservationTicketListAppBar(
+            ReservationNavBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(66.dp)
@@ -92,7 +92,7 @@ internal fun ReservationTicketListScreen(
                     Spacer(modifier = Modifier
                         .fillMaxWidth()
                         .height(16.dp)
-                        .background(Gray20))
+                        .background(HobbyLoopColor.Gray20))
                 }
             }
         }
@@ -150,23 +150,23 @@ fun PreviewReservationTicketListScreen() {
         ClassInfo(8, "2024-05-14 10:00 - 11:00", "고급 필라테스", "고급", 7, 7)
     )
 
-    val ticket1 = Ticket(
+    val ticket1 = TicketInfo(
         ticketInfo = Pair(centerInfo1, classInfoList1)
     )
 
-    val ticket2 = Ticket(
+    val ticketInfo = TicketInfo(
         ticketInfo = Pair(centerInfo2, classInfoList2)
     )
 
-    val ticket3 = Ticket(
+    val ticket3 = TicketInfo(
         ticketInfo = Pair(centerInfo3, classInfoList3)
     )
 
-    val ticket4 = Ticket(
+    val ticket4 = TicketInfo(
         ticketInfo = Pair(centerInfo4, classInfoList4)
     )
 
-    val ticketList = listOf(ticket1, ticket2, ticket3, ticket4)
+    val ticketList = listOf(ticket1, ticketInfo, ticket3, ticket4)
 
     ReservationTicketListScreen(
         ticketList = ticketList,

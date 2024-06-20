@@ -1,9 +1,9 @@
 package com.hobbyloop.feature.reservation.ticket_list
 
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.feature.reservation.model.CenterInfo
-import com.hobbyloop.feature.reservation.model.ClassInfo
-import com.hobbyloop.feature.reservation.model.Ticket
+import com.hobbyloop.domain.entity.center.CenterInfo
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.ticket.TicketInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container
@@ -43,7 +43,7 @@ class ReservationTicketListViewModel @Inject constructor() : ViewModel(),
     }
 
 
-    fun createDummyTicketList(): List<Ticket> {
+    fun createDummyTicketList(): List<TicketInfo> {
         val centerInfo1 = CenterInfo(
             centerId = 1.toString(),
             centerProfileImageUrl = "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzAyMDNfMTc0%2FMDAxNjc1NDA2NjgzNzI1.9DYXly_t1f9R0B65qD6OUXEgV3KHE1l_1SF_SiTH83sg.mcvrKhIgHJwr7l6_DkDv_6aVfLMSbK_AVERzDvIPV8gg.JPEG.brandingpicks%2F%25B1%25E2%25BE%25F7_%25C8%25B8%25BB%25E7_%25B7%25CE%25B0%25ED%25B5%25F0%25C0%25DA%25C0%25CE_%25C1%25A6%25C0%25DB8.jpg&type=sc960_832",
@@ -92,23 +92,23 @@ class ReservationTicketListViewModel @Inject constructor() : ViewModel(),
             ClassInfo(8, "2024-05-14 10:00 - 11:00", "고급 필라테스", "고급", 7, 7)
         )
 
-        val ticket1 = Ticket(
+        val ticket1 = TicketInfo(
             ticketInfo = Pair(centerInfo1, classInfoList1)
         )
 
-        val ticket2 = Ticket(
+        val ticketInfo = TicketInfo(
             ticketInfo = Pair(centerInfo2, classInfoList2)
         )
 
-        val ticket3 = Ticket(
+        val ticket3 = TicketInfo(
             ticketInfo = Pair(centerInfo3, classInfoList3)
         )
 
-        val ticket4 = Ticket(
+        val ticket4 = TicketInfo(
             ticketInfo = Pair(centerInfo4, classInfoList4)
         )
 
-        return listOf(ticket1, ticket2, ticket3, ticket4)
+        return listOf(ticket1, ticketInfo, ticket3, ticket4)
     }
 }
 
@@ -116,7 +116,7 @@ class ReservationTicketListViewModel @Inject constructor() : ViewModel(),
 @Immutable
 data class TicketListState(
     val classId: String = "",
-    val ticketList: List<Ticket> = emptyList()
+    val ticketList: List<TicketInfo> = emptyList()
 )
 
 sealed interface TicketListStateSideEffect {

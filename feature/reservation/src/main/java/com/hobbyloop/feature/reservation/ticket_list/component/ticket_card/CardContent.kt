@@ -20,10 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.feature.reservation.Gray60
-import com.hobbyloop.feature.reservation.R
-import com.hobbyloop.feature.reservation.component.box.GradientBox
-import com.hobbyloop.feature.reservation.component.button.RoundRippleIcon
+import com.hobbyloop.ui.R
+import com.hobbyloop.core.ui.componenet.box.GradientBox
+import com.hobbyloop.core.ui.componenet.button.RoundRippleIcon
+import theme.HobbyLoopColor
 
 @Composable
 fun CardContent(
@@ -72,7 +72,7 @@ fun CardContent(
                 text = classPeriod,
                 fontWeight = FontWeight(500),
                 fontSize = 12.sp,
-                color = Gray60
+                color = HobbyLoopColor.Gray60
             )
         }
 
@@ -80,7 +80,7 @@ fun CardContent(
 
         RoundRippleIcon(
             iconSize = 26.dp,
-            iconResId = R.drawable.arrow_right_ic,
+            iconResId = R.drawable.ic_right,
             contentDescription = "수업 예약 상세보기 이동",
             onClick = { navigateToReservationTicketDetail(classId) }
         )
