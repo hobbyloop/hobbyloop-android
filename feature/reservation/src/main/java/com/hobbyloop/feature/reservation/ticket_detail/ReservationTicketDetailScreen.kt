@@ -46,7 +46,7 @@ import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailSt
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailSideEffect
 import com.hobbyloop.core.ui.componenet.yearly_calendar.CalendarView
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelected
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

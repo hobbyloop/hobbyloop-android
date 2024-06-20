@@ -35,9 +35,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hobbyloop.ui.R
 import com.hobbyloop.core.ui.componenet.box.OutlinedGradientBox
+import com.hobbyloop.core.ui.util.TextUtil.extractTime
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
-import com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils
 import theme.HobbyLoopColor
 
 @Composable
@@ -263,7 +263,7 @@ fun ClassTimeRow(classInfo: ClassInfo) {
 
         Spacer(modifier = Modifier.width(6.dp))
 
-        Text(text = com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils.extractTime(classInfo.dateTime))
+        Text(text = extractTime(classInfo.dateTime))
     }
 }
 

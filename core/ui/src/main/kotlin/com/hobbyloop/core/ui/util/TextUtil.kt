@@ -50,4 +50,10 @@ object TextUtil {
             this
         }
     }
+
+    // 정규 표현식을 사용하여 HH:mm - HH:mm" 형식의 시간 부분을 추출하는 함수
+    fun extractTime(dateTime: String): String {
+        val regex = "\\d{2}:\\d{2} - \\d{2}:\\d{2}".toRegex() // "HH:mm - HH:mm" 형식 매칭
+        return regex.find(dateTime)?.value ?: "시간 정보 없음" // 매칭되는 첫 번째 결과 반환, 없으면 기본 텍스트 반환
+    }
 }

@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.yearly_calendar.component.DaysOfMonth
 import com.hobbyloop.core.ui.componenet.yearly_calendar.component.MonthHeader
-import com.hobbyloop.data.repository.local.calendar.model.CalendarDay
-import com.hobbyloop.data.repository.local.calendar.model.CalendarMonth
-import com.hobbyloop.data.repository.local.calendar.model.CalendarYear
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
-import com.hobbyloop.data.repository.local.calendar.model.DaySelectedStatus
+import com.hobbyloop.domain.entity.calendar.CalendarDay
+import com.hobbyloop.domain.entity.calendar.CalendarMonth
+import com.hobbyloop.domain.entity.calendar.CalendarYear
+import com.hobbyloop.domain.entity.calendar.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelectedStatus
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarIntent
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarSideEffect
 import com.hobbyloop.domain.entity.class_info.ClassInfo

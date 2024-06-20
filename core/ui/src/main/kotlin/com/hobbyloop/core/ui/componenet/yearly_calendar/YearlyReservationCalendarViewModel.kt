@@ -1,18 +1,18 @@
 package com.hobbyloop.core.ui.componenet.yearly_calendar
 
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.data.repository.local.calendar.model.CalendarMonth
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
-import com.hobbyloop.data.repository.local.calendar.model.DaySelectedStatus
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarEvent
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarIntent
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarSideEffect
 import com.hobbyloop.core.ui.componenet.yearly_calendar.state.YearlyCalendarState
-import com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils.getCurrentDate
-import com.hobbyloop.data.repository.local.calendar.YearlyCalendarUtils.getCurrentMonthIndex
-import com.hobbyloop.data.repository.local.calendar.DatesRepository
+import com.hobbyloop.core.ui.util.YearlyCalendarUtils.getCurrentDate
+import com.hobbyloop.core.ui.util.YearlyCalendarUtils.getCurrentMonthIndex
+import com.hobbyloop.domain.entity.calendar.CalendarMonth
+import com.hobbyloop.domain.entity.calendar.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelectedStatus
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.domain.usecase.calendar.GetYearsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
@@ -27,14 +27,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class YearlyReservationCalendarViewModel @Inject constructor(
-    private val datesRepository: DatesRepository
+    private val getYearsUseCase: GetYearsUseCase
 ) : ViewModel(), ContainerHost<YearlyCalendarState, YearlyCalendarSideEffect> {
 
     override val container: Container<YearlyCalendarState, YearlyCalendarSideEffect> = container(
         initialState = YearlyCalendarState(
-            calendarYear = datesRepository.calendarYear,
+            calendarYear = getYearsUseCase(),
             selectedMonthIndex = getCurrentMonthIndex(startYear = 2024),
-            selectedMonth = datesRepository.calendarYear[getCurrentMonthIndex(startYear = 2024)],
+            selectedMonth = getYearsUseCase()[getCurrentMonthIndex(startYear = 2024)],
         ),
         buildSettings = {
             this.exceptionHandler = CoroutineExceptionHandler { _, throwable ->

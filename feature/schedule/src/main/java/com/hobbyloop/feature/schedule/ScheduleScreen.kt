@@ -24,7 +24,7 @@ import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
 import com.hobbyloop.core.ui.componenet.reservation.top_bar.ReservationNavBar
 import com.hobbyloop.core.ui.componenet.yearly_calendar.YearlyReservationCalendar
 import com.hobbyloop.core.ui.util.TextUtil.toTicketInfoFormattedString
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
 import org.orbitmvi.orbit.compose.collectAsState

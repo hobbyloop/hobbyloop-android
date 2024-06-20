@@ -1,16 +1,15 @@
 package com.hobbyloop.core.ui.componenet.monthly_calendar
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.hobbyloop.data.repository.local.calendar.DatesRepository
-import com.hobbyloop.domain.entity.class_info.ClassInfo
-import com.hobbyloop.domain.entity.class_info.Instructor
-import com.hobbyloop.domain.entity.calendar.DateInfo
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarEvent
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarIntent
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarSideEffect
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarState
 import com.hobbyloop.core.ui.componenet.monthly_calendar.util.MonthlyCalendarUtils
+import com.hobbyloop.domain.entity.calendar.DateInfo
+import com.hobbyloop.domain.entity.class_info.ClassInfo
+import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.domain.usecase.calendar.GetCurrentMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
@@ -29,7 +28,7 @@ const val bufferCount = 4
 
 @HiltViewModel
 class CurrentMonthCalendarViewModel @Inject constructor(
-    private val datesRepository: DatesRepository
+    private val getCurrentMonthUseCase: GetCurrentMonthUseCase
 ) : ViewModel(), ContainerHost<CurrentMonthCalendarState, CurrentMonthCalendarSideEffect> {
 
     override val container: Container<CurrentMonthCalendarState, CurrentMonthCalendarSideEffect> = container(
@@ -179,7 +178,7 @@ class CurrentMonthCalendarViewModel @Inject constructor(
      * - 이를 위해 inputBufferCount는 4로 고정되어 있으며, 앞뒤로 버퍼 데이터를 생성함
      */
     private fun prepareDateListWithBuffers(inputBufferCount: Int): List<DateInfo> {
-        val dataList = datesRepository.datesOfCurrentMonth
+        val dataList = getCurrentMonthUseCase()
         val bufferDateInfo = DateInfo(year = -1, month = -1, day = -1, dayOfWeek = "")
 
         val bufferList = List(inputBufferCount) { bufferDateInfo }

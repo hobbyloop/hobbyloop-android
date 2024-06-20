@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.hobbyloop.core.ui.componenet.button.NavigationIconButton
 import com.hobbyloop.core.ui.componenet.monthly_calendar.CurrentMonthlyReservationCalendar
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
 import com.hobbyloop.ui.R

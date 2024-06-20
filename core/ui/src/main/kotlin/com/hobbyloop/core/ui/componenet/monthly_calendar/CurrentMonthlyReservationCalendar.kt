@@ -36,7 +36,7 @@ import com.hobbyloop.core.ui.componenet.monthly_calendar.component.MonthlyCalend
 import com.hobbyloop.domain.entity.calendar.DateInfo
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarIntent
 import com.hobbyloop.core.ui.componenet.monthly_calendar.state.CurrentMonthCalendarSideEffect
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
 import com.hobbyloop.ui.R

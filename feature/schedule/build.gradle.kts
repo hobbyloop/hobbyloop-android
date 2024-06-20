@@ -5,7 +5,3 @@ plugins {
 android {
     namespace = "com.hobbyloop.feature.schedule"
 }
-
-dependencies {
-    implementation(project(":core:data"))
-}

@@ -2,7 +2,7 @@ package com.hobbyloop.core.ui.componenet.yearly_calendar.state
 
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelected
 
 sealed class YearlyCalendarIntent {
     data class LoadReservations(val classInfo: List<Pair<Instructor, List<ClassInfo>>>) : YearlyCalendarIntent()

@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hobbyloop.data.repository.local.calendar.model.CalendarDay
-import com.hobbyloop.data.repository.local.calendar.model.CalendarMonth
-import com.hobbyloop.data.repository.local.calendar.model.DaySelected
-import com.hobbyloop.data.repository.local.calendar.model.DaySelectedStatus
+import com.hobbyloop.domain.entity.calendar.CalendarDay
+import com.hobbyloop.domain.entity.calendar.CalendarMonth
+import com.hobbyloop.domain.entity.calendar.DaySelected
+import com.hobbyloop.domain.entity.calendar.DaySelectedStatus
 import theme.HobbyLoopColor
 
 @Composable

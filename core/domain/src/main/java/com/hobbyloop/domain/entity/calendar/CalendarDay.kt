@@ -1,4 +1,4 @@
-package com.hobbyloop.data.repository.local.calendar.model
+package com.hobbyloop.domain.entity.calendar
 
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
