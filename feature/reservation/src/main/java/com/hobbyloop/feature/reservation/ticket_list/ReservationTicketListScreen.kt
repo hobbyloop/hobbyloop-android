@@ -1,6 +1,8 @@
 package com.hobbyloop.feature.reservation.ticket_list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,12 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
 import com.hobbyloop.core.ui.componenet.top_bar.ActionIcon
 import com.hobbyloop.core.ui.componenet.top_bar.AppBar
 import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
@@ -27,6 +32,8 @@ import com.hobbyloop.ui.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import theme.HobbyLoopColor
+import theme.HobbyLoopColor.Gray80
+import theme.HobbyLoopTypo
 
 @Composable
 internal fun ReservationTicketListScreen(
@@ -36,7 +43,9 @@ internal fun ReservationTicketListScreen(
     val state = viewModel.collectAsState().value
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is TicketListStateSideEffect.NavigateToReservationTicketDetail -> navigateToReservationTicketDetail(sideEffect.classId)
+            is TicketListStateSideEffect.NavigateToReservationTicketDetail -> navigateToReservationTicketDetail(
+                sideEffect.classId
+            )
         }
     }
 
@@ -77,39 +86,82 @@ internal fun ReservationTicketListScreen(
         },
         containerColor = Color.White,
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ) {
-            item {
-                ReservationTicketListHeader(totalTicketCount = ticketList.size)
-            }
+        if (ticketList.isNotEmpty()) {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+            ) {
+                item {
+                    ReservationTicketListHeader(totalTicketCount = ticketList.size)
+                }
 
-            items(
-                count = ticketList.size,
-                key = { index -> ticketList[index].ticketInfo.first.centerId }
-            ) { index ->
-                ticketList[index].let { ticket ->
-                    TicketCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(16.dp),
-                        centerIconImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
-                        centerName = ticket.ticketInfo.first.centerName,
-                        isRefundable = ticket.ticketInfo.first.isRefundable,
-                        classInfoList = ticket.ticketInfo.second,
-                        navigateToReservationTicketDetail = { ticketId ->
-                            navigateToReservationTicketDetail(ticketId)
-                        }
+                items(
+                    count = ticketList.size,
+                    key = { index -> ticketList[index].ticketInfo.first.centerId }
+                ) { index ->
+                    ticketList[index].let { ticket ->
+                        TicketCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(16.dp),
+                            centerIconImageUrl = ticket.ticketInfo.first.centerProfileImageUrl,
+                            centerName = ticket.ticketInfo.first.centerName,
+                            isRefundable = ticket.ticketInfo.first.isRefundable,
+                            classInfoList = ticket.ticketInfo.second,
+                            navigateToReservationTicketDetail = { ticketId ->
+                                navigateToReservationTicketDetail(ticketId)
+                            }
+                        )
+
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(16.dp)
+                                .background(HobbyLoopColor.Gray20)
+                        )
+                    }
+                }
+            }
+        } else {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "등록된 이용권이 없어",
+                        style = HobbyLoopTypo.body14.copy(color = Gray80)
                     )
 
-                    Spacer(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
-                        .background(HobbyLoopColor.Gray20))
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "수업을 예약할 수 없어요 \uD83E\uDD72",
+                        style = HobbyLoopTypo.body14.copy(color = Gray80)
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(18.dp))
+
+                FixedBottomButton(
+                    isSelected = true,
+                    onClick = {
+                        // TODO 이용권 구매화면으로 이동
+                    },
+                    text = "이용권 구매하러 가기",
+                    selectedColor = HobbyLoopColor.Primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .padding(horizontal = 16.dp)
+                )
             }
         }
     }
@@ -186,6 +238,15 @@ fun PreviewReservationTicketListScreen() {
 
     ReservationTicketListScreen(
         ticketList = ticketList,
+        navigateToReservationTicketDetail = {}
+    )
+}
+
+@Preview
+@Composable
+fun PreviewReservationTicketEmptyListScreen() {
+    ReservationTicketListScreen(
+        ticketList = emptyList(),
         navigateToReservationTicketDetail = {}
     )
 }
