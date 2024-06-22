@@ -9,15 +9,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
 import com.hobbyloop.ui.R
-import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
+import theme.HobbyLoopTypo
 
 @Composable
 fun ClassNoticeSection(
@@ -32,20 +30,12 @@ fun ClassNoticeSection(
             title = "공지사항",
             iconRes = R.drawable.ic_megaphone_color,
             iconDescription = "공지사항 아이콘",
-            textStyle = TextStyle(
-                color = Color.Black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight(700),
-            )
+            textStyle = HobbyLoopTypo.head16
         )
 
         Text(
             text = notice,
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontWeight = FontWeight(500),
-                lineHeight = 22.sp
-            ),
+            style = HobbyLoopTypo.body14.copy(lineHeight = 22.sp),
             maxLines = 3,
             overflow = TextOverflow.Ellipsis
         )

@@ -13,7 +13,6 @@ object HobbyLoopColor {
     val Gray20 = Color(0xFFF9F9F9)
 
     val White = Color(0xFFFFFFFF)
-    val Black = Color(0xFF000000)
 
     val Alert = Color(0xFFEB2323)
 }

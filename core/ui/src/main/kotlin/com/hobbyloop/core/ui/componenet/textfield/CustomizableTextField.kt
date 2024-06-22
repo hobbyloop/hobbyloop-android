@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import theme.HobbyLoopColor
+import theme.pretendard
 
 @Composable
 fun CustomizableTextField(
@@ -96,6 +97,7 @@ fun CustomizableTextField(
             ),
         singleLine = true,
         textStyle = TextStyle(
+            fontFamily = pretendard,
             color = textColor,
             fontSize = textSize,
             fontWeight = fontWeight

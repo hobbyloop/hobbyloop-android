@@ -25,8 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +34,7 @@ import com.hobbyloop.core.ui.componenet.box.OutlinedGradientBox
 import com.hobbyloop.core.ui.componenet.divider.DottedVerticalDivider
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun TicketCard(
@@ -73,14 +72,15 @@ fun TicketCard(
             ) {
                 Column(
                     modifier = Modifier
-                        .width(234.dp)
+                        .width(245.dp)
                         .fillMaxHeight()
                         .padding(start = 24.dp, end = 20.dp)
                         .padding(vertical = 20.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         AsyncImage(
                             model = centerIconImageUrl,
@@ -96,10 +96,7 @@ fun TicketCard(
                         Column {
                             Text(
                                 text = classTitle,
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight(500),
-                                ),
+                                style = HobbyLoopTypo.body14,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -108,43 +105,34 @@ fun TicketCard(
 
                             Text(
                                 text = centerName,
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight(500),
-                                ),
-                                color = HobbyLoopColor.Gray60,
+                                style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray60),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
 
+                            Spacer(modifier = Modifier.height(4.dp))
+
                             Text(
                                 text = "$instructorName 강사님",
-                                style = TextStyle(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight(500),
-                                ),
-                                color = HobbyLoopColor.Gray60
+                                style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray60)
                             )
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(3.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Spacer(
                         modifier = Modifier
-                            .width(190.dp)
+                            .fillMaxWidth()
                             .height(1.dp)
                             .background(HobbyLoopColor.Gray20)
                     )
 
-                    Spacer(modifier = Modifier.height(3.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     Text(
                         text = classTime,
-                        style = TextStyle(
-                            fontWeight = FontWeight(500),
-                            fontSize = 14.sp
-                        )
+                        style = HobbyLoopTypo.head14.copy(fontSize = 14.6.sp, lineHeight = 14.6.sp)
                     )
                 }
 
@@ -185,7 +173,7 @@ fun PreviewTicketCard() {
                 classTime = "2023. 5. 12 금 09:00 - 09:50",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(125.dp)
+                    .height(135.dp)
             )
         }
     }

@@ -3,7 +3,6 @@ package com.hobbyloop.feature.home.component
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,9 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.hobbyloop.feature.home.model.HotTicketUiModel
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun HotTicketSection(

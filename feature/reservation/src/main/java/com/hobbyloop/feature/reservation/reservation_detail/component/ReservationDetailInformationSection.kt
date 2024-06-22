@@ -12,22 +12,17 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
 import com.hobbyloop.core.ui.componenet.textfield.CustomizableTextField
 import com.hobbyloop.core.ui.componenet.textfield.TextFieldStyle
 import com.hobbyloop.core.ui.util.TextFieldUtil
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ClassDetailReservationInformation(
     name: String,
@@ -54,31 +49,20 @@ fun ClassDetailReservationInformation(
                 isIconTintEnabled = true,
                 iconTint = HobbyLoopColor.Primary,
                 iconDescription = "공지사항 아이콘",
-                textStyle = TextStyle(
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(700),
-                )
+                textStyle = HobbyLoopTypo.head16
             )
 
             Spacer(modifier = Modifier.width(4.dp))
 
             Text(
                 text = "정보는 마이페이지에서 수정 가능해요.",
-                style = TextStyle(
-                    color = HobbyLoopColor.Gray60,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight(500),
-                )
+                style = HobbyLoopTypo.caption12.copy(HobbyLoopColor.Gray60)
             )
         }
 
         Text(
             text = "이름",
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            )
+            style = HobbyLoopTypo.body16
         )
 
         CustomizableTextField(
@@ -97,10 +81,7 @@ fun ClassDetailReservationInformation(
 
         Text(
             text = "전화번호",
-            style = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            )
+            style = HobbyLoopTypo.body16
         )
 
         CustomizableTextField(

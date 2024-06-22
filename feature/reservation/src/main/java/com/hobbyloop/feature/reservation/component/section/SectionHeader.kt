@@ -1,4 +1,4 @@
-package com.hobbyloop.core.ui.componenet.reservation.section
+package com.hobbyloop.feature.reservation.component.section
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.PaddingValues

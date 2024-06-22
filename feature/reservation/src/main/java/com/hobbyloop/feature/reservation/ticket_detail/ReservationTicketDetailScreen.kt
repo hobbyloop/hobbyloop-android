@@ -35,18 +35,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
-import com.hobbyloop.feature.reservation.component.top_bar.ReservationTitleAppBar
+import com.hobbyloop.core.ui.componenet.top_bar.ActionIcon
+import com.hobbyloop.core.ui.componenet.top_bar.AppBar
+import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
+import com.hobbyloop.core.ui.componenet.yearly_calendar.CalendarView
+import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassContent
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassPager
-import com.hobbyloop.feature.reservation.ticket_detail.component.InstructorInfo
 import com.hobbyloop.feature.reservation.ticket_detail.component.ClassWaitRegistrationContent
+import com.hobbyloop.feature.reservation.ticket_detail.component.InstructorInfo
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationDetailState
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailIntent
 import com.hobbyloop.feature.reservation.ticket_detail.state.ReservationTicketDetailSideEffect
-import com.hobbyloop.core.ui.componenet.yearly_calendar.CalendarView
-import com.hobbyloop.domain.entity.calendar.DaySelected
+import com.hobbyloop.ui.R
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -174,9 +177,18 @@ internal fun ReservationTicketDetailScreen(
         BottomSheetMode.MODAL_BOTTOM_SHEET -> {
             Scaffold(
                 topBar = {
-                    ReservationTitleAppBar(
-                        title = centerName,
-                        onCloseClick = onCloseClick
+                    AppBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(66.dp),
+                        appBarStyle = AppBarStyle.NavigationICAndTitle(
+                            navigationIcon = ActionIcon(
+                                iconResId = R.drawable.ic_back,
+                                contentDescription = "뒤로가기",
+                                onClick = onCloseClick
+                            ),
+                            title = centerName
+                        ),
                     )
                 },
             ) { padding ->
@@ -347,9 +359,18 @@ internal fun ReservationTicketDetailScreen(
             ) {
                 Scaffold(
                     topBar = {
-                        ReservationTitleAppBar(
-                            title = centerName,
-                            onCloseClick = onCloseClick
+                        AppBar(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(66.dp),
+                            appBarStyle = AppBarStyle.NavigationICAndTitle(
+                                navigationIcon = ActionIcon(
+                                    iconResId = com.hobbyloop.ui.R.drawable.ic_back,
+                                    contentDescription = "뒤로가기",
+                                    onClick = onCloseClick
+                                ),
+                                title = centerName
+                            ),
                         )
                     },
                 ) { padding ->

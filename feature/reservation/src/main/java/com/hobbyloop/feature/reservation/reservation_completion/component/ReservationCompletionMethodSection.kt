@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
-import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
 import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
+import com.hobbyloop.ui.R
+import theme.HobbyLoopTypo
 
 @Composable
 fun ReservationCompletionMethodSection(
@@ -37,11 +34,7 @@ fun ReservationCompletionMethodSection(
         SectionHeader(
             title = "예약방법",
             iconRes = R.drawable.ic_ticket_color,
-            textStyle = TextStyle(
-                color = Color.Black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight(700),
-            ),
+            textStyle = HobbyLoopTypo.head16,
             iconDescription = "예약 아이콘",
             iconPadding = PaddingValues(top = 4.dp, bottom = 4.dp, start = 2.75.dp, end = 3.25.dp)
         )
@@ -59,7 +52,7 @@ fun ReservationCompletionMethodSection(
                 classTime = classTime,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(125.dp)
+                    .height(135.dp)
             )
         }
     }

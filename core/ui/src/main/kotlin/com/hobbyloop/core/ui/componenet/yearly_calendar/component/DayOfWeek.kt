@@ -8,9 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.hobbyloop.domain.entity.calendar.DayOfWeek
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun DaysOfWeek(modifier: Modifier = Modifier) {
@@ -27,8 +27,7 @@ fun WeekdayHeader(name: String) {
         Text(
             modifier = Modifier.wrapContentSize(Alignment.Center),
             text = name,
-            color = HobbyLoopColor.Gray60,
-            fontSize = 14.sp
+            style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray60),
         )
     }
 }

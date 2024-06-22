@@ -24,17 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.hobbyloop.ui.R
-import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
 import com.hobbyloop.core.ui.componenet.box.GradientBox
 import com.hobbyloop.core.ui.componenet.button.SurfaceButton
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
+import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun ClassDetailReservationMethod(
@@ -51,11 +50,7 @@ fun ClassDetailReservationMethod(
     ) {
         SectionHeader(
             title = "예약방법",
-            textStyle = TextStyle(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            ),
+            textStyle = HobbyLoopTypo.head16,
             iconRes = R.drawable.ic_ticket_color,
             iconPadding = PaddingValues(top = 5.dp, bottom = 5.dp, start = 2.75.dp, end = 3.25.dp)
         )
@@ -146,11 +141,7 @@ fun ClassDetailReservationMethod(
                 ) {
                     Text(
                         text = "발란스 스튜디오",
-                        style = TextStyle(
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight(500)
-                        )
+                        style = HobbyLoopTypo.caption10.copy(color = HobbyLoopColor.White)
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -158,29 +149,17 @@ fun ClassDetailReservationMethod(
                     ) {
                         Text(
                             text = sessionCount.toString(),
-                            style = TextStyle(
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight(700)
-                            )
+                            style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.White)
                         )
                         Text(
                             text = "회",
-                            style = TextStyle(
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight(500)
-                            )
+                            style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.White)
                         )
                     }
 
                     Text(
                         text = usagePeriod,
-                        style = TextStyle(
-                            color = Color.White,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight(500)
-                        )
+                        style = HobbyLoopTypo.caption10.copy(color = HobbyLoopColor.White)
                     )
                 }
             }

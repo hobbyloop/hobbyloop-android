@@ -8,14 +8,14 @@ import androidx.navigation.navDeepLink
 import com.hobbyloop.core.ui.ROOT_DEEPLINK
 import com.hobbyloop.core.ui.screenFadeIn
 import com.hobbyloop.core.ui.screenFadeOut
-import com.hobbyloop.feature.reservation.reservation_detail.navigateToReservationDetail
-import com.hobbyloop.feature.reservation.reservation_detail.reservationDetailScreen
 import com.hobbyloop.feature.reservation.reservation_completion.navigateToReservationCompletion
 import com.hobbyloop.feature.reservation.reservation_completion.reservationCompletionScreen
-import com.hobbyloop.feature.reservation.ticket_list.RESERVATION_TICKET_LIST_ROUTE
-import com.hobbyloop.feature.reservation.ticket_list.reservationTicketListScreen
+import com.hobbyloop.feature.reservation.reservation_detail.navigateToReservationDetail
+import com.hobbyloop.feature.reservation.reservation_detail.reservationDetailScreen
 import com.hobbyloop.feature.reservation.ticket_detail.navigateToReservationTicketDetail
 import com.hobbyloop.feature.reservation.ticket_detail.reservationCenterDetailScreen
+import com.hobbyloop.feature.reservation.ticket_list.RESERVATION_TICKET_LIST_ROUTE
+import com.hobbyloop.feature.reservation.ticket_list.reservationTicketListScreen
 
 const val RESERVATION_GRAPH_ROUTE = "reservation-graph"
 private const val RESERVATION_DEEPLINK = "$ROOT_DEEPLINK/reservation"
@@ -59,6 +59,7 @@ fun NavGraphBuilder.reservationGraph(
             navigateToReservationHome = {
                 navController.navigate(RESERVATION_TICKET_LIST_ROUTE) {
                     popUpTo(navController.graph.findStartDestination().id) {
+                        inclusive = true
                         saveState = true
                     }
                     launchSingleTop = true

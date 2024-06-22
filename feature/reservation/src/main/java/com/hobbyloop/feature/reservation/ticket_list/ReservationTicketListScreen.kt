@@ -15,12 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hobbyloop.core.ui.componenet.top_bar.ActionIcon
+import com.hobbyloop.core.ui.componenet.top_bar.AppBar
+import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
 import com.hobbyloop.domain.entity.center.CenterInfo
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.ticket.TicketInfo
 import com.hobbyloop.feature.reservation.ticket_list.component.ReservationTicketListHeader
 import com.hobbyloop.feature.reservation.ticket_list.component.ticket_card.TicketCard
-import com.hobbyloop.core.ui.componenet.reservation.top_bar.ReservationNavBar
+import com.hobbyloop.ui.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import theme.HobbyLoopColor
@@ -50,14 +53,27 @@ internal fun ReservationTicketListScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationNavBar(
+            AppBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(66.dp)
-                    .padding(17.dp),
-                onSearchClick = { },
-                onNotificationClick = { },
-            )
+                    .padding(horizontal = 16.dp),
+                appBarStyle = AppBarStyle.NavigationICAndActionIC(
+                    navigationIcon = ActionIcon(
+                        iconResId = R.drawable.logo_small,
+                        contentDescription = "앱 로고"
+                    ),
+                    actionIcons = listOf(
+                        ActionIcon(
+                            iconResId = R.drawable.ic_search,
+                            contentDescription = "검색"
+                        ) {},
+                        ActionIcon(
+                            iconResId = R.drawable.ic_notice,
+                            contentDescription = "알림 확인"
+                        ) {}
+                    )
+                ))
         },
         containerColor = Color.White,
     ) { padding ->

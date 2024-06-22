@@ -3,17 +3,16 @@ package com.hobbyloop.core.ui.componenet.yearly_calendar.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.hobbyloop.core.ui.componenet.button.NavigationIconButton
 import com.hobbyloop.ui.R
+import theme.HobbyLoopColor.Gray100
+import theme.HobbyLoopColor.Gray40
+import theme.HobbyLoopTypo
 
 @Composable
 fun MonthHeader(
@@ -38,14 +37,13 @@ fun MonthHeader(
             iconId = R.drawable.ic_back,
             description = "Previous month",
             onClick = onPreviousMonthClick,
-            enabledColor = LocalContentColor.current,
-            disabledColor = Color.Gray
+            enabledColor = Gray100,
+            disabledColor = Gray40
         )
 
         Text(
             text = "${year}년 ${month}월",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            style = HobbyLoopTypo.head16,
         )
 
         NavigationIconButton(
@@ -53,8 +51,8 @@ fun MonthHeader(
             iconId = R.drawable.ic_right,
             description = "Next month",
             onClick = onNextMonthClick,
-            enabledColor = LocalContentColor.current,
-            disabledColor = Color.Gray
+            enabledColor = Gray100,
+            disabledColor = Gray40
         )
     }
 }

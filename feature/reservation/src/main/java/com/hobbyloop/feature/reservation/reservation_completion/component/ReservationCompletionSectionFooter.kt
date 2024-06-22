@@ -15,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopColor.Gray100
+import theme.HobbyLoopColor.Gray80
+import theme.HobbyLoopTypo
 
 @Composable
 fun ReservationCompletionSectionFooter(modifier: Modifier) {
@@ -35,23 +36,20 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
         ) {
             Text(
                 text = "취소를 원하실 경우, ",
-                style = TextStyle(
-                    fontSize = 13.sp,
-                )
+                style = HobbyLoopTypo.caption12.copy(lineHeight = 21.sp)
             )
             Text(
                 text = "결제하신 업체에 문의 후 취소 가능해요.",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(700)
-                )
+                style = HobbyLoopTypo.head14.copy(lineHeight = 21.sp)
+
             )
         }
+
+        Spacer(modifier = Modifier.height(4.dp))
+
         Text(
             text = "상황에 따라 취소가 불가할 수 있으니 사전에 꼭 알아보세요!",
-            style = TextStyle(
-                fontSize = 13.sp,
-            )
+            style = HobbyLoopTypo.caption12.copy(lineHeight = 21.sp)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -70,10 +68,7 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                 )
                 Text(
                     text = "고객센터 문의 안내",
-                    style = TextStyle(
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight(700)
-                    )
+                    style = HobbyLoopTypo.head14
                 )
             }
 
@@ -85,13 +80,11 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(id = R.drawable.ic_call),
                     contentDescription = "ReservationCallIcon",
+                    tint = Gray100
                 )
                 Text(
                     text = "예약취소 : 업체문의",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        color = HobbyLoopColor.Gray80
-                    )
+                    style = HobbyLoopTypo.caption12.copy(color = Gray80)
                 )
             }
 
@@ -103,13 +96,11 @@ fun ReservationCompletionSectionFooter(modifier: Modifier) {
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(id = R.drawable.ic_chat),
                     contentDescription = "ReservationChatIcon",
+                    tint = Gray100
                 )
                 Text(
                     text = "플랫폼 시스템 오류 : 플랫폼 고객센터 문의",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        color = HobbyLoopColor.Gray80
-                    )
+                    style = HobbyLoopTypo.caption12.copy(color = Gray80)
                 )
             }
         }

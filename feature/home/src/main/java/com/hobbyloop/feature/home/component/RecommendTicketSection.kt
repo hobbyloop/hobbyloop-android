@@ -3,7 +3,6 @@ package com.hobbyloop.feature.home.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,9 +35,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.hobbyloop.feature.home.model.RecommendTicketUiModel
 import com.hobbyloop.feature.home.model.TicketCategory
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun RecommendTicketSection(

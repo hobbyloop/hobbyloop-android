@@ -33,12 +33,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
 import com.hobbyloop.core.ui.componenet.box.OutlinedGradientBox
 import com.hobbyloop.core.ui.util.TextUtil.extractTime
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun ClassContent(
@@ -84,8 +85,7 @@ fun ClassesTitle() {
 
         Text(
             text = "가능수업",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            style = HobbyLoopTypo.body16
         )
     }
 }
@@ -176,9 +176,10 @@ fun ClassInfoBox(
             ) {
                 Text(
                     text = "대기가능",
-                    color = HobbyLoopColor.Primary,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = HobbyLoopTypo.caption10.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = HobbyLoopColor.Primary
+                    ),
                     modifier = Modifier
                         .padding(horizontal = 12.dp, vertical = 8.dp)
                 )
@@ -191,9 +192,8 @@ fun ClassInfoBox(
         ) {
             Text(
                 text = classInfo.title,
+                style = HobbyLoopTypo.head16,
                 modifier = Modifier.padding(start = 8.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
             )
 
             Row(
@@ -203,13 +203,15 @@ fun ClassInfoBox(
             ) {
                 Text(
                     text = "수업 난이도:",
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    style = HobbyLoopTypo.body14
                 )
                 Text(
                     text = classInfo.difficulty,
-                    color = HobbyLoopColor.Primary,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    style = HobbyLoopTypo.body16.copy(
+                        color = HobbyLoopColor.Primary,
+                        fontWeight = FontWeight.Bold
+                    ),
                 )
             }
 
@@ -231,19 +233,21 @@ fun ClassInfoBox(
 
                 Spacer(modifier = Modifier.width(6.dp))
 
-                Text(text = "예약")
+                Text(
+                    text = "예약",
+                    style = HobbyLoopTypo.body14
+                )
 
                 Spacer(modifier = Modifier.width(6.dp))
 
                 Text(
                     text = "${classInfo.currentReservationCount}",
-                    color = HobbyLoopColor.Primary,
-                    fontSize = 14.sp
+                    style = HobbyLoopTypo.body14.copy(HobbyLoopColor.Primary)
                 )
 
                 Text(
                     text = "/${classInfo.fullReservationCount}명",
-                    fontSize = 14.sp
+                    style = HobbyLoopTypo.body14
                 )
             }
         }
@@ -263,7 +267,10 @@ fun ClassTimeRow(classInfo: ClassInfo) {
 
         Spacer(modifier = Modifier.width(6.dp))
 
-        Text(text = extractTime(classInfo.dateTime))
+        Text(
+            text = extractTime(classInfo.dateTime),
+            style = HobbyLoopTypo.body14
+        )
     }
 }
 

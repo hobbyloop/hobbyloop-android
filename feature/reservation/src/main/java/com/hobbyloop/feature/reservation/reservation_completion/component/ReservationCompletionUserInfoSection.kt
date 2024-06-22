@@ -12,16 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
-import com.hobbyloop.core.ui.componenet.reservation.section.SectionHeader
 import com.hobbyloop.core.ui.util.TextUtil.formatAsPhoneNumber
+import com.hobbyloop.feature.reservation.component.section.SectionHeader
+import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun ReservationCompletionUserInfoSection(
@@ -43,22 +40,14 @@ fun ReservationCompletionUserInfoSection(
                 isIconTintEnabled = true,
                 iconTint = HobbyLoopColor.Primary,
                 iconDescription = "공지사항 아이콘",
-                textStyle = TextStyle(
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight(700),
-                )
+                textStyle = HobbyLoopTypo.head16
             )
 
             Spacer(modifier = Modifier.width(4.dp))
 
             Text(
                 text = "정보는 마이페이지에서 수정 가능해요.",
-                style = TextStyle(
-                    color = HobbyLoopColor.Gray60,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight(500),
-                )
+                style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray60)
             )
         }
 
@@ -72,18 +61,12 @@ fun ReservationCompletionUserInfoSection(
             ) {
                 Text(
                     text = "예약자",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = HobbyLoopColor.Gray60
-                    ),
+                    style = HobbyLoopTypo.body16.copy(color = HobbyLoopColor.Gray60),
                     modifier = Modifier.weight(0.3f)
                 )
                 Text(
                     text = name,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    ),
+                    style = HobbyLoopTypo.body16,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -93,18 +76,12 @@ fun ReservationCompletionUserInfoSection(
             ) {
                 Text(
                     text = "전화번호",
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = HobbyLoopColor.Gray60
-                    ),
+                    style = HobbyLoopTypo.body16.copy(color = HobbyLoopColor.Gray60),
                     modifier = Modifier.weight(0.3f)
                 )
                 Text(
                     text = phoneNumber.formatAsPhoneNumber(),
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.Black
-                    ),
+                    style = HobbyLoopTypo.body16,
                     modifier = Modifier.weight(1f)
                 )
             }

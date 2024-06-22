@@ -21,12 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
-import com.hobbyloop.core.ui.componenet.reservation.top_bar.ReservationNavBar
+import com.hobbyloop.core.ui.componenet.top_bar.ActionIcon
+import com.hobbyloop.core.ui.componenet.top_bar.AppBar
+import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
 import com.hobbyloop.core.ui.componenet.yearly_calendar.YearlyReservationCalendar
 import com.hobbyloop.core.ui.util.TextUtil.toTicketInfoFormattedString
 import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.ui.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -54,14 +57,27 @@ internal fun ScheduleScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationNavBar(
+            AppBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(66.dp)
-                    .padding(17.dp),
-                onSearchClick = { },
-                onNotificationClick = { },
-            )
+                    .padding(horizontal = 16.dp),
+                appBarStyle = AppBarStyle.NavigationICAndActionIC(
+                    navigationIcon = ActionIcon(
+                        iconResId = R.drawable.logo_small,
+                        contentDescription = "앱 로고"
+                    ),
+                    actionIcons = listOf(
+                        ActionIcon(
+                            iconResId = R.drawable.ic_search,
+                            contentDescription = "검색"
+                        ) {},
+                        ActionIcon(
+                            iconResId = R.drawable.ic_notice,
+                            contentDescription = "알림 확인"
+                        ) {}
+                    )
+                ))
         },
         containerColor = Color.White
     ) { padding ->
@@ -109,13 +125,13 @@ internal fun ScheduleScreen(
                                             classTime = classInfo.dateTime.toTicketInfoFormattedString(),
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .height(125.dp)
+                                                .height(135.dp)
                                                 .padding(horizontal = 16.dp)
                                         )
                                     }
                                 }
 
-                                Spacer(modifier = Modifier.height(76.dp))
+                                Spacer(modifier = Modifier.height(86.dp))
                             }
                         }
                     }

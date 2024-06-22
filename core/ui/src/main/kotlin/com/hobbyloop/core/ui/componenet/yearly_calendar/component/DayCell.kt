@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +34,7 @@ import com.hobbyloop.domain.entity.calendar.DaySelected
 import com.hobbyloop.domain.entity.calendar.DaySelectedStatus
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 val DayStatusKey = SemanticsPropertyKey<DaySelectedStatus>("DayStatusKey")
 var SemanticsPropertyReceiver.dayStatusProperty by DayStatusKey
@@ -83,9 +83,7 @@ fun DayCell(
                         .wrapContentSize(Alignment.Center)
                         .clearAndSetSemantics {},
                     text = calendarDay.day.toString(),
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        color = calendarDay.status.dayTypeColor()
-                    )
+                    style = HobbyLoopTypo.body14.copy(color = calendarDay.status.dayTypeColor()),
                 )
             }
         }
@@ -185,10 +183,10 @@ fun PreviewDayCell() {
     )
 }
 
-fun DaySelectedStatus.dayTypeColor(): androidx.compose.ui.graphics.Color = when (this) {
+fun DaySelectedStatus.dayTypeColor(): Color = when (this) {
     DaySelectedStatus.Holiday,
     DaySelectedStatus.Weekend -> HobbyLoopColor.Gray40
     DaySelectedStatus.Selected -> HobbyLoopColor.White
-    else -> HobbyLoopColor.Black
+    else -> HobbyLoopColor.Gray100
 }
 

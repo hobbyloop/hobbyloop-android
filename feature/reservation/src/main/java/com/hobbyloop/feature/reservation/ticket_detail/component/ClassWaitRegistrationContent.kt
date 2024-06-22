@@ -18,13 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
 import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
+import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun ClassWaitRegistrationContent(
@@ -52,9 +51,7 @@ fun ClassWaitRegistrationContent(
 
             Text(
                 text = "대기 신청을 할까요?",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                style = HobbyLoopTypo.head22,
             )
 
             Spacer(modifier = Modifier.height(14.dp))
@@ -67,18 +64,14 @@ fun ClassWaitRegistrationContent(
                     }
                     append("번째")
                 },
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                style = HobbyLoopTypo.head16,
             )
 
             Spacer(modifier = Modifier.height(28.dp))
 
             Text(
                 text = "예약 가능한 상태가 되면 앱 알림으로 알려드릴게요!",
-                fontSize = 14.sp,
-                color = Color.Black,
-                fontWeight = FontWeight(500)
+                style = HobbyLoopTypo.body14,
             )
         }
 

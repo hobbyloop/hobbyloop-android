@@ -16,14 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
 import com.hobbyloop.core.ui.componenet.box.GradientBox
 import com.hobbyloop.core.ui.componenet.button.RoundRippleIcon
+import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun CardContent(
@@ -64,22 +64,18 @@ fun CardContent(
         ) {
             Text(
                 text = className,
-                fontWeight = FontWeight(700),
-                fontSize = 14.sp,
-                color = Color.Black
+                style = HobbyLoopTypo.head14,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = classPeriod,
-                fontWeight = FontWeight(500),
-                fontSize = 12.sp,
-                color = HobbyLoopColor.Gray60
+                style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray60),
             )
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
         RoundRippleIcon(
-            iconSize = 26.dp,
             iconResId = R.drawable.ic_right,
             contentDescription = "수업 예약 상세보기 이동",
             onClick = { navigateToReservationTicketDetail(classId) }

@@ -31,9 +31,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hobbyloop.ui.R
 import com.hobbyloop.domain.entity.class_info.ClassInfo
 import com.hobbyloop.domain.entity.class_info.Instructor
+import com.hobbyloop.ui.R
+import theme.HobbyLoopColor.Gray100
+import theme.HobbyLoopTypo
 
 @Composable
 fun InstructorInfo(
@@ -72,8 +74,11 @@ fun InstructorInfo(
                 ) { name ->
                     Text(
                         text = "$name 강사",
+                        style = HobbyLoopTypo.head18,
+                        color = Gray100,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
+                        lineHeight = 18.sp
                     )
                 }
             }
@@ -89,7 +94,7 @@ fun InstructorInfo(
             ) {
                 Text(
                     text = "강사 프로필",
-                    fontSize = 14.sp
+                    style = HobbyLoopTypo.body14,
                 )
                 Icon(
                     painter = painterResource(id = if (isInstructorDetailsVisibleState) R.drawable.ic_up else R.drawable.ic_down),
@@ -113,10 +118,13 @@ fun InstructorInfo(
                     ) {
                         Text(
                             text = "이력",
-                            fontWeight = FontWeight.Bold
+                            style = HobbyLoopTypo.body14.copy(fontWeight = FontWeight.Bold)
                         )
                         Spacer(modifier = Modifier.width(18.dp))
-                        Text(text = history)
+                        Text(
+                            text = history,
+                            style = HobbyLoopTypo.body14
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(17.dp))

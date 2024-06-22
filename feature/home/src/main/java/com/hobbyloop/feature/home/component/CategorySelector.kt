@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.feature.home.model.CategorySelectorItemUiModel
 import com.hobbyloop.feature.home.model.TicketCategory
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import com.hobbyloop.ui.R
+import theme.HobbyLoopTypo
 
 @Composable
 fun CategorySelector(

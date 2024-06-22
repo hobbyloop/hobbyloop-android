@@ -20,11 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
+import com.hobbyloop.core.ui.componenet.top_bar.AppBar
+import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionMethodSection
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionSectionFooter
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionSectionHeader
 import com.hobbyloop.feature.reservation.reservation_completion.component.ReservationCompletionUserInfoSection
-import com.hobbyloop.feature.reservation.reservation_completion.component.top_bar.ReservationCompletionTopBar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import theme.HobbyLoopColor
@@ -56,10 +57,13 @@ internal fun ReservationCompletionScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationCompletionTopBar(
+            AppBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(66.dp)
+                    .height(66.dp),
+                appBarStyle = AppBarStyle.Title(
+                    title = "예약 완료"
+                ),
             )
         },
         containerColor = Color.White,
@@ -126,7 +130,7 @@ internal fun ReservationCompletionScreen(
             FixedBottomButton(
                 isSelected = true,
                 onClick = navigateToReservationHome,
-                text = "예약하기",
+                text = "완료",
                 selectedColor = HobbyLoopColor.Primary,
                 unselectedColor = Color.Gray,
                 modifier = Modifier

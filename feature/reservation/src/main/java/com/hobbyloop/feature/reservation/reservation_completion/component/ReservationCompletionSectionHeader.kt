@@ -17,14 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.hobbyloop.core.ui.componenet.box.GradientBox
 import com.hobbyloop.core.ui.util.TextUtil.extractFirstName
 import theme.HobbyLoopColor
+import theme.HobbyLoopColor.Gray80
+import theme.HobbyLoopTypo
 
 @Composable
 fun ReservationCompletionSectionHeader(
@@ -63,10 +62,7 @@ fun ReservationCompletionSectionHeader(
 
             Text(
                 text = "예약이 완료되었어요!",
-                style = TextStyle(
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight(700)
-                )
+                style = HobbyLoopTypo.head22
             )
         }
 
@@ -77,20 +73,12 @@ fun ReservationCompletionSectionHeader(
         ) {
             Text(
                 text = "${name.extractFirstName()}님의 만족스러운 방문이 되시길 바랄게요.",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(500),
-                    color = HobbyLoopColor.Gray80
-                )
+                style = HobbyLoopTypo.head14.copy(Gray80)
             )
 
             Text(
                 text = "예약 하신 시간에 맞춰 방문 부탁드려요!",
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight(500),
-                    color = HobbyLoopColor.Gray80
-                )
+                style = HobbyLoopTypo.head14.copy(Gray80)
             )
         }
     }

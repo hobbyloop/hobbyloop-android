@@ -21,12 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
+import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
+import com.hobbyloop.core.ui.componenet.top_bar.ActionIcon
+import com.hobbyloop.core.ui.componenet.top_bar.AppBar
+import com.hobbyloop.core.ui.componenet.top_bar.AppBarStyle
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationInformation
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassDetailReservationMethod
-import com.hobbyloop.core.ui.componenet.reservation.ticket.TicketCard
 import com.hobbyloop.feature.reservation.reservation_detail.component.ClassNoticeSection
-import com.hobbyloop.core.ui.componenet.button.FixedBottomButton
-import com.hobbyloop.feature.reservation.component.top_bar.ReservationTitleAppBar
+import com.hobbyloop.ui.R
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import theme.HobbyLoopColor
@@ -88,9 +91,20 @@ internal fun ReservationDetailScreen(
 ) {
     Scaffold(
         topBar = {
-            ReservationTitleAppBar(
-                title = "수업 예약",
-                onCloseClick = onCloseClick
+            AppBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(66.dp),
+                appBarStyle = AppBarStyle.NavigationICAndTitle(
+                    navigationIcon = ActionIcon(
+                        iconResId = R.drawable.ic_back,
+                        contentDescription = "뒤로가기",
+                        onClick = {
+                            onCloseClick()
+                        }
+                    ),
+                    title = "수업 예약"
+                ),
             )
         },
         containerColor = Color.White,
@@ -116,7 +130,7 @@ internal fun ReservationDetailScreen(
                     classTime = classTime,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(125.dp)
+                        .height(135.dp)
                         .padding(horizontal = 16.dp),
                 )
 
