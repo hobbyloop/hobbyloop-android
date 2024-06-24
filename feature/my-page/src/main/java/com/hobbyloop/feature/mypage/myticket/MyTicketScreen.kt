@@ -14,8 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import com.hobbyloop.ui.R
+import theme.HobbyLoopTypo
 
 @Composable
 fun MyTicketScreen(

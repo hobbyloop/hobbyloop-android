@@ -33,10 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.feature.mypage.mypoint.component.PointHistoryItem
-import com.hobbyloop.feature.mypage.mypoint.component.PointHistoryList
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import com.hobbyloop.ui.R
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun MyPointScreen(

@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.feature.mypage.mypoint.model.HistoryUiModel
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun PointHistory(
