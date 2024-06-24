@@ -22,7 +22,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.hobbyloop.feature.home.model.AdUiModel
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
+import theme.HobbyLoopTypo
 import theme.HobbyLoopColor
 
 @OptIn(ExperimentalPagerApi::class)

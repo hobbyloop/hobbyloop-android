@@ -7,5 +7,6 @@ internal fun Project.configureOrbitMvi() {
     dependencies {
         add("implementation", getLibrary("orbit-core"))
         add("implementation", getLibrary("orbit-viewmodel"))
+        add("implementation", getLibrary("orbit-compose"))
     }
 }

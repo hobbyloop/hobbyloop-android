@@ -28,8 +28,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.feature.home.model.UpcomingReservationUiModel
-import com.hobbyloop.member.ui.theme.HobbyLoopTypo
 import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
 fun UpComingReservation(

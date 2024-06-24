@@ -1,9 +1,11 @@
 import com.android.build.api.dsl.LibraryExtension
 import internal.configureAndroid
 import internal.configureCompose
+import internal.configureHilt
 import internal.configureImageLoading
 import internal.configureKotlinExtensions
 import internal.configureNavigation
+import internal.configureOrbitMvi
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -17,6 +19,8 @@ class UiModuleConventions : Plugin<Project> {
         configureCompose<LibraryExtension>()
         configureNavigation()
         configureKotlinExtensions()
+        configureHilt()
         configureImageLoading()
+        configureOrbitMvi()
     }
 }

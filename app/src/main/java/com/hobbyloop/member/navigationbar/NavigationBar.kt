@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -41,6 +42,7 @@ import androidx.navigation.NavController
 import com.hobbyloop.member.R
 import kotlinx.collections.immutable.toImmutableList
 import theme.HobbyLoopColor
+import theme.pretendard
 
 @Composable
 fun BottomBar(
@@ -182,9 +184,13 @@ fun ScreenContent(
         }
         Text(
             text = stringResource(screen.title),
-            color = if (isSelected) selectedColor else unselectedColor,
-            fontSize = labelSize,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+            style =
+                TextStyle(
+                    color = if (isSelected) selectedColor else unselectedColor,
+                    fontSize = labelSize,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                    fontFamily = pretendard,
+                ),
         )
     }
 }
