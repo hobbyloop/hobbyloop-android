@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.appmodule")
+    alias(libs.plugins.buildlogic.appmodule)
 }
 
 dependencies {

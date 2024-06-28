@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.datamodule")
+    alias(libs.plugins.buildlogic.datamodule)
     id("kotlinx-serialization")
 }
 

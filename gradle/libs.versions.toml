@@ -87,3 +87,12 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization-plugin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+
+# Plugins defined by this project
+buildlogic-appmodule = { id = "buildlogic.appmodule", version = "unspecified" }
+buildlogic-datamodule = { id = "buildlogic.datamodule", version = "unspecified" }
+buildlogic-featuremodule = { id = "buildlogic.featuremodule", version = "unspecified" }
+buildlogic-uimodule = { id = "buildlogic.uimodule", version = "unspecified" }
+buildlogic-networkmodule = { id = "buildlogic.networkmodule", version = "unspecified" }
+buildlogic-dataStoreModule = { id = "buildlogic.dataStoreModule", version = "unspecified" }
+buildlogic-commonModule = { id = "buildlogic.commonModule", version = "unspecified" }

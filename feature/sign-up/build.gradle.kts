@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.featuremodule")
+    alias(libs.plugins.buildlogic.featuremodule)
 }
 
 android {
