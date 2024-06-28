@@ -100,3 +100,4 @@ buildlogic-networkmodule = { id = "buildlogic.networkmodule", version = "unspeci
 buildlogic-dataStoreModule = { id = "buildlogic.dataStoreModule", version = "unspecified" }
 buildlogic-commonModule = { id = "buildlogic.commonModule", version = "unspecified" }
 buildlogic-domainModule = { id = "buildlogic.domainModule", version = "unspecified" }
+buildlogic-databaseModule = { id = "buildlogic.databaseModule", version = "unspecified" }
