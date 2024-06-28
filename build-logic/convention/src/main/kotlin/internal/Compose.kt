@@ -16,15 +16,17 @@ internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configu
     }
 
     dependencies {
-        add("implementation", platform(getLibrary("compose-bom")))
-        add("implementation", getLibrary("ui"))
-        add("implementation", getLibrary("ui-graphics"))
-        add("implementation", getLibrary("ui-tooling-preview"))
-        add("implementation", getLibrary("material3"))
-        add("implementation", getLibrary("material"))
-        add("implementation", getLibrary("lifecycle-runtime-ktx"))
-        add("implementation", getLibrary("androidx-lifecycle-runtime-compose"))
-        add("implementation", getLibrary("activity-compose"))
-        add("debugImplementation", getLibrary("ui-tooling"))
+        dependencies {
+            add("api", platform(getLibrary("compose-bom")))
+            add("api", getLibrary("ui"))
+            add("api", getLibrary("ui-graphics"))
+            add("api", getLibrary("ui-tooling-preview"))
+            add("api", getLibrary("material3"))
+            add("api", getLibrary("material"))
+            add("api", getLibrary("lifecycle-runtime-ktx"))
+            add("api", getLibrary("androidx-lifecycle-runtime-compose"))
+            add("api", getLibrary("activity-compose"))
+            add("debugImplementation", getLibrary("ui-tooling"))
+        }
     }
 }
