@@ -2,6 +2,7 @@ import com.android.build.api.dsl.LibraryExtension
 import internal.configureAndroid
 import internal.configureAndroidTest
 import internal.configureHilt
+import internal.configureJsonConverter
 import internal.configureKotlinExtensions
 import internal.configureUnitTest
 import org.gradle.api.Plugin
@@ -16,6 +17,7 @@ class DataModuleConventions : Plugin<Project> {
 
         configureAndroid<LibraryExtension>()
         configureHilt()
+        configureJsonConverter()
         configureKotlinExtensions()
         configureAndroidTest()
         configureUnitTest()
