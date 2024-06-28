@@ -1,6 +1,5 @@
 import internal.configureAsync
 import internal.configureInject
-import internal.configureJava
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -12,7 +11,6 @@ class DomainModuleConventions : Plugin<Project> {
             apply("java-library")
         }
 
-        configureJava()
         configureInject()
         configureAsync()
     }

@@ -6,6 +6,7 @@ import internal.configureImageLoading
 import internal.configureKotlinExtensions
 import internal.configureNavigation
 import internal.configureOrbitMvi
+import internal.getLibrary
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -26,6 +27,7 @@ class UiModuleConventions : Plugin<Project> {
 
         dependencies{
             add("implementation", project(":core:domain"))
+            add("implementation", getLibrary("material"))
         }
     }
 }
