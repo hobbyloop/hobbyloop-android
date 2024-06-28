@@ -60,7 +60,7 @@ inject = "javax.inject:javax.inject:1"
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
-#ktor
+# ktor
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 ktor-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
@@ -73,7 +73,7 @@ protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 androidx-ui-desktop = { group = "androidx.compose.ui", name = "ui-desktop", version.ref = "uiDesktop" }
 
-#orbit
+# orbit
 orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit" }
 orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit"}
@@ -96,3 +96,4 @@ buildlogic-uimodule = { id = "buildlogic.uimodule", version = "unspecified" }
 buildlogic-networkmodule = { id = "buildlogic.networkmodule", version = "unspecified" }
 buildlogic-dataStoreModule = { id = "buildlogic.dataStoreModule", version = "unspecified" }
 buildlogic-commonModule = { id = "buildlogic.commonModule", version = "unspecified" }
+buildlogic-domainModule = { id = "buildlogic.domainModule", version = "unspecified" }
