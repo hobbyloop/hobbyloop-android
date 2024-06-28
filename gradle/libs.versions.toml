@@ -29,6 +29,7 @@ protobuf = "3.25.2"
 androidxDataStore = "1.1.1"
 uiDesktop = "1.6.7"
 androidxCoreSplashscreen = "1.0.0"
+accompanist = "0.28.0"
 
 [libraries]
 android-tools-build-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
@@ -59,6 +60,8 @@ kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotli
 inject = "javax.inject:javax.inject:1"
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
+accompanist-pager-indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }
 
 # ktor
 ktor-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }

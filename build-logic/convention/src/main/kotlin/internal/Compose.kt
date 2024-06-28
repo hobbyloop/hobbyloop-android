@@ -26,6 +26,8 @@ internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configu
             add("api", getLibrary("lifecycle-runtime-ktx"))
             add("api", getLibrary("androidx-lifecycle-runtime-compose"))
             add("api", getLibrary("activity-compose"))
+            add("api", getLibrary("accompanist-pager"))
+            add("api", getLibrary("accompanist-pager-indicators"))
             add("debugImplementation", getLibrary("ui-tooling"))
         }
     }
