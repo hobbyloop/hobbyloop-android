@@ -1,10 +1,7 @@
 plugins {
-    id("buildlogic.networkmodule")
+    alias(libs.plugins.buildlogic.networkmodule)
 }
 
 android {
     namespace = "com.hobbyloop.network"
-}
-
-dependencies {
 }

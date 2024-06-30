@@ -44,5 +44,13 @@ gradlePlugin {
             id = "buildlogic.commonModule"
             implementationClass = "CommonModuleConventions"
         }
+        register("domainModule") {
+            id = "buildlogic.domainModule"
+            implementationClass = "DomainModuleConventions"
+        }
+        register("databaseModule") {
+            id = "buildlogic.databaseModule"
+            implementationClass = "DatabaseModuleConventions"
+        }
     }
 }

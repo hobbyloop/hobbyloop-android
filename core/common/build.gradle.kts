@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.commonModule")
+    alias(libs.plugins.buildlogic.commonModule)
 }
 
 android {

@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.protobuf)
-    id("buildlogic.dataStoreModule")
+    alias(libs.plugins.buildlogic.dataStoreModule)
 }
 
 android {
