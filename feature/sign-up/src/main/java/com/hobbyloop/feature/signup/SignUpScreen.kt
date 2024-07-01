@@ -14,32 +14,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hobbyloop.core.ui.componenet.ActiveStateButton
 import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.ModalBottomSheet
@@ -51,32 +44,29 @@ import com.hobbyloop.feature.signup.componenet.EnhancedInputField
 import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
 import com.kimdowoo.datepicker.componenet.SpinnerDatePicker
-import kotlin.math.sign
 
 @Composable
-fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}, userLoginResult: UserLoginResult) {
+fun SignUpScreen(
+    onBackClick: () -> Unit = {},
+    onNavigationBarClick: () -> Unit = {},
+    userLoginResult: UserLoginResult
+) {
     val viewModel: SignUpViewModel = hiltViewModel()
-    ModalBottomSheet(
-        modifier = Modifier,
-        sheetContent = {
-            SpinnerDatePicker(
-                modifier = Modifier,
-                onDateChanged = { year, month, day ->
-                    viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
-                }
-            )
-        },
-        content = { showSheet ->
-            SignUpLayout(
-                viewModel,
-                onBackClick = onBackClick,
-                onNavigationBarClick = onNavigationBarClick,
-                userLoginResult = userLoginResult,
-                showSheet = showSheet,
-            )
-        }
-    )
+    ModalBottomSheet(modifier = Modifier, sheetContent = {
+        SpinnerDatePicker(modifier = Modifier, onDateChanged = { year, month, day ->
+            viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
+        })
+    }, content = { showSheet ->
+        SignUpLayout(
+            viewModel,
+            onBackClick = onBackClick,
+            onNavigationBarClick = onNavigationBarClick,
+            userLoginResult = userLoginResult,
+            showSheet = showSheet,
+        )
+    })
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,21 +78,35 @@ fun SignUpLayout(
     showSheet: () -> Unit,
     userLoginResult: UserLoginResult
 ) {
+
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        TopBar(
-            modifier = Modifier
-                .height(66.dp)
-                .align(Alignment.TopCenter),
-            onNavigationClick = onBackClick,
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = Color.Transparent
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else {
+            TopBar(
+                modifier = Modifier
+                    .height(66.dp)
+                    .align(Alignment.TopCenter),
+                onNavigationClick = onBackClick,
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.Transparent
+                )
             )
-        )
-        SignUpForm(viewModel, Modifier.padding(16.dp), onNavigationBarClick, showSheet = showSheet, userLoginResult = userLoginResult)
+            SignUpForm(
+                viewModel,
+                Modifier.padding(16.dp),
+                onNavigationBarClick,
+                showSheet = showSheet,
+                userLoginResult = userLoginResult
+            )
+        }
+
     }
 }
 
@@ -150,8 +154,7 @@ fun SignUpForm(
         GenderSelection(selectedGender = userInfo.gender, selectGender = viewModel::selectGender)
 
         DateSelection(
-            userInfo.birthDay,
-            showSheet = showSheet
+            userInfo.birthDay, showSheet = showSheet
         )
 
         PhoneNumberVerificationForm(
@@ -204,30 +207,23 @@ fun TermsCheck(
     Column {
         InfoHeadTitle(text = stringResource(id = R.string.signup_Terms), isEssential = false)
         val allChecked = dataCollectionConsent && marketingConsent
-        CheckboxWithLabel(
-            label = Terms.All.label,
+        CheckboxWithLabel(label = Terms.All.label,
             checked = allChecked,
             onCheckedChange = { updateConsents(Terms.All, !allChecked) })
         HorizontalLine(modifier = Modifier.padding(vertical = 8.dp))
         CheckboxWithLabel(
-            label = Terms.MarketingConsent.label,
-            checked = marketingConsent,
-            onCheckedChange = {
+            label = Terms.MarketingConsent.label, checked = marketingConsent, onCheckedChange = {
                 updateConsents(
-                    Terms.MarketingConsent,
-                    !marketingConsent
+                    Terms.MarketingConsent, !marketingConsent
                 )
-            },
-            moreInfo = true,
-            isEssential = false
+            }, moreInfo = true, isEssential = false
         )
         CheckboxWithLabel(
             label = Terms.DataCollectionConsent.label,
             checked = dataCollectionConsent,
             onCheckedChange = {
                 updateConsents(
-                    Terms.DataCollectionConsent,
-                    !dataCollectionConsent
+                    Terms.DataCollectionConsent, !dataCollectionConsent
                 )
             },
             moreInfo = true,

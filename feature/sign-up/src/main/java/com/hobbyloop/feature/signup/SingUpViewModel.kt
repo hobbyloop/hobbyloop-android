@@ -42,6 +42,9 @@ class SignUpViewModel @Inject constructor(
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid: StateFlow<Boolean> = _isFormValid.asStateFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     fun updateName(newName: String) {
         val isValid = validateName(newName)
         _userInfo.value = _userInfo.value.copy(name = newName)
@@ -122,29 +125,31 @@ class SignUpViewModel @Inject constructor(
 
 
     fun signUp(userLoginResult: UserLoginResult) {
-
-        val signUpInfo = SignUpInfo(
-            name = userInfo.value.name,
-            email = userLoginResult.email,
-            nickname = userInfo.value.nickname,
-            gender = userInfo.value.gender?.ordinal ?: 0,
-            birthday = LocalDate.now(),
-            phoneNumber = userInfo.value.phoneNumber,
-            isOption1 = userInfo.value.marketingConsent,
-            isOption2 = userInfo.value.dataCollectionConsent,
-            provider = userLoginResult.provider,
-            subject = userLoginResult.subject,
-            oauth2AccessToken = userLoginResult.oauth2AccessToken,
-            ci = "", // Add CI value if needed
-            di = "" // Add DI value if needed
-        )
-
         viewModelScope.launch {
+            _isLoading.value = true
             try {
+                val signUpInfo = SignUpInfo(
+                    name = userInfo.value.name,
+                    email = userLoginResult.email,
+                    nickname = userInfo.value.nickname,
+                    gender = userInfo.value.gender?.ordinal ?: 0,
+                    birthday = LocalDate.now(),
+                    phoneNumber = userInfo.value.phoneNumber,
+                    isOption1 = userInfo.value.marketingConsent,
+                    isOption2 = userInfo.value.dataCollectionConsent,
+                    provider = userLoginResult.provider,
+                    subject = userLoginResult.subject,
+                    oauth2AccessToken = userLoginResult.oauth2AccessToken,
+                    ci = "", // Add CI value if needed
+                    di = "" // Add DI value if needed
+                )
+
                 val signupResponse = signUpUseCase(signUpInfo)
                 setUserDataUseCase.setJwt(signupResponse.accessToken)
             } catch (e: Exception) {
                 // Handle error
+            } finally {
+                _isLoading.value = false
             }
         }
     }

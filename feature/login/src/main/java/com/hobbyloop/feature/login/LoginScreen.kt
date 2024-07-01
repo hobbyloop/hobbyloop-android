@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,21 +29,27 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.SingleLineText
 import com.hobbyloop.core.ui.icons.HblIcons
-import com.hobbyloop.core.ui.util.DevicePreviews
 import com.hobbyloop.domain.entity.login.UserLoginResult
 import com.hobbyloop.feature.login.model.LoginProviderType
 
 @Composable
-internal fun LoginScreen(onSignUpClick: (UserLoginResult) -> Unit) {
+fun LoginScreen(onSignUpClick: (UserLoginResult) -> Unit) {
     val viewModel: LoginViewModel = hiltViewModel()
-    LoginScreens(onSignUpClick = onSignUpClick, onSocialLoginClick = viewModel::login)
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    LoginScreens(
+        onSignUpClick = onSignUpClick,
+        onSocialLoginClick = viewModel::login,
+        isLoading = isLoading
+    )
 }
 
 @Composable
 fun LoginScreens(
     modifier: Modifier = Modifier,
     onSignUpClick: (UserLoginResult) -> Unit,
-    onSocialLoginClick: (context: Context, LoginProviderType, onSignUpClick: (UserLoginResult) -> Unit) -> Unit
+    onSocialLoginClick: (context: Context, LoginProviderType, onSignUpClick: (UserLoginResult) -> Unit) -> Unit,
+    isLoading: Boolean
 ) {
     Column(
         modifier
@@ -49,7 +58,6 @@ fun LoginScreens(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-
         Spacer(modifier = Modifier.weight(0.4f))
         Icon(
             painter = painterResource(id = HblIcons.AppLogo.resourceId),
@@ -57,7 +65,13 @@ fun LoginScreens(
             contentDescription = null
         )
         Spacer(modifier = Modifier.weight(0.6f))
-        LoginButtons(onSocialLoginClick = onSocialLoginClick, onSignUpClick = onSignUpClick)
+
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            LoginButtons(onSocialLoginClick = onSocialLoginClick, onSignUpClick = onSignUpClick)
+        }
+
         Spacer(modifier = Modifier.height(83.dp))
         HorizontalLine(Modifier.padding(PaddingValues(horizontal = 20.dp)))
         SingleLineText(

@@ -14,6 +14,8 @@ import com.hobbyloop.feature.login.provider.GoogleLoginProvider
 import com.hobbyloop.feature.login.provider.KakaoLoginProvider
 import com.hobbyloop.feature.login.provider.NaverLoginProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +25,12 @@ class LoginViewModel @Inject constructor(
     private val getJWTUseCase: GetJWTUseCase
 ) : ViewModel() {
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> get() = _isLoading
+
     fun login(context: Context, providerType: LoginProviderType, onSignUpClick: (UserLoginResult) -> Unit) {
+        _isLoading.value = true
+
         val provider = when (providerType) {
             LoginProviderType.KAKAO -> KakaoLoginProvider()
             LoginProviderType.NAVER -> NaverLoginProvider()
@@ -33,6 +40,7 @@ class LoginViewModel @Inject constructor(
         provider.login(context) { token, error ->
             if (error != null) {
                 Log.e(TAG, "로그인 실패 $error")
+                _isLoading.value = false
             } else if (token != null) {
                 viewModelScope.launch {
                     try {
@@ -48,6 +56,8 @@ class LoginViewModel @Inject constructor(
 
                     } catch (e: Exception) {
                         Log.e(TAG, "JWT 획득 실패: ${e.message}")
+                    } finally {
+                        _isLoading.value = false
                     }
                 }
             }
