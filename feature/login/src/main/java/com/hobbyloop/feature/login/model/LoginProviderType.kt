@@ -1,7 +1,7 @@
 package com.hobbyloop.feature.login.model
 
-enum class LoginProviderType {
-    KAKAO,
-    NAVER,
-    GOOGLE
+enum class LoginProviderType(val providerName : String) {
+    KAKAO("Kakao"),
+    NAVER("Naver"),
+    GOOGLE("Google")
 }

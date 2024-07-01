@@ -25,6 +25,7 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
@@ -44,8 +45,8 @@ object NetworkModule {
         }
 
         defaultRequest {
-            header(HttpHeaders.ContentType, ContentType.Application.Json)
-            url("https://rickandmortyapi.com/api/")
+            contentType(ContentType.Application.Json)
+            url("https://hobbyloop.kr")
         }
 
         HttpResponseValidator {
@@ -77,12 +78,11 @@ object NetworkModule {
 
         install(ContentNegotiation) {
             json(Json {
-                ignoreUnknownKeys = true // 모델에 없고, json에 있는경우 해당 key 무시
-                prettyPrint = true
-                isLenient = true // "" 따옴표 잘못된건 무시하고 처리
-                encodeDefaults = true //null 인 값도 json에 포함.
-            }
-            )
+                encodeDefaults = false
+                ignoreUnknownKeys = true
+                isLenient = true
+                useAlternativeNames = false
+            })
         }
     }
 

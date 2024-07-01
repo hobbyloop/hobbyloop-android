@@ -6,4 +6,6 @@ plugins {
     alias(libs.plugins.ktlint) apply true
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.serialization) apply false
+
+
 }

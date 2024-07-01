@@ -37,6 +37,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hobbyloop.core.ui.componenet.ActiveStateButton
@@ -45,14 +46,16 @@ import com.hobbyloop.core.ui.componenet.ModalBottomSheet
 import com.hobbyloop.core.ui.componenet.TopBar
 import com.hobbyloop.core.ui.componenet.UnderLineClickableText
 import com.hobbyloop.core.ui.icons.HblIcons
+import com.hobbyloop.domain.entity.login.UserLoginResult
 import com.hobbyloop.feature.signup.componenet.EnhancedInputField
 import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
 import com.kimdowoo.datepicker.componenet.SpinnerDatePicker
+import kotlin.math.sign
 
 @Composable
-fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}) {
-    val viewModel: SignUpViewModel = viewModel()
+fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit = {}, userLoginResult: UserLoginResult) {
+    val viewModel: SignUpViewModel = hiltViewModel()
     ModalBottomSheet(
         modifier = Modifier,
         sheetContent = {
@@ -68,7 +71,8 @@ fun SignUpScreen(onBackClick: () -> Unit = {}, onNavigationBarClick: () -> Unit 
                 viewModel,
                 onBackClick = onBackClick,
                 onNavigationBarClick = onNavigationBarClick,
-                showSheet = showSheet
+                userLoginResult = userLoginResult,
+                showSheet = showSheet,
             )
         }
     )
@@ -81,7 +85,8 @@ fun SignUpLayout(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onNavigationBarClick: () -> Unit,
-    showSheet: () -> Unit
+    showSheet: () -> Unit,
+    userLoginResult: UserLoginResult
 ) {
     Box(
         modifier = modifier
@@ -97,7 +102,7 @@ fun SignUpLayout(
                 containerColor = Color.Transparent
             )
         )
-        SignUpForm(viewModel, Modifier.padding(16.dp), onNavigationBarClick, showSheet = showSheet)
+        SignUpForm(viewModel, Modifier.padding(16.dp), onNavigationBarClick, showSheet = showSheet, userLoginResult = userLoginResult)
     }
 }
 
@@ -106,7 +111,8 @@ fun SignUpForm(
     viewModel: SignUpViewModel,
     modifier: Modifier,
     onNavigationBarClick: () -> Unit,
-    showSheet: () -> Unit
+    showSheet: () -> Unit,
+    userLoginResult: UserLoginResult
 ) {
 
     val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
@@ -181,10 +187,8 @@ fun SignUpForm(
             ActiveStateButton(
                 modifier = Modifier.height(48.dp),
                 textRes = R.string.signup_endSignUp,
-                // TODO 개발 중 네비게이션을 위한 버튼 활성화, 추후 제거
-                // enabled = isFormValid,
-                enabled = true,
-                onClick = onNavigationBarClick,
+                enabled = isFormValid,
+                onClick = { viewModel.signUp(userLoginResult) },
                 textStyle = MaterialTheme.typography.labelLarge
             )
         }

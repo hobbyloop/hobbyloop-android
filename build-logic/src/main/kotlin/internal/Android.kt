@@ -17,7 +17,7 @@ internal inline fun <reified T : CommonExtension<*, *, *, *, *>> Project.configu
         compileSdk = 34
 
         defaultConfig {
-            minSdk = 24
+            minSdk = 26
         }
 
         compileOptions {

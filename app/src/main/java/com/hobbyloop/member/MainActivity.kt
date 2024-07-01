@@ -1,6 +1,7 @@
 package com.hobbyloop.member
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.hobbyloop.feature.login.LOGIN_GRAPH_ROUTE
 import com.hobbyloop.member.navigationbar.NAVIGATION_BAR_HOST_ROUTE
 import com.hobbyloop.member.root.RootHost
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,13 +49,14 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RenderMainContent(uiState: MainActivityUiState.Success) {
-        val startDestination =
-            if (uiState.userData.jwt.isEmpty()) {
-                NAVIGATION_BAR_HOST_ROUTE
-                // LOGIN_GRAPH_ROUTE
-            } else {
-                NAVIGATION_BAR_HOST_ROUTE
-            }
+
+        Log.d("JWT", uiState.userData.jwt)
+
+        val startDestination = if (uiState.userData.jwt.isEmpty()) {
+            LOGIN_GRAPH_ROUTE
+        } else {
+            NAVIGATION_BAR_HOST_ROUTE
+        }
 
         RootHost(startDestination = startDestination)
     }
