@@ -127,8 +127,3 @@ fun VerificationCodeInput(
     }
 }
 
-@DevicePreviews
-@Composable
-fun SignUpLayoutPreview() {
-    SignUpScreen()
-}

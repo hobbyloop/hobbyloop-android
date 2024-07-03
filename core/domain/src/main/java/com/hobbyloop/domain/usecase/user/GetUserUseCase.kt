@@ -1,4 +1,9 @@
 package com.hobbyloop.domain.usecase.user
 
-class GetUserUseCase {
+import javax.inject.Inject
+
+class GetUserUseCase @Inject constructor(
+
+) {
+
 }

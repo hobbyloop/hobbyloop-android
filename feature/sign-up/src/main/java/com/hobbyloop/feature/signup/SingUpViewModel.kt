@@ -1,17 +1,35 @@
 package com.hobbyloop.feature.signup
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hobbyloop.domain.entity.login.UserLoginResult
+import com.hobbyloop.domain.entity.signup.SignUpInfo
+import com.hobbyloop.domain.usecase.login.GetJWTUseCase
+import com.hobbyloop.domain.usecase.signup.SignUpUseCase
+import com.hobbyloop.domain.usecase.user.SetUserDataUseCase
 import com.hobbyloop.feature.signup.state.CodeInfo
 import com.hobbyloop.feature.signup.state.UserInfo
 import com.hobbyloop.feature.signup.state.ValidationState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Date
+import java.util.Locale
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val setUserDataUseCase: SetUserDataUseCase,
+    private val signUpUseCase: SignUpUseCase
+) : ViewModel() {
     private val _userInfo = MutableStateFlow(UserInfo())
     val userInfo: StateFlow<UserInfo> = _userInfo.asStateFlow()
 
@@ -23,6 +41,9 @@ class SignUpViewModel : ViewModel() {
 
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid: StateFlow<Boolean> = _isFormValid.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     fun updateName(newName: String) {
         val isValid = validateName(newName)
@@ -52,7 +73,7 @@ class SignUpViewModel : ViewModel() {
 
     fun updateBirthDay(newBirthDay: String) {
         _userInfo.value = _userInfo.value.copy(birthDay = newBirthDay)
-        _validationState.value = _validationState.value.copy(isNameValid = newBirthDay.isNotBlank())
+        _validationState.value = _validationState.value.copy(isBirthDayValid = newBirthDay.isNotBlank())
         updateFormValidity()
     }
 
@@ -103,9 +124,40 @@ class SignUpViewModel : ViewModel() {
     }
 
 
+    fun signUp(userLoginResult: UserLoginResult) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val signUpInfo = SignUpInfo(
+                    name = userInfo.value.name,
+                    email = userLoginResult.email ?: "",
+                    nickname = userInfo.value.nickname,
+                    gender = userInfo.value.gender?.ordinal ?: 0,
+                    birthday = LocalDate.now(),
+                    phoneNumber = userInfo.value.phoneNumber,
+                    isOption1 = userInfo.value.marketingConsent,
+                    isOption2 = userInfo.value.dataCollectionConsent,
+                    provider = userLoginResult.provider ?: "",
+                    subject = userLoginResult.subject ?: "",
+                    oauth2AccessToken = userLoginResult.oauth2AccessToken ?: "",
+                    ci = "", // Add CI value if needed
+                    di = "" // Add DI value if needed
+                )
+
+                val signupResponse = signUpUseCase(signUpInfo)
+                setUserDataUseCase.setJwt(signupResponse.accessToken)
+            } catch (e: Exception) {
+                // Handle error
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     private fun updateFormValidity() {
         val state = validationState.value
-        _isFormValid.value = state.isNameValid && state.isNicknameValid && state.isPhoneNumberValid && state.isGenderSelected && codeInfo.value.isVerificationCodeValid
+        _isFormValid.value =
+            state.isNameValid && state.isNicknameValid && state.isPhoneNumberValid && state.isGenderSelected && codeInfo.value.isVerificationCodeValid
     }
 
     private fun validateName(name: String): Boolean = name.length >= 2

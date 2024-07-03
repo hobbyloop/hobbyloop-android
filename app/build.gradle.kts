@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:datastore"))
     implementation(project(":core:common"))
+    implementation(project(":core:network"))
 
     implementation(project(":feature:center"))
     implementation(project(":feature:center-detail"))

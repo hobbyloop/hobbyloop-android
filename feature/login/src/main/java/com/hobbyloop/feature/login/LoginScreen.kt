@@ -12,9 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,20 +29,27 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.hobbyloop.core.ui.componenet.HorizontalLine
 import com.hobbyloop.core.ui.componenet.SingleLineText
 import com.hobbyloop.core.ui.icons.HblIcons
-import com.hobbyloop.core.ui.util.DevicePreviews
+import com.hobbyloop.domain.entity.login.UserLoginResult
 import com.hobbyloop.feature.login.model.LoginProviderType
 
 @Composable
-internal fun LoginScreen(onSignUpClick: () -> Unit) {
+fun LoginScreen(onSignUpClick: (UserLoginResult) -> Unit) {
     val viewModel: LoginViewModel = hiltViewModel()
-    LoginScreens(onSignUpClick = onSignUpClick, onSocialLoginClick = viewModel::login)
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    LoginScreens(
+        onSignUpClick = onSignUpClick,
+        onSocialLoginClick = viewModel::login,
+        isLoading = isLoading
+    )
 }
 
 @Composable
 fun LoginScreens(
     modifier: Modifier = Modifier,
-    onSignUpClick: () -> Unit,
-    onSocialLoginClick: (context: Context, LoginProviderType) -> Unit
+    onSignUpClick: (UserLoginResult) -> Unit,
+    onSocialLoginClick: (context: Context, LoginProviderType, onSignUpClick: (UserLoginResult) -> Unit) -> Unit,
+    isLoading: Boolean
 ) {
     Column(
         modifier
@@ -48,7 +58,6 @@ fun LoginScreens(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-
         Spacer(modifier = Modifier.weight(0.4f))
         Icon(
             painter = painterResource(id = HblIcons.AppLogo.resourceId),
@@ -56,7 +65,13 @@ fun LoginScreens(
             contentDescription = null
         )
         Spacer(modifier = Modifier.weight(0.6f))
-        LoginButtons(onSignUpClick, onSocialLoginClick)
+
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            LoginButtons(onSocialLoginClick = onSocialLoginClick, onSignUpClick = onSignUpClick)
+        }
+
         Spacer(modifier = Modifier.height(83.dp))
         HorizontalLine(Modifier.padding(PaddingValues(horizontal = 20.dp)))
         SingleLineText(
@@ -69,7 +84,8 @@ fun LoginScreens(
 
 @Composable
 fun LoginButtons(
-    onSignUpClick: () -> Unit, onSocialLoginClick: (context: Context, LoginProviderType) -> Unit
+    onSocialLoginClick: (context: Context, LoginProviderType, onSignUpClick: (UserLoginResult) -> Unit) -> Unit,
+    onSignUpClick: (UserLoginResult) -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -78,7 +94,7 @@ fun LoginButtons(
         modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         LoginButton(buttonText = stringResource(R.string.kakao_login),
-            onClick = { onSocialLoginClick(context, LoginProviderType.KAKAO) },
+            onClick = { onSocialLoginClick(context, LoginProviderType.KAKAO, onSignUpClick) },
             backgroundColor = Color(0xFFFEE500),
             leadingIcon = {
                 Icon(
@@ -88,7 +104,7 @@ fun LoginButtons(
                 )
             })
         LoginButton(buttonText = stringResource(R.string.google_login),
-            onClick = { onSocialLoginClick(context, LoginProviderType.GOOGLE) },
+            onClick = { onSocialLoginClick(context, LoginProviderType.GOOGLE, onSignUpClick) },
             backgroundColor = Color.White,
             leadingIcon = {
                 Icon(
@@ -99,7 +115,7 @@ fun LoginButtons(
             })
         LoginButton(
             buttonText = stringResource(R.string.naver_login),
-            onClick = { onSocialLoginClick(context, LoginProviderType.NAVER) },
+            onClick = { onSocialLoginClick(context, LoginProviderType.NAVER, onSignUpClick) },
             backgroundColor = Color(0xFF03C75A),
             leadingIcon = {
                 Icon(
@@ -140,11 +156,4 @@ fun LoginButton(
     }
 }
 
-@DevicePreviews
-@Composable
-private fun LoginButtonsPreview() {
-    MaterialTheme {
-        LoginScreen(onSignUpClick = {})
-    }
-}
 
