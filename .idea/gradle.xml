@@ -37,7 +37,6 @@
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/my-page" />
             <option value="$PROJECT_DIR$/feature/reservation" />
-            <option value="$PROJECT_DIR$/feature/reservation-detail" />
             <option value="$PROJECT_DIR$/feature/schedule" />
             <option value="$PROJECT_DIR$/feature/sign-up" />
           </set>

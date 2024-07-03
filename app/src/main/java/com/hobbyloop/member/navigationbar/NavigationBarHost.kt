@@ -45,7 +45,12 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                         navController = navController,
                     )
                     centerGraph()
-                    reservationGraph()
+                    reservationGraph(
+                        navController = navController,
+                        onCloseClick = {
+                            navController.popBackStack()
+                        },
+                    )
                     scheduleGraph()
                     myPageGraph()
                 }
