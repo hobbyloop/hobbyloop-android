@@ -7,10 +7,10 @@ import kotlinx.serialization.Serializable
 data class NetworkLogin(
     val accessToken: String?,
     val refreshToken: String?,
-    val email: String,
-    val provider: String,
-    val subject: String,
-    val oauth2AccessToken: String
+    val email: String?,
+    val provider: String?,
+    val subject: String?,
+    val oauth2AccessToken: String?
 ) {
     fun toDomainModel(): UserLoginResult {
         return UserLoginResult(

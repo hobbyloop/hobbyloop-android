@@ -51,6 +51,7 @@ class LoginViewModel @Inject constructor(
                         if (jwt == null) {
                             onSignUpClick(loginResponse)
                         } else {
+                            Log.d("jwt",jwt.toString())
                             setUserDataUseCase.setJwt(jwt)
                         }
 

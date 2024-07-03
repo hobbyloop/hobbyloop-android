@@ -130,16 +130,16 @@ class SignUpViewModel @Inject constructor(
             try {
                 val signUpInfo = SignUpInfo(
                     name = userInfo.value.name,
-                    email = userLoginResult.email,
+                    email = userLoginResult.email ?: "",
                     nickname = userInfo.value.nickname,
                     gender = userInfo.value.gender?.ordinal ?: 0,
                     birthday = LocalDate.now(),
                     phoneNumber = userInfo.value.phoneNumber,
                     isOption1 = userInfo.value.marketingConsent,
                     isOption2 = userInfo.value.dataCollectionConsent,
-                    provider = userLoginResult.provider,
-                    subject = userLoginResult.subject,
-                    oauth2AccessToken = userLoginResult.oauth2AccessToken,
+                    provider = userLoginResult.provider ?: "",
+                    subject = userLoginResult.subject ?: "",
+                    oauth2AccessToken = userLoginResult.oauth2AccessToken ?: "",
                     ci = "", // Add CI value if needed
                     di = "" // Add DI value if needed
                 )
