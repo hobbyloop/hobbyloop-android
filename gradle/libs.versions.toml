@@ -61,6 +61,8 @@ orbit = "6.1.0"
 # Java DI Standards
 inject = "1"
 
+# Timber
+timber = "5.0.1"
 
 [libraries]
 # Build and Plugin Tools
@@ -137,6 +139,8 @@ orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref =
 # Java DI Standards
 inject = { group = "javax.inject", name = "javax.inject", version.ref = "inject" }
 
+# Timber
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 [plugins]
 # Android Plugins
