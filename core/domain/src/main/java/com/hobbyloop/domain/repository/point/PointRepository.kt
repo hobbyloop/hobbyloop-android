@@ -1,9 +1,9 @@
 package com.hobbyloop.domain.repository.point
 
-import com.hobbyloop.domain.common.Resource
-import com.hobbyloop.domain.entity.point.Point
-import kotlinx.coroutines.flow.Flow
+import com.hobbyloop.domain.common.CustomResult
+import com.hobbyloop.domain.common.DataError
+import com.hobbyloop.domain.entity.point.PointTotalHistory
 
 interface PointRepository {
-    fun getPointHistory(): Flow<Resource<Point>>
+    suspend fun getPointTotalHistory(): CustomResult<PointTotalHistory, DataError.Network>
 }

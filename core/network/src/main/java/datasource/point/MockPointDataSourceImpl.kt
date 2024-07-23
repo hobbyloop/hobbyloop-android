@@ -2,59 +2,72 @@ package datasource.point
 
 import com.hobbyloop.domain.common.CustomResult
 import com.hobbyloop.domain.common.DataError
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import model.point.ExtinctionPointResponse
-import model.point.HistoryResponse
-import model.point.PointResponse
+import datasource.BaseDataSource
+import model.point.PointDayHistoryResponse
+import model.point.PointMonthHistoryResponse
+import model.point.PointTotalHistoryResponse
 import javax.inject.Inject
 
-class MockPointDataSourceImpl @Inject constructor() : PointDataSource {
+class MockPointDataSourceImpl @Inject constructor() : BaseDataSource(), PointDataSource {
 
-    private val pointResponse = PointResponse(
-        point = 50000,
-        extinctionPointResponse = ExtinctionPointResponse(
-            point = 1000,
-            date = "2023-06-06"
-        ),
-        history = listOf(
-            HistoryResponse(
-                point = 1000,
-                type = 0,
-                date = "2023-06-06 11:11:11.111",
-                totalPoint = 3000
-            ),
-            HistoryResponse(
-                point = 1000,
-                type = 0,
-                date = "2023-06-06 11:11:11.111",
-                totalPoint = 3000
-            ),
-            HistoryResponse(
-                point = 1000,
-                type = 1,
-                date = "2023-06-06 11:11:11.111",
-                totalPoint = 3000
-            ),
-            HistoryResponse(
-                point = 1000,
-                type = 0,
-                date = "2023-06-06 11:11:11.111",
-                totalPoint = 3000
-            ),
-            HistoryResponse(
-                point = 1000,
-                type = 1,
-                date = "2023-06-06 11:11:11.111",
-                totalPoint = 3000
+    override suspend fun getPointTotalHistory(): CustomResult<PointTotalHistoryResponse, DataError.Network> {
+        val mockResponse = PointTotalHistoryResponse(
+            totalPoints = 50000,
+            pointHistories = listOf(
+                PointMonthHistoryResponse(
+                    yearMonth = "2024/06",
+                    pointHistories = listOf(
+                        PointDayHistoryResponse(
+                            type = "EARN",
+                            amount = 2500,
+                            balance = 4200,
+                            description = "하비루프 스튜디오 이용권 사용",
+                            createdAt = "2024-07-17T12:52:56.349Z"
+                        ),
+                        PointDayHistoryResponse(
+                            type = "EARN",
+                            amount = 2500,
+                            balance = 4200,
+                            description = "하비루프 스튜디오 이용권 사용",
+                            createdAt = "2024-07-17T12:52:56.349Z"
+                        ),
+                        PointDayHistoryResponse(
+                            type = "EARN",
+                            amount = 2500,
+                            balance = 4200,
+                            description = "하비루프 스튜디오 이용권 사용",
+                            createdAt = "2024-07-17T12:52:56.349Z"
+                        )
+                    )
+                ),
+                PointMonthHistoryResponse(
+                    yearMonth = "2024/05",
+                    pointHistories = listOf(
+                        PointDayHistoryResponse(
+                            type = "SPEND",
+                            amount = 1500,
+                            balance = 2700,
+                            description = "하비루프 카페 결제",
+                            createdAt = "2024-05-16T10:45:30.123Z"
+                        ),
+                        PointDayHistoryResponse(
+                            type = "EARN",
+                            amount = 1000,
+                            balance = 3700,
+                            description = "하비루프 운동 참여",
+                            createdAt = "2024-05-10T08:20:10.789Z"
+                        ),
+                        PointDayHistoryResponse(
+                            type = "SPEND",
+                            amount = 1200,
+                            balance = 2500,
+                            description = "하비루프 상품 구매",
+                            createdAt = "2024-05-01T14:32:56.349Z"
+                        )
+                    )
+                )
             )
         )
-    )
-
-    override fun getPointHistory(): Flow<CustomResult<PointResponse, DataError.Network>> = flow {
-        delay(1000)
-        val result: CustomResult<PointResponse, DataError.Network> = CustomResult.Success(pointResponse)
-        emit(result)
+        return CustomResult.Success(mockResponse)
     }
 }

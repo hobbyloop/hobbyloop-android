@@ -133,7 +133,7 @@ fun MyPointScreen(
                                 Text(text = "보유 포인트", style = HobbyLoopTypo.head14.copy(color = HobbyLoopColor.Gray60))
                             }
                             Spacer(Modifier.height(14.dp))
-                            Text(text = "${state.value.point.point} P", style = HobbyLoopTypo.head18)
+                            Text(text = "${state.value.point.totalPoints} P", style = HobbyLoopTypo.head18)
                         }
                     }
 
@@ -162,10 +162,10 @@ fun MyPointScreen(
                         }
                     }
 
-                    items(state.value.point.history) { history ->
-                        PointHistoryItem(history)
-                        Spacer(Modifier.height(24.dp))
-                    }
+//                    items(state.value.point.history) { history ->
+//                        PointHistoryItem(history)
+//                        Spacer(Modifier.height(24.dp))
+//                    }
 
                     item {
                         Spacer(

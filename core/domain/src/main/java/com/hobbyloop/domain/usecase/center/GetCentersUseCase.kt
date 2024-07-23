@@ -6,4 +6,5 @@ import javax.inject.Inject
 class GetCentersUseCase @Inject constructor(
     private val repository: CenterRepository
 ) {
+
 }

@@ -5,11 +5,13 @@ import com.hobbyloop.domain.common.DataError
 import com.hobbyloop.domain.common.Resource
 import com.hobbyloop.domain.entity.ticket.HotTicket
 import com.hobbyloop.domain.entity.ticket.RecommendTicket
+import com.hobbyloop.domain.entity.ticket.TicketHistory
 import com.hobbyloop.domain.repository.ticket.TicketRepository
 import datasource.ticket.TicketDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import model.ticket.toDomain
 import model.ticket.toEntity
 import javax.inject.Inject
 
@@ -34,6 +36,17 @@ class MockTicketRepositoryImpl @Inject constructor(
                 when (result) {
                     is CustomResult.Success -> Resource.Success(result.data.map { it.toEntity() })
                     is CustomResult.Error -> Resource.Error("result.error", null)
+                }
+            }
+    }
+
+    override fun getTicketHistory(): Flow<CustomResult<List<TicketHistory>, DataError.Network>> {
+        return dataSource.getTicketHistory()
+            .catch { emit(CustomResult.Error(DataError.Network.UNKNOWN)) }
+            .map { result ->
+                when (result) {
+                    is CustomResult.Success -> CustomResult.Success(result.data.map { it.toDomain() })
+                    is CustomResult.Error -> CustomResult.Error(result.error)
                 }
             }
     }
