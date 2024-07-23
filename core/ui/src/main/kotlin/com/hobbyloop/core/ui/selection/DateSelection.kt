@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.hobbyloop.core.ui.componenet.inputField.EnhancedLeadingIconInputField
-import com.hobbyloop.core.ui.componenet.inputField.InfoHeadTitle
 import com.hobbyloop.core.ui.icons.HblIcons
+import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
+import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
 import com.hobbyloop.ui.R
 
 

@@ -2,12 +2,16 @@ package datasource.ticket
 
 import com.hobbyloop.domain.common.CustomResult
 import com.hobbyloop.domain.common.DataError
+import com.hobbyloop.domain.entity.ticket.TicketHistory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import model.center.CenterResponse
 import model.ticket.HotTicketResponse
+import model.ticket.MonthHistoryResponse
 import model.ticket.RecommendTicketResponse
+import model.ticket.TicketHistoryResponse
 import model.ticket.TicketResponse
+import model.ticket.UsageHistoryResponse
 import javax.inject.Inject
 
 class MockTicketDataSourceImpl @Inject constructor() : TicketDataSource {
@@ -140,6 +144,34 @@ class MockTicketDataSourceImpl @Inject constructor() : TicketDataSource {
             } catch (e: Exception) {
 
             }
+        }
+    }
+
+    override fun getTicketHistory(): Flow<CustomResult<List<TicketHistoryResponse>, DataError.Network>> {
+        val mockTickets = listOf(
+            TicketHistoryResponse(
+                ticketId = 1,
+                ticketImageUrl = "string",
+                ticketName = "2:1 필라테스 30회",
+                centerName = "필라피티 스튜디오",
+                remainingCount = 7,
+                totalCounting = 30,
+                usingHistoryByMonth = listOf(
+                    MonthHistoryResponse(
+                        yearMonth = "2024/06",
+                        usingHistories = listOf(
+                            UsageHistoryResponse(
+                                useCount = 1,
+                                remainingCount = 13,
+                                usedAt = "2024-06-30T13:36:35.781Z"
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        return flow {
+            emit(CustomResult.Success(mockTickets))
         }
     }
 }

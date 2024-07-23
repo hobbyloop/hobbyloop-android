@@ -1,48 +1,56 @@
 package model.point
 
-import com.hobbyloop.domain.entity.point.ExtinctionPoint
-import com.hobbyloop.domain.entity.point.History
-import com.hobbyloop.domain.entity.point.Point
+import com.hobbyloop.domain.entity.point.PointDayHistory
+import com.hobbyloop.domain.entity.point.PointMonthHistory
+import com.hobbyloop.domain.entity.point.PointTotalHistory
+import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-data class PointResponse(
-    val point: Int,
-    val extinctionPointResponse: ExtinctionPointResponse,
-    val history: List<HistoryResponse>
+@Serializable
+data class PointTotalHistoryResponse(
+    val totalPoints: Int,
+    val pointHistories: List<PointMonthHistoryResponse>
 )
 
-data class ExtinctionPointResponse(
-    val point: Int,
-    val date: String
+@Serializable
+data class PointMonthHistoryResponse(
+    val yearMonth: String,
+    val pointHistories: List<PointDayHistoryResponse>
 )
 
-data class HistoryResponse(
-    val point: Int,
-    val type: Int,
-    val date: String,
-    val totalPoint: Int
+@Serializable
+data class PointDayHistoryResponse(
+    val type: String,
+    val amount: Int,
+    val balance: Int,
+    val description: String,
+    val createdAt: String
 )
 
-fun ExtinctionPointResponse.toEntity(): ExtinctionPoint {
-    return ExtinctionPoint(
-        point = this.point,
-        date = this.date
+fun PointTotalHistoryResponse.toDomain(): PointTotalHistory {
+    return PointTotalHistory(
+        totalPoints = this.totalPoints,
+        pointHistories = this.pointHistories.map { it.toDomain() }
     )
 }
 
-fun HistoryResponse.toEntity(): History {
-    return History(
-        point = this.point,
+fun PointMonthHistoryResponse.toDomain(): PointMonthHistory {
+    return PointMonthHistory(
+        yearMonth = this.yearMonth,
+        pointHistories = this.pointHistories.map { it.toDomain() }
+    )
+}
+
+fun PointDayHistoryResponse.toDomain(): PointDayHistory {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    val date = dateFormat.parse(this.createdAt) ?: Date()
+    return PointDayHistory(
         type = this.type,
-        date = this.date,
-        totalPoint = this.totalPoint
+        amount = this.amount,
+        balance = this.balance,
+        description = this.description,
+        createdAt = date
     )
 }
-
-fun PointResponse.toEntity(): Point {
-    return Point(
-        point = this.point,
-        extinctionPoint = this.extinctionPointResponse.toEntity(),
-        history = this.history.map { it.toEntity() }
-    )
-}
-

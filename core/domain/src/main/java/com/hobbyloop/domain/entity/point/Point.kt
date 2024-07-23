@@ -1,19 +1,21 @@
 package com.hobbyloop.domain.entity.point
 
-data class ExtinctionPoint(
-    val point: Int,
-    val date: String
+import java.util.Date
+
+data class PointDayHistory(
+    val type: String,
+    val amount: Int,
+    val balance: Int,
+    val description: String,
+    val createdAt: Date // Date object for better manipulation
 )
 
-data class History(
-    val point: Int,
-    val type: Int,
-    val date: String,
-    val totalPoint: Int
+data class PointMonthHistory(
+    val yearMonth: String,
+    val pointHistories: List<PointDayHistory>
 )
 
-data class Point(
-    val point: Int,
-    val extinctionPoint: ExtinctionPoint,
-    val history: List<History>
+data class PointTotalHistory(
+    val totalPoints: Int,
+    val pointHistories: List<PointMonthHistory>
 )

@@ -18,9 +18,9 @@ internal fun NavGraphBuilder.myTicketScreen(onCloseClick: () -> Unit) {
     ) {
         MyTicketScreen(
             onCloseClick = onCloseClick,
-            onSaveClick = {
+            onBuyTicketClick = {
 
-            },
+            }
         )
     }
 }

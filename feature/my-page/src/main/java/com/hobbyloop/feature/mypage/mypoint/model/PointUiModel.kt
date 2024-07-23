@@ -1,83 +1,63 @@
 package com.hobbyloop.feature.mypage.mypoint.model
 
-import com.hobbyloop.domain.entity.point.ExtinctionPoint
-import com.hobbyloop.domain.entity.point.History
-import com.hobbyloop.domain.entity.point.Point
+import com.hobbyloop.domain.entity.point.PointDayHistory
+import com.hobbyloop.domain.entity.point.PointMonthHistory
+import com.hobbyloop.domain.entity.point.PointTotalHistory
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-data class ExtinctionPointUiModel(
-    val point: String = "",
-    val date: String = ""
+
+data class PointHistoryUiModel(
+    val type: String,
+    val amount: Int,
+    val balance: Int,
+    val description: String,
+    val createdAt: String // Readable date string
 )
 
-data class HistoryUiModel(
-    val point: String,
-    val type: Int,
-    val date: String,
-    val totalPoint: String
+data class PointMonthHistoryUiModel(
+    val yearMonth: String,
+    val pointHistories: List<PointHistoryUiModel>
 )
 
 data class PointUiModel(
-    val point: String = "",
-    val extinctionPoint: ExtinctionPointUiModel = ExtinctionPointUiModel(),
-    val history: List<HistoryUiModel> = listOf()
+    val totalPoints: Int = 0,
+    val history: List<PointMonthHistoryUiModel> = emptyList(),
+    val extinctionPoint: ExtinctionPointUiModel = ExtinctionPointUiModel()
 )
 
-fun ExtinctionPoint.toUiModel(): ExtinctionPointUiModel {
-    return ExtinctionPointUiModel(
-        point = this.point.toCommaSeparatedString(),
-        date = this.date.toFormattedDate()
-    )
-}
+data class ExtinctionPointUiModel(
+    val point: Int = 0,
+    val date: String = ""
+)
 
-fun History.toUiModel(): HistoryUiModel {
-    return HistoryUiModel(
-        point = this.point.toCommaSeparatedString(),
-        type = this.type,
-        date = this.date.toMonthDayFormat(),
-        totalPoint = this.totalPoint.toCommaSeparatedString()
-    )
-}
 
-fun Point.toUiModel(): PointUiModel {
+fun PointTotalHistory.toUiModel(): PointUiModel {
     return PointUiModel(
-        point = this.point.toCommaSeparatedString(),
-        extinctionPoint = this.extinctionPoint.toUiModel(),
-        history = this.history.map { it.toUiModel() }
+        totalPoints = this.totalPoints,
+        history = this.pointHistories.map { it.toUiModel() },
+        extinctionPoint = ExtinctionPointUiModel(
+            point = this.pointHistories.firstOrNull()?.pointHistories?.firstOrNull()?.amount ?: 0,
+            date = this.pointHistories.firstOrNull()?.pointHistories?.firstOrNull()?.createdAt.toString()
+        )
     )
 }
 
-fun String.toFormattedDate(): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("yyyy. MM. dd", Locale.getDefault())
-    return try {
-        val date = inputFormat.parse(this)
-        if (date != null) {
-            outputFormat.format(date)
-        } else {
-            this
-        }
-    } catch (e: Exception) {
-        this
-    }
+fun PointMonthHistory.toUiModel(): PointMonthHistoryUiModel {
+    return PointMonthHistoryUiModel(
+        yearMonth = this.yearMonth,
+        pointHistories = this.pointHistories.map { it.toUiModel() }
+    )
 }
 
-fun String.toMonthDayFormat(): String {
-    val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-    val outputFormat = SimpleDateFormat("MM.dd", Locale.getDefault())
-    return try {
-        val date = inputFormat.parse(this)
-        if (date != null) {
-            outputFormat.format(date)
-        } else {
-            this
-        }
-    } catch (e: Exception) {
-        this
-    }
-}
-
-fun Int.toCommaSeparatedString(): String {
-    return "%,d".format(this)
+fun PointDayHistory.toUiModel(): PointHistoryUiModel {
+    val readableDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+    val readableDate = readableDateFormat.format(this.createdAt)
+    return PointHistoryUiModel(
+        type = this.type,
+        amount = this.amount,
+        balance = this.balance,
+        description = this.description,
+        createdAt = readableDate
+    )
 }

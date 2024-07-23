@@ -3,28 +3,21 @@ package com.hobbyloop.feature.mypage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hobbyloop.ui.R
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import theme.HobbyLoopColor
 import theme.HobbyLoopTypo
 
@@ -38,8 +31,28 @@ internal fun MyPageScreen(
     onMyTicketClick: () -> Unit,
     onMyCouponClick: () -> Unit,
     onMyBookmarkClick: () -> Unit,
+    viewModel: MyPageViewModel = hiltViewModel()
 ) {
+    val state by viewModel.container.stateFlow.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(viewModel) {
+        viewModel.container.sideEffectFlow.collect { sideEffect ->
+            when (sideEffect) {
+                is MyPageSideEffect.ShowError -> {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = sideEffect.message
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             Box(
                 modifier = Modifier
@@ -61,127 +74,148 @@ internal fun MyPageScreen(
             }
         }
     ) { padding ->
-        Column(
-            modifier =
-            Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Box(
+        if (state.isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+        } else {
+            state.userInfo?.let { userInfo ->
+                Column(
                     modifier = Modifier
-                        .height(85.dp)
-                        .width(85.dp)
-                        .background(color = HobbyLoopColor.Gray40, shape = CircleShape)
+                        .padding(padding)
+                        .fillMaxSize()
                 ) {
-
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.clickable {
-                        onEditMyInfoClick()
-                    },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "본명", style = HobbyLoopTypo.head18)
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_pen_16),
-                        contentDescription = null,
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .height(85.dp)
+                                .width(85.dp)
+                                .background(color = HobbyLoopColor.Gray40, shape = CircleShape)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_pen_16), // Replace with actual user image
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clip(CircleShape)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Row(
+                            modifier = Modifier.clickable {
+                                onEditMyInfoClick()
+                            },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = userInfo.name, style = HobbyLoopTypo.head18)
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_pen_16),
+                                contentDescription = null,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = userInfo.nickname, style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
+                            ItemDivider()
+                            Text(text = userInfo.phoneNumber, style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
+                        }
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 28.dp, top = 16.dp, end = 28.dp, bottom = 24.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    onMyPointClick()
+                                },
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(text = "포인트", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(text = "${userInfo.points}P", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                        }
+                        ItemDivider()
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    onMyTicketClick()
+                                },
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(text = "이용권", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(text = "${userInfo.ticketCount}개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                        }
+                        ItemDivider()
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    onMyCouponClick()
+                                },
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(text = "쿠폰", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(text = "${userInfo.couponCount}개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                        }
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
+                            .background(color = HobbyLoopColor.Gray20)
                     )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "닉네임", style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
-                    ItemDivider()
-                    Text(text = "010-1234-5678", style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 28.dp, top = 16.dp, end = 28.dp, bottom = 24.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            onMyPointClick()
-                        },
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "포인트", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "50,000P", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
-                }
-                ItemDivider()
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            onMyTicketClick()
-                        },
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "이용권", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "3개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
-                }
-                ItemDivider()
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            onMyCouponClick()
-                        },
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "쿠폰", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "2개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        MyPageMenu(text = "보관함", iconRes = R.drawable.ic_right, onMyClassClick = onMyBookmarkClick)
+                        HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+                        MyPageMenu(text = "리뷰", iconRes = R.drawable.ic_right, onMyClassClick = {  }, isEnabled = false)
+                        HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+                        MyPageMenu(text = "수업내역", iconRes = R.drawable.ic_right, onMyClassClick = onMyClassClick)
+                        HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+                    }
                 }
             }
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .background(color = HobbyLoopColor.Gray20)
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                MyPageMenu(text = "보관함", iconRes = R.drawable.ic_right, onMyClassClick = onMyBookmarkClick)
-                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
-                MyPageMenu(text = "리뷰", iconRes = R.drawable.ic_right, onMyClassClick = {  })
-                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
-                MyPageMenu(text = "수업내역", iconRes = R.drawable.ic_right, onMyClassClick = onMyClassClick)
-                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+            state.error?.let { error ->
+                // Show error message
+                Text(text = error, color = Color.Red, modifier = Modifier.padding(16.dp))
             }
         }
     }
 }
 
 @Composable
-fun MyPageMenu(text: String, iconRes: Int, onMyClassClick: () -> Unit) {
+fun MyPageMenu(text: String, iconRes: Int, onMyClassClick: () -> Unit, isEnabled: Boolean = true) {
+    val textColor = if (isEnabled) HobbyLoopColor.Gray100 else HobbyLoopColor.Gray40
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                onMyClassClick()
+            .clickable(enabled = isEnabled) {
+                if (isEnabled) {
+                    onMyClassClick()
+                }
             }
             .padding(horizontal = 16.dp, vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = text, style = HobbyLoopTypo.head16)
+        Text(text = text, style = HobbyLoopTypo.head16.copy(color = textColor))
         Image(painter = painterResource(id = iconRes), contentDescription = null)
     }
 }

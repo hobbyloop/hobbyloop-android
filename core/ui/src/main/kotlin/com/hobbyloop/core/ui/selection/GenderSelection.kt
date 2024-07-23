@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.hobbyloop.core.ui.componenet.inputField.InfoHeadTitle
+import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
 import com.hobbyloop.ui.R
 
 @Composable
