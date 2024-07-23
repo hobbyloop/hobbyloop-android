@@ -25,4 +25,8 @@
     <string name="signup_codeVerified">인증완료</string>
     <string name="signup_retouch">입력 하신 정보들은 마이페이지에서 언제든 수정 가능해요</string>
     <string name="signup_detail">자세히</string>
+
+    <string name="mypage_myinfo_edit_complete">수정완료</string>
+    <string name="mypage_coupon_register">등록</string>
+    <string name="mypage_coupon_register_hint">쿠폰 코드를 입력해주세요.</string>
 </resources>

@@ -6,14 +6,18 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import datasource.ad.AdDataSource
 import datasource.ad.MockAdDataSourceImpl
-import datasource.point.MockPointDataSourceImpl
-import datasource.point.PointDataSource
+import datasource.coupon.CouponDataSource
+import datasource.coupon.MockCouponDataSourceImpl
 import datasource.login.LoginDataSource
 import datasource.login.LoginDataSourceImpl
+import datasource.point.MockPointDataSourceImpl
+import datasource.point.PointDataSource
 import datasource.signup.SignUpDataSource
 import datasource.signup.SignUpDataSourceImpl
 import datasource.ticket.MockTicketDataSourceImpl
 import datasource.ticket.TicketDataSource
+import datasource.user.UserInfoDataSource
+import datasource.user.UserInfoDataSourceImpl
 import javax.inject.Singleton
 
 @Module
@@ -51,5 +55,16 @@ abstract class DataSourceModule {
         impl: SignUpDataSourceImpl
     ): SignUpDataSource
 
+    @Singleton
+    @Binds
+    abstract fun bindUserInfoDataSource(
+        impl: UserInfoDataSourceImpl
+    ): UserInfoDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindCouponDataSource(
+        impl: MockCouponDataSourceImpl
+    ): CouponDataSource
 
 }

@@ -1,35 +1,33 @@
 package com.hobbyloop.network.di
 
 import android.util.Log
-import com.hobbyloop.domain.common.DataError
-import com.hobbyloop.domain.common.NetWorkException
+import com.hobbyloop.domain.repository.user.UserDataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.RedirectResponseException
-import io.ktor.client.plugins.ServerResponseException
+import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.observer.ResponseObserver
-import io.ktor.client.request.HttpRequest
 import io.ktor.client.request.header
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import model.common.ErrorResponse
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -37,8 +35,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient = HttpClient(Android) {
-        install(HttpTimeout) { // Timeout configuration
+    fun provideHttpClient(
+        userDataRepository: UserDataRepository
+    ): HttpClient = HttpClient(Android) {
+        install(HttpTimeout) {
             requestTimeoutMillis = 10000
             connectTimeoutMillis = 10000
             socketTimeoutMillis = 10000
@@ -47,23 +47,16 @@ object NetworkModule {
         defaultRequest {
             contentType(ContentType.Application.Json)
             url("https://hobbyloop.kr")
+            header(HttpHeaders.Authorization, "Bearer ${runBlocking { userDataRepository.userData.first().jwt }}")
         }
 
         HttpResponseValidator {
-            handleResponseExceptionWithRequest { exception: Throwable, _: HttpRequest ->
-                throw mapToCustomException(NetworkExceptionMapper.mapException(exception))
-            }
-
             validateResponse { response ->
-                val error = NetworkExceptionMapper.mapResponse(response)
-                if (error != DataError.Network.UNKNOWN) {
-                    throw mapToCustomException(error)
+                if (!response.status.isSuccess()) {
+                    val errorResponse = response.body<ErrorResponse>()
+                    throw ResponseException(response, errorResponse.errorMessage)
                 }
             }
-        }
-
-        ResponseObserver { response ->
-            Log.d("HTTP status: ", "${response.status.value}")
         }
 
         Logging {
@@ -85,44 +78,5 @@ object NetworkModule {
             })
         }
     }
-
-    private fun mapToCustomException(dataError: DataError.Network): NetWorkException {
-        return when (dataError) {
-            DataError.Network.UNAUTHORIZED -> NetWorkException.AuthorizationException("Authorization failed")
-            DataError.Network.CLIENT_ERROR -> NetWorkException.ClientException("Client error")
-            DataError.Network.SERVER_ERROR -> NetWorkException.ServerException("Server error")
-            DataError.Network.REDIRECTION -> NetWorkException.RedirectionException("Redirection error")
-            else -> NetWorkException.UnknownException("Unknown error")
-        }
-    }
 }
-
-object NetworkExceptionMapper {
-
-    fun mapException(exception: Throwable): DataError.Network {
-        return when (exception) {
-            is RedirectResponseException -> DataError.Network.REDIRECTION
-            is ClientRequestException -> {
-                when (exception.response.status.value) {
-                    401 -> DataError.Network.UNAUTHORIZED
-                    else -> DataError.Network.CLIENT_ERROR
-                }
-            }
-
-            is ServerResponseException -> DataError.Network.SERVER_ERROR
-            else -> DataError.Network.UNKNOWN
-        }
-    }
-
-    fun mapResponse(response: HttpResponse): DataError.Network {
-        return when (response.status.value) {
-            401 -> DataError.Network.UNAUTHORIZED
-            in 400..499 -> DataError.Network.CLIENT_ERROR
-            in 500..599 -> DataError.Network.SERVER_ERROR
-            else -> DataError.Network.UNKNOWN
-        }
-    }
-}
-
-
 
