@@ -2,4 +2,31 @@
 <resources>
     <string name="empty" />
     <string name="complete">완료</string>
+    <string name="signup_welcome">반가워요 회원님!</string>
+    <string name="signup_info">회원님의 정보를 입력해주세요</string>
+    <string name="signup_name">이름</string>
+    <string name="signup_name_hint">회원님의 이름을 적어주세요</string>
+    <string name="signup_nickname">닉네임</string>
+    <string name="signup_nickname_hint">자신만의 닉네임을 지어보세요!</string>
+    <string name="signup_gender">성별</string>
+    <string name="signup_birthday">생년월일</string>
+    <string name="signup_phoneNumber">전화번호 인증</string>
+    <string name="signup_Terms">약관 동의</string>
+    <string name="signup_endSignUp">하비루프 시작</string>
+    <string name="signup_reCodeSent">인증번호 재발송</string>
+    <string name="signup_codeSent">인증번호 전송</string>
+    <string name="signup_nickname_error">닉네임을 다시 확인해주세요</string>
+    <string name="signup_name_error">이름을 다시 확인해주세요</string>
+    <string name="signup_phoneNumber_error">전화번호를 다시 확인해주세요.</string>
+    <string name="signup_phoneNumber_hint">-를 제외한 번호를 입력해주세요</string>
+    <string name="signup_code_hint">인증번호를 입력해주세요</string>
+    <string name="signup_code_error">인증번호를 다시 확인해주세요.</string>
+    <string name="signup_checkCode">인증확인</string>
+    <string name="signup_codeVerified">인증완료</string>
+    <string name="signup_retouch">입력 하신 정보들은 마이페이지에서 언제든 수정 가능해요</string>
+    <string name="signup_detail">자세히</string>
+
+    <string name="mypage_myinfo_edit_complete">수정완료</string>
+    <string name="mypage_coupon_register">등록</string>
+    <string name="mypage_coupon_register_hint">쿠폰 코드를 입력해주세요.</string>
 </resources>

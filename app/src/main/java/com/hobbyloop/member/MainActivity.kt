@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import theme.HobbyloopTheme
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,6 +30,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         setupSplashScreen()
 
         lifecycleScope.launch {
@@ -49,14 +53,14 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun RenderMainContent(uiState: MainActivityUiState.Success) {
-
         Log.d("JWT", uiState.userData.jwt)
 
-        val startDestination = if (uiState.userData.jwt.isEmpty()) {
-            LOGIN_GRAPH_ROUTE
-        } else {
-            NAVIGATION_BAR_HOST_ROUTE
-        }
+        val startDestination =
+            if (uiState.userData.jwt.isEmpty()) {
+                LOGIN_GRAPH_ROUTE
+            } else {
+                NAVIGATION_BAR_HOST_ROUTE
+            }
 
         RootHost(startDestination = startDestination)
     }

@@ -52,7 +52,9 @@ fun NavGraphBuilder.navigationBarHost(navController: NavHostController) {
                         },
                     )
                     scheduleGraph()
-                    myPageGraph()
+                    myPageGraph(
+                        navController = navController,
+                    )
                 }
                 Box(
                     modifier =

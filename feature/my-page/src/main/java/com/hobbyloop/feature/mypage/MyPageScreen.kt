@@ -1,25 +1,214 @@
 package com.hobbyloop.feature.mypage
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.hobbyloop.ui.R
+import theme.HobbyLoopColor
+import theme.HobbyLoopTypo
 
 @Composable
-internal fun MyPageScreen() {
-    Scaffold { padding ->
+internal fun MyPageScreen(
+    onBackClick: () -> Unit,
+    onSettingClick: () -> Unit,
+    onEditMyInfoClick: () -> Unit,
+    onMyPointClick: () -> Unit,
+    onMyClassClick: () -> Unit,
+    onMyTicketClick: () -> Unit,
+    onMyCouponClick: () -> Unit,
+    onMyBookmarkClick: () -> Unit,
+) {
+    Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 20.dp)
+            ) {
+                Text(
+                    "마이페이지",
+                    style = HobbyLoopTypo.head16,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.ic_setting),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.CenterEnd).clickable {
+                        onSettingClick()
+                    }
+                )
+            }
+        }
+    ) { padding ->
         Column(
             modifier =
             Modifier
                 .padding(padding)
                 .fillMaxSize()
         ) {
-            Text(
-                text = "마이페이지",
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(85.dp)
+                        .width(85.dp)
+                        .background(color = HobbyLoopColor.Gray40, shape = CircleShape)
+                ) {
+
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.clickable {
+                        onEditMyInfoClick()
+                    },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "본명", style = HobbyLoopTypo.head18)
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_pen_16),
+                        contentDescription = null,
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "닉네임", style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
+                    ItemDivider()
+                    Text(text = "010-1234-5678", style = HobbyLoopTypo.caption12.copy(color = HobbyLoopColor.Gray40))
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 28.dp, top = 16.dp, end = 28.dp, bottom = 24.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            onMyPointClick()
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "포인트", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = "50,000P", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                }
+                ItemDivider()
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            onMyTicketClick()
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "이용권", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = "3개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                }
+                ItemDivider()
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            onMyCouponClick()
+                        },
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "쿠폰", style = HobbyLoopTypo.body14.copy(color = HobbyLoopColor.Gray80))
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(text = "2개", style = HobbyLoopTypo.head16.copy(color = HobbyLoopColor.Gray100))
+                }
+            }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .background(color = HobbyLoopColor.Gray20)
             )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                MyPageMenu(text = "보관함", iconRes = R.drawable.ic_right, onMyClassClick = onMyBookmarkClick)
+                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+                MyPageMenu(text = "리뷰", iconRes = R.drawable.ic_right, onMyClassClick = {  })
+                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+                MyPageMenu(text = "수업내역", iconRes = R.drawable.ic_right, onMyClassClick = onMyClassClick)
+                HorizontalDivider(thickness = 1.dp, color = HobbyLoopColor.Gray40)
+            }
         }
     }
+}
+
+@Composable
+fun MyPageMenu(text: String, iconRes: Int, onMyClassClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onMyClassClick()
+            }
+            .padding(horizontal = 16.dp, vertical = 15.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = text, style = HobbyLoopTypo.head16)
+        Image(painter = painterResource(id = iconRes), contentDescription = null)
+    }
+}
+
+@Composable
+private fun ItemDivider() {
+    Spacer(modifier = Modifier.width(4.dp))
+    Box(
+        modifier = Modifier
+            .width(1.dp)
+            .height(10.dp)
+            .background(color = Color(0xFFD9D9D9))
+    )
+    Spacer(modifier = Modifier.width(4.dp))
+}
+
+@Composable
+@Preview
+private fun PreviewMyPageScreen() {
+    MyPageScreen(
+        onBackClick = {},
+        onEditMyInfoClick = {},
+        onMyClassClick = {},
+        onMyTicketClick = {},
+        onMyPointClick = {},
+        onMyCouponClick = {},
+        onMyBookmarkClick = {},
+        onSettingClick = {}
+    )
 }
