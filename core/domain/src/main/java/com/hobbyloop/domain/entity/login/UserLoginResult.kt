@@ -1,6 +1,9 @@
 package com.hobbyloop.domain.entity.login
 
-    data class UserLoginResult(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class UserLoginResult(
     val accessToken: String?,
     val refreshToken: String?,
     val email: String?,

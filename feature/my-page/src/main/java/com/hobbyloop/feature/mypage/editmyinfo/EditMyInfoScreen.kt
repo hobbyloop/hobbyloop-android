@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.hobbyloop.core.ui.componenet.ActiveStateButton
 import com.hobbyloop.core.ui.componenet.inputField.InputInfoContent
 import com.hobbyloop.core.ui.selection.DateSelection
-import com.hobbyloop.feature.signup.PhoneNumberVerificationForm
+import com.hobbyloop.core.ui.componenet.inputField.PhoneNumberVerificationForm
 import com.hobbyloop.ui.R
 import theme.HobbyLoopTypo
 import theme.HobbyLoopColor

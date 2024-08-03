@@ -1,12 +1,10 @@
 package com.hobbyloop.feature.signup
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hobbyloop.domain.entity.login.UserLoginResult
 import com.hobbyloop.domain.entity.signup.SignUpInfo
-import com.hobbyloop.domain.usecase.login.GetJWTUseCase
 import com.hobbyloop.domain.usecase.signup.SignUpUseCase
 import com.hobbyloop.domain.usecase.user.SetUserDataUseCase
 import com.hobbyloop.feature.signup.state.CodeInfo
@@ -14,15 +12,10 @@ import com.hobbyloop.feature.signup.state.UserInfo
 import com.hobbyloop.feature.signup.state.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.ZoneId
-import java.util.Date
-import java.util.Locale
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +23,15 @@ class SignUpViewModel @Inject constructor(
     private val setUserDataUseCase: SetUserDataUseCase,
     private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
+
+    companion object {
+        const val PHONE_NUMBER_LENGTH = 11
+        const val PHONE_NUMBER_PREFIX = "010"
+        const val MIN_NAME_LENGTH = 2
+        const val MIN_NICKNAME_LENGTH = 2
+        val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일")
+    }
+
     private val _userInfo = MutableStateFlow(UserInfo())
     val userInfo: StateFlow<UserInfo> = _userInfo.asStateFlow()
 
@@ -45,84 +47,78 @@ class SignUpViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    fun updateName(newName: String) {
-        val isValid = validateName(newName)
-        _userInfo.value = _userInfo.value.copy(name = newName)
-        _validationState.value = _validationState.value.copy(isNameValid = isValid)
-        updateFormValidity()
-    }
+    fun updateField(field: SignUpField, value: String) {
+        val isValid = validateField(field, value)
 
-    fun updateNickname(newNickname: String) {
-        val isValid = validateNickname(newNickname)
-        _userInfo.value = _userInfo.value.copy(nickname = newNickname)
-        _validationState.value = _validationState.value.copy(isNicknameValid = isValid)
-        updateFormValidity()
-    }
+        _userInfo.update { currentUserInfo ->
+            when (field) {
+                SignUpField.NAME -> currentUserInfo.copy(name = value)
+                SignUpField.NICKNAME -> currentUserInfo.copy(nickname = value)
+                SignUpField.PHONE_NUMBER -> {
+                    resetCodeInfo()
+                    currentUserInfo.copy(phoneNumber = value)
+                }
+                SignUpField.BIRTHDAY -> currentUserInfo.copy(birthDay = value)
+            }
+        }
 
-    fun updatePhoneNumber(newNumber: String) {
-        val isValid = validatePhoneNumber(newNumber)
-        _userInfo.value = _userInfo.value.copy(phoneNumber = newNumber)
-        _validationState.value = _validationState.value.copy(isPhoneNumberValid = isValid)
-        _codeInfo.value = _codeInfo.value.copy(
-            isCodeSent = false,
-            isResendAvailable = false,
-            isVerificationCodeValid = false
-        )
-    }
+        _validationState.update { currentState ->
+            when (field) {
+                SignUpField.NAME -> currentState.copy(isNameValid = isValid)
+                SignUpField.NICKNAME -> currentState.copy(isNicknameValid = isValid)
+                SignUpField.PHONE_NUMBER -> currentState.copy(isPhoneNumberValid = isValid)
+                SignUpField.BIRTHDAY -> currentState.copy(isBirthDayValid = isValid)
+            }
+        }
 
-
-    fun updateBirthDay(newBirthDay: String) {
-        _userInfo.value = _userInfo.value.copy(birthDay = newBirthDay)
-        _validationState.value = _validationState.value.copy(isBirthDayValid = newBirthDay.isNotBlank())
         updateFormValidity()
     }
 
     fun selectGender(gender: Gender) {
-        _userInfo.value = _userInfo.value.copy(gender = gender)
-        _validationState.value = _validationState.value.copy(isGenderSelected = true)
+        _userInfo.update { it.copy(gender = gender) }
+        _validationState.update { it.copy(isGenderSelected = true) }
         updateFormValidity()
     }
 
     fun sendVerificationCode() {
         viewModelScope.launch {
-            _codeInfo.value = _codeInfo.value.copy(
-                isCodeSent = true,
-                isResendAvailable = true,
-                isVerificationCodeValid = false
-            )
+            _codeInfo.update {
+                it.copy(
+                    isCodeSent = true,
+                    isResendAvailable = true,
+                    isVerificationCodeValid = false
+                )
+            }
+            updateFormValidity()
         }
-        updateFormValidity()
     }
 
     fun updateVerificationCode(newCode: String) {
-        _codeInfo.value = _codeInfo.value.copy(code = newCode, isVerificationCodeValid = false)
+        _codeInfo.update { it.copy(code = newCode, isVerificationCodeValid = false) }
         updateFormValidity()
     }
 
     fun verifyCode() {
         viewModelScope.launch {
-            _codeInfo.value =
-                _codeInfo.value.copy(isVerificationCodeValid = false, showProgress = true)
+            _codeInfo.update { it.copy(isVerificationCodeValid = false, showProgress = true) }
             delay(2000)
-            _codeInfo.value =
-                _codeInfo.value.copy(isVerificationCodeValid = true, showProgress = false)
+            _codeInfo.update { it.copy(isVerificationCodeValid = true, showProgress = false) }
             updateFormValidity()
         }
     }
 
     fun updateConsents(term: Terms, checked: Boolean) {
-        when (term) {
-            Terms.All -> _userInfo.value =
-                _userInfo.value.copy(marketingConsent = checked, dataCollectionConsent = checked)
-
-            Terms.MarketingConsent -> _userInfo.value =
-                _userInfo.value.copy(marketingConsent = checked)
-
-            Terms.DataCollectionConsent -> _userInfo.value =
-                _userInfo.value.copy(dataCollectionConsent = checked)
+        _userInfo.update {
+            when (term) {
+                Terms.All -> it.copy(
+                    marketingConsent = checked,
+                    dataCollectionConsent = checked
+                )
+                Terms.MarketingConsent -> it.copy(marketingConsent = checked)
+                Terms.DataCollectionConsent -> it.copy(dataCollectionConsent = checked)
+            }
         }
     }
-
 
     fun signUp(userLoginResult: UserLoginResult) {
         viewModelScope.launch {
@@ -133,7 +129,7 @@ class SignUpViewModel @Inject constructor(
                     email = userLoginResult.email ?: "",
                     nickname = userInfo.value.nickname,
                     gender = userInfo.value.gender?.ordinal ?: 0,
-                    birthday = LocalDate.now(),
+                    birthday = LocalDate.parse(userInfo.value.birthDay, dateFormatter),
                     phoneNumber = userInfo.value.phoneNumber,
                     isOption1 = userInfo.value.marketingConsent,
                     isOption2 = userInfo.value.dataCollectionConsent,
@@ -143,11 +139,10 @@ class SignUpViewModel @Inject constructor(
                     ci = "", // Add CI value if needed
                     di = "" // Add DI value if needed
                 )
-
                 val signupResponse = signUpUseCase(signUpInfo)
                 setUserDataUseCase.setJwt(signupResponse.accessToken)
             } catch (e: Exception) {
-                // Handle error
+                Log.d("SignUpViewModel", "signUp: $e")
             } finally {
                 _isLoading.value = false
             }
@@ -157,24 +152,27 @@ class SignUpViewModel @Inject constructor(
     private fun updateFormValidity() {
         val state = validationState.value
         _isFormValid.value =
-            state.isNameValid && state.isNicknameValid && state.isPhoneNumberValid && state.isGenderSelected && codeInfo.value.isVerificationCodeValid
+            state.isNameValid && state.isNicknameValid && state.isPhoneNumberValid &&
+                    state.isGenderSelected && codeInfo.value.isVerificationCodeValid
     }
 
-    private fun validateName(name: String): Boolean = name.length >= 2
-    private fun validateNickname(nickname: String): Boolean = nickname.length >= 2
-    private fun validatePhoneNumber(phone: String): Boolean =
-        phone.length == 11 && phone.startsWith("010")
+    private fun validateField(field: SignUpField, value: String): Boolean {
+        return when (field) {
+            SignUpField.NAME -> value.length >= MIN_NAME_LENGTH
+            SignUpField.NICKNAME -> value.length >= MIN_NICKNAME_LENGTH
+            SignUpField.PHONE_NUMBER -> value.length == PHONE_NUMBER_LENGTH && value.startsWith(PHONE_NUMBER_PREFIX)
+            SignUpField.BIRTHDAY -> value.isNotBlank()
+        }
+    }
+
+    private fun resetCodeInfo() {
+        _codeInfo.update {
+            it.copy(
+                isCodeSent = false,
+                isResendAvailable = false,
+                isVerificationCodeValid = false
+            )
+        }
+    }
 }
 
-
-enum class Gender(val label: String) {
-    Male("남성"),
-    Female("여성")
-}
-
-
-enum class Terms(val label: String) {
-    All("전체 동의"),
-    MarketingConsent("마케팅 수신 정보 동의"),
-    DataCollectionConsent("마케팅 정보 수집 동의")
-}
