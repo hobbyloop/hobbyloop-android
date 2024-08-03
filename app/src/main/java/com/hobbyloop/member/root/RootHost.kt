@@ -6,7 +6,6 @@ import androidx.navigation.compose.rememberNavController
 import com.hobbyloop.feature.login.loginGraph
 import com.hobbyloop.feature.signup.navigateToSignUpGraph
 import com.hobbyloop.feature.signup.signUpGraph
-import com.hobbyloop.member.navigationbar.navigateToNavigationBarHost
 import com.hobbyloop.member.navigationbar.navigationBarHost
 
 @Composable
@@ -26,7 +25,6 @@ internal fun RootHost(startDestination: String) {
         )
         signUpGraph(
             onBackClick = { rootController.popBackStack() },
-            onNavigationBarClick = rootController::navigateToNavigationBarHost,
         )
     }
 }

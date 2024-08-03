@@ -1,5 +1,6 @@
 import internal.configureAsync
 import internal.configureInject
+import internal.configureJsonConverter
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -10,8 +11,8 @@ class DomainModuleConventions : Plugin<Project> {
             apply("org.jetbrains.kotlin.jvm")
             apply("java-library")
         }
-
         configureInject()
+        configureJsonConverter()
         configureAsync()
     }
 }

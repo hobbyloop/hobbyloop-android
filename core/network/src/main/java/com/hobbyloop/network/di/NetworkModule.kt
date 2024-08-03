@@ -64,7 +64,6 @@ object NetworkModule {
                 override fun log(message: String) {
                     Log.v("HTTP Logger: ", message)
                 }
-
             }
             level = LogLevel.ALL
         }

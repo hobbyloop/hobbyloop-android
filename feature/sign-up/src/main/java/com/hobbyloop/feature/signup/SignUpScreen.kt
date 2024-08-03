@@ -2,85 +2,98 @@ package com.hobbyloop.feature.signup
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hobbyloop.core.ui.componenet.ActiveStateButton
-import com.hobbyloop.core.ui.componenet.HorizontalLine
-import com.hobbyloop.core.ui.componenet.ModalBottomSheet
-import com.hobbyloop.core.ui.componenet.TopBar
-import com.hobbyloop.core.ui.componenet.UnderLineClickableText
+import com.hobbyloop.core.ui.componenet.*
+import com.hobbyloop.core.ui.componenet.inputField.PhoneNumberVerificationForm
 import com.hobbyloop.core.ui.icons.HblIcons
 import com.hobbyloop.domain.entity.login.UserLoginResult
 import com.hobbyloop.feature.signup.componenet.EnhancedInputField
 import com.hobbyloop.feature.signup.componenet.EnhancedLeadingIconInputField
 import com.hobbyloop.feature.signup.componenet.InfoHeadTitle
+import com.hobbyloop.feature.signup.state.CodeInfo
+import com.hobbyloop.feature.signup.state.UserInfo
+import com.hobbyloop.feature.signup.state.ValidationState
 import com.kimdowoo.datepicker.componenet.SpinnerDatePicker
 
 @Composable
 fun SignUpScreen(
     onBackClick: () -> Unit = {},
-    onNavigationBarClick: () -> Unit = {},
-    userLoginResult: UserLoginResult
+    userLoginResult: UserLoginResult,
+    viewModel: SignUpViewModel = hiltViewModel()
 ) {
-    val viewModel: SignUpViewModel = hiltViewModel()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
+    val validState by viewModel.validationState.collectAsStateWithLifecycle()
+    val isFormValid by viewModel.isFormValid.collectAsStateWithLifecycle()
+    val codeInfo by viewModel.codeInfo.collectAsStateWithLifecycle()
+
+    val focusManager = LocalFocusManager.current
+
+    fun clearFocusAnd(action: () -> Unit) {
+        focusManager.clearFocus()
+        action()
+    }
+
     ModalBottomSheet(modifier = Modifier, sheetContent = {
         SpinnerDatePicker(modifier = Modifier, onDateChanged = { year, month, day ->
-            viewModel.updateBirthDay("${year}년 ${month}월 ${day}일")
+            viewModel.updateField(SignUpField.BIRTHDAY, "${year}년 ${month}월 ${day}일")
         })
     }, content = { showSheet ->
         SignUpLayout(
-            viewModel,
-            onBackClick = onBackClick,
-            onNavigationBarClick = onNavigationBarClick,
+            isLoading = isLoading,
+            onBackClick = { clearFocusAnd(onBackClick) },
             userLoginResult = userLoginResult,
-            showSheet = showSheet,
+            showSheet = { clearFocusAnd(showSheet) },
+            userInfo = userInfo,
+            validState = validState,
+            isFormValid = isFormValid,
+            codeInfo = codeInfo,
+            onUpdateField = viewModel::updateField,
+            onSelectGender = { gender -> clearFocusAnd { viewModel.selectGender(gender) } },
+            onUpdateVerificationCode = viewModel::updateVerificationCode,
+            onVerifyCode = { clearFocusAnd(viewModel::verifyCode) },
+            onSendVerificationCode = { clearFocusAnd(viewModel::sendVerificationCode) },
+            onUpdateConsents = { term, consent -> clearFocusAnd { viewModel.updateConsents(term, consent) } },
+            onSignUp = { clearFocusAnd { viewModel.signUp(userLoginResult) } }
         )
     })
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpLayout(
-    viewModel: SignUpViewModel,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onNavigationBarClick: () -> Unit,
     showSheet: () -> Unit,
-    userLoginResult: UserLoginResult
+    userLoginResult: UserLoginResult,
+    isLoading: Boolean,
+    userInfo: UserInfo,
+    validState: ValidationState,
+    isFormValid: Boolean,
+    codeInfo: CodeInfo,
+    onUpdateField: (SignUpField, String) -> Unit,
+    onSelectGender: (Gender) -> Unit,
+    onUpdateVerificationCode: (String) -> Unit,
+    onVerifyCode: () -> Unit,
+    onSendVerificationCode: () -> Unit,
+    onUpdateConsents: (Terms, Boolean) -> Unit,
+    onSignUp: (UserLoginResult) -> Unit
 ) {
-
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -89,47 +102,60 @@ fun SignUpLayout(
         if (isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         } else {
-            TopBar(
-                modifier = Modifier
-                    .height(66.dp)
-                    .align(Alignment.TopCenter),
-                onNavigationClick = onBackClick,
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent
+            Column {
+                TopBar(
+                    modifier = Modifier
+                        .height(66.dp),
+                    onNavigationClick = onBackClick,
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent
+                    )
                 )
-            )
-            SignUpForm(
-                viewModel,
-                Modifier.padding(16.dp),
-                onNavigationBarClick,
-                showSheet = showSheet,
-                userLoginResult = userLoginResult
-            )
+                SignUpForm(
+                    Modifier.padding(16.dp),
+                    showSheet = showSheet,
+                    userLoginResult = userLoginResult,
+                    userInfo = userInfo,
+                    validState = validState,
+                    isFormValid = isFormValid,
+                    codeInfo = codeInfo,
+                    onUpdateField = onUpdateField,
+                    onSelectGender = onSelectGender,
+                    onUpdateVerificationCode = onUpdateVerificationCode,
+                    onVerifyCode = onVerifyCode,
+                    onSendVerificationCode = onSendVerificationCode,
+                    onUpdateConsents = onUpdateConsents,
+                    onSignUp = onSignUp
+                )
+            }
         }
-
     }
 }
 
 @Composable
 fun SignUpForm(
-    viewModel: SignUpViewModel,
     modifier: Modifier,
-    onNavigationBarClick: () -> Unit,
     showSheet: () -> Unit,
-    userLoginResult: UserLoginResult
+    userLoginResult: UserLoginResult,
+    userInfo: UserInfo,
+    validState: ValidationState,
+    isFormValid: Boolean,
+    codeInfo: CodeInfo,
+    onUpdateField: (SignUpField, String) -> Unit,
+    onSelectGender: (Gender) -> Unit,
+    onUpdateVerificationCode: (String) -> Unit,
+    onVerifyCode: () -> Unit,
+    onSendVerificationCode: () -> Unit,
+    onUpdateConsents: (Terms, Boolean) -> Unit,
+    onSignUp: (UserLoginResult) -> Unit
 ) {
-
-    val userInfo by viewModel.userInfo.collectAsStateWithLifecycle()
-    val validState by viewModel.validationState.collectAsStateWithLifecycle()
-    val isFormValid by viewModel.isFormValid.collectAsStateWithLifecycle()
-    val codeInfo by viewModel.codeInfo.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
-            .padding(top = 66.dp)
+            .padding(top = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(32.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         SignUpMainTitle()
 
@@ -139,7 +165,7 @@ fun SignUpForm(
             hintText = stringResource(id = R.string.signup_name_hint),
             errorText = stringResource(R.string.signup_name_error),
             isValid = validState.isNameValid,
-            valueChange = viewModel::updateName
+            onValueChange = { onUpdateField(SignUpField.NAME, it) }
         )
 
         InputInfoContent(
@@ -148,13 +174,17 @@ fun SignUpForm(
             hintText = stringResource(R.string.signup_nickname_hint),
             errorText = stringResource(R.string.signup_nickname_error),
             isValid = validState.isNicknameValid,
-            valueChange = viewModel::updateNickname
+            onValueChange = { onUpdateField(SignUpField.NICKNAME, it) }
         )
 
-        GenderSelection(selectedGender = userInfo.gender, selectGender = viewModel::selectGender)
+        GenderSelection(
+            selectedGender = userInfo.gender,
+            selectGender = onSelectGender
+        )
 
         DateSelection(
-            userInfo.birthDay, showSheet = showSheet
+            userInfo.birthDay,
+            showSheet = showSheet
         )
 
         PhoneNumberVerificationForm(
@@ -165,16 +195,16 @@ fun SignUpForm(
             showProgress = codeInfo.showProgress,
             isResendAvailable = codeInfo.isResendAvailable,
             isCodeSent = codeInfo.isCodeSent,
-            updateVerificationCodeInfo = viewModel::updateVerificationCode,
-            verifyCode = viewModel::verifyCode,
-            updatePhoneNumber = viewModel::updatePhoneNumber,
-            sendVerificationCode = viewModel::sendVerificationCode,
+            updateVerificationCodeInfo = onUpdateVerificationCode,
+            verifyCode = onVerifyCode,
+            updatePhoneNumber = { onUpdateField(SignUpField.PHONE_NUMBER, it) },
+            sendVerificationCode = onSendVerificationCode
         )
 
         TermsCheck(
             dataCollectionConsent = userInfo.dataCollectionConsent,
             marketingConsent = userInfo.marketingConsent,
-            updateConsents = viewModel::updateConsents
+            updateConsents = onUpdateConsents
         )
 
         Column(
@@ -191,7 +221,7 @@ fun SignUpForm(
                 modifier = Modifier.height(48.dp),
                 textRes = R.string.signup_endSignUp,
                 enabled = isFormValid,
-                onClick = { viewModel.signUp(userLoginResult) },
+                onClick = { onSignUp(userLoginResult) },
                 textStyle = MaterialTheme.typography.labelLarge
             )
         }
@@ -207,31 +237,26 @@ fun TermsCheck(
     Column {
         InfoHeadTitle(text = stringResource(id = R.string.signup_Terms), isEssential = false)
         val allChecked = dataCollectionConsent && marketingConsent
-        CheckboxWithLabel(label = Terms.All.label,
+        CheckboxWithLabel(
+            label = Terms.All.label,
             checked = allChecked,
-            onCheckedChange = { updateConsents(Terms.All, !allChecked) })
-        HorizontalLine(modifier = Modifier.padding(vertical = 8.dp))
-        CheckboxWithLabel(
-            label = Terms.MarketingConsent.label, checked = marketingConsent, onCheckedChange = {
-                updateConsents(
-                    Terms.MarketingConsent, !marketingConsent
-                )
-            }, moreInfo = true, isEssential = false
+            onCheckedChange = { updateConsents(Terms.All, !allChecked) }
         )
-        CheckboxWithLabel(
+        HorizontalLine(modifier = Modifier.padding(vertical = 8.dp))
+        TermsCheckItem(
+            label = Terms.MarketingConsent.label,
+            checked = marketingConsent,
+            onCheckedChange = { updateConsents(Terms.MarketingConsent, it) },
+            isEssential = false
+        )
+        TermsCheckItem(
             label = Terms.DataCollectionConsent.label,
             checked = dataCollectionConsent,
-            onCheckedChange = {
-                updateConsents(
-                    Terms.DataCollectionConsent, !dataCollectionConsent
-                )
-            },
-            moreInfo = true,
+            onCheckedChange = { updateConsents(Terms.DataCollectionConsent, it) },
             isEssential = false
         )
     }
 }
-
 
 @Composable
 fun CheckboxWithLabel(
@@ -302,7 +327,7 @@ fun SignUpMainTitle() {
 
 @Composable
 fun GenderSelection(selectedGender: Gender?, selectGender: (Gender) -> Unit) {
-    val genders = Gender.entries
+    val genders = Gender.entries.toTypedArray()
     val shape = RoundedCornerShape(8.dp)
 
     Column {
@@ -344,7 +369,7 @@ fun InputInfoContent(
     isEssential: Boolean = true,
     isValid: Boolean,
     value: String,
-    valueChange: (String) -> Unit
+    onValueChange: (String) -> Unit
 ) {
     Column(modifier = modifier) {
         InfoHeadTitle(text = headerText, isEssential = isEssential)
@@ -355,11 +380,23 @@ fun InputInfoContent(
             isValid = isValid,
             errorText = errorText,
             value = value,
-            valueChange = valueChange,
+            valueChange = onValueChange,
         )
     }
 }
 
-
-
-
+@Composable
+fun TermsCheckItem(
+    label: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    isEssential: Boolean = true
+) {
+    CheckboxWithLabel(
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        label = label,
+        moreInfo = true,
+        isEssential = isEssential
+    )
+}

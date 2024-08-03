@@ -1,4 +1,4 @@
-package com.hobbyloop.feature.signup
+package com.hobbyloop.core.ui.componenet.inputField
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

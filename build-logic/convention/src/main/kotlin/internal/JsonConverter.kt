@@ -9,6 +9,6 @@ internal fun Project.configureJsonConverter() {
     }
 
     dependencies {
-        add("implementation", getLibrary("kotlinx-serialization-json"))
+        add("api", getLibrary("kotlinx-serialization-json"))
     }
 }
